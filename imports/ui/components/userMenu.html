@@ -6,7 +6,7 @@
     </div>
     <i class="dropdown icon"></i>
     <div class="menu">
-      <div class="item">
+      <div class="itineraries item">
         Mis itinerarios
       </div>
       <div class="logout item">
@@ -15,4 +15,37 @@
     </div>
   </div>
   {{/with}}
+</template>
+
+<template name="myItinerariesModal">
+  <div class="header">
+    Mis itinerarios
+  </div>
+  <div class="content">
+    <div class="description">
+      <p>
+        Verifica lo que ingresaste. <b>¿Es éste tu itinerario?</b>
+      </p>
+      <div class="ui breadcrumb">
+        {{#each steps}}
+          <div class="section">
+            {{this.name}}
+          </div>
+          <i class="right chevron icon divider"></i>
+        {{/each}}
+        <div class="section">
+          <b>Fin</b>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Nope
+    </div>
+    <div class="ui positive right labeled icon button">
+      Yep, that's me
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
 </template>
