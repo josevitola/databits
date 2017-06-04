@@ -9,12 +9,19 @@ Template.userMenu.onRendered(function() {
   $('.ui.dropdown').dropdown();
 });
 
+Template.userMenu.helpers({
+  itinCount: function() {
+    var it = Itineraries.find({belongsTo: Meteor.userId()}).fetch();
+    return it.length;
+  }
+});
+
 Template.myItinerariesModal.helpers({
   itineraries: function() {
     var it = Itineraries.find({belongsTo: Meteor.userId()}).fetch();
     console.log(it);
     return it;
-  }
+  },
 });
 
 Template.userMenu.events({
