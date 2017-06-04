@@ -25,17 +25,14 @@ Template.map.onCreated(function() {
       position: candelariaLatLng,
       draggable: true,
       animation: google.maps.Animation.DROP,
-      icon: "map_icons/food.png"
+      icon: "map_icons/start_m.png"
     });
 
     var infowindow = new google.maps.InfoWindow({ content: '<center>¿Dónde inicia tu recorrido?<br><b>Arrástrame</b></center>' });
     infowindow.open(map.instance, initialMarker);
 
-    setPlacesInfo("https://www.datos.gov.co/resource/ghc6-jiw3.json", restData, restMarkers, 'restaurant.png', map.instance);
-
-    restMarkers.forEach(function(marker) {
-      marker.setMap(map.instance);
-    });
+    setPlacesInfo("ghc6-jiw3.json", restData, 'food_m.png', map.instance, infowindow);
+    setPlacesInfo("mdh3-rurf.json", musData, 'museum_m.png', map.instance, infowindow);
   });
 });
 

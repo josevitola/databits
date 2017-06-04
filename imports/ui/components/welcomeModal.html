@@ -16,9 +16,8 @@
           Mi ubicación
         </button>
 
-        {{> loginButtons}}
-
         <p style="margin-top: 20px">O escribe la dirección aquí:</p>
+
         <form id="initialAddressModal" class="ui form">
           <div class="field">
             <input type="text" name="address" placeholder="Dirección...">
@@ -27,7 +26,14 @@
             <i class="checkmark icon"></i>
             Comenzar
           </button>
+          <button class="ui red labeled icon button" id="searchOnMapButton">
+            <i class="marker icon"></i>
+            Buscar en mapa
+          </button>
         </form>
+
+        {{> loginButtons}}
+
 
       </div>
     </div>
