@@ -7,6 +7,7 @@ import { Itineraries } from '/imports/api/itinerary.js';
 import './components/signUpModal.js';
 import './components/userMenu.js';
 import './components/cards.js';
+import './components/start.js';
 import './components/map.js';
 import './body.html';
 
