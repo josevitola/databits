@@ -2,6 +2,8 @@ import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+import { Itineraries } from '/imports/api/itinerary.js';
+
 import './cards.html';
 
 Template.cards.onCreated(function() {
@@ -16,6 +18,15 @@ Template.cards.helpers({
 
   getIndex: function(idx) {
     return idx + 1;
+  },
+
+  totalPrice: function() {
+    var steps = Session.get("steps");
+    var price = 0;
+    for(var i = 0; i < steps.length; i++) {
+      price += steps[i].price;
+    }
+    return price;
   }
 });
 
@@ -67,4 +78,15 @@ Template.cardsModal.helpers({
     var steps = Session.get("steps");
     return steps;
   },
+});
+
+Template.cardsModal.events({
+  'click .ui.positive.button'(event) {
+    console.log("lala");
+
+    var steps = Session.get("steps");
+    console.log(steps);
+
+    // Itineraries.insert({name: "success", when: "now"});
+  }
 });
