@@ -1,29 +1,45 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { setPlacesInfo } from '../../api/datasets.js';
+import { showMarkers } from '../../api/datasets.js';
 
 import './map.html';
 
-var MAP_ZOOM = 13;
-var bogLat = 4.6381991;
-var bogLng = -74.0862351;
+var MAP_ZOOM = 15;
+var candelariaLatLng = {lat: 4.5964417, lng: -74.0765273};
 
 // Data Arrays
-var restsData = [];
+var restData = [];
+var musData = [];
+var theatData = [];
 // Marker arrays
-var restsMarkers = [];
+var restMarkers = [];
+var musMarkers = [];
+var theatMarkers = [];
 
 Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
-    var latLng = Geolocation.latLng();
-
-    var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(latLng.lat, latLng.lng),
-      map: map.instance
+    // var latLng = Geolocation.latLng();
+    var initialMarker = new google.maps.Marker({
+      map: map.instance,
+      position: candelariaLatLng,
+      draggable: true,
+      animation: google.maps.Animation.DROP,
+      icon: "map_icons/initial.png"
     });
 
-    setPlacesInfo("https://www.datos.gov.co/resource/ghc6-jiw3.json", restsData, restsMarkers);
-    console.log(restsData);
+    var infowindow = new google.maps.InfoWindow({ content: '' });
+
+    setPlacesInfo("https://www.datos.gov.co/resource/ghc6-jiw3.json", restData, restMarkers, map.instance);
+
+    // showMarkers(restsMarkers);
+    // console.log(restsMarkers[0]);
+    // for (var i = 0; i < restsMarkers.length; i++) {
+    //   restsMarkers[i].setMap(map.instance);
+    // }
+    // restsMarkers.forEach(function(marker) {
+    //   marker.setMap(map.instance);
+    // });
   });
 });
 
@@ -37,7 +53,7 @@ Template.map.helpers({
     // Initialize the map once we have the latLng.
     if (GoogleMaps.loaded() && latLng) {
       return {
-        center: new google.maps.LatLng(latLng.lat, latLng.lng),
+        center: candelariaLatLng,
         zoom: MAP_ZOOM
       };
     }
