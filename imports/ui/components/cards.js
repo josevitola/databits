@@ -9,6 +9,7 @@ import './cards.html';
 
 Template.cards.onCreated(function() {
   this.state = new ReactiveDict();
+  Session.set("totalPrice", 0);
 });
 
 Template.cards.helpers({
@@ -80,6 +81,10 @@ Template.cardsModal.helpers({
     var steps = Session.get("steps");
     return steps;
   },
+
+  totalPrice: function() {
+    return Session.get("totalPrice");
+  }
 });
 
 Template.cardsModal.events({
@@ -92,6 +97,7 @@ Template.cardsModal.events({
 
     Itineraries.insert({
       belongsTo: Meteor.userId(),
+      createdAt: new Date(),
       steps: steps,
       price: price
     });
