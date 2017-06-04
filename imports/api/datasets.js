@@ -64,10 +64,13 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
               'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + entry.direccion +
               ' Bogota, Colombia&size=600x300' + '&key=AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA' +
           '" class="ui medium rounded image"></img></center>' +
-          '<br><b>Dirección:</b> '+ name +
+          '<br><b>Dirección:</b> '+ entry.direccion +
           '<br><b>Teléfono:</b> ' + phone +
           '<br><b>Sitio web:</b> <a href="' + entry.pagina_web + '">' + entry.pagina_web + '</a>' +
-          '<br><br><button class="ui labeled icon green add step button right floated"><i class="plus icon"></i>Agregar</button>'
+          '<br><br><button class="ui labeled icon green add step button right floated"' +
+          'data-name="' + name + '" data-phone="' + phone + '" data-address="'
+          + entry.direccion + '" data-web="' + entry.pagina_web +
+          '"><i class="plus icon"></i>Agregar</button>'
         }
         google.maps.event.addListener(marker, 'click', function() {
           setInfoWindow(map, item.html, marker, infowindow);

@@ -31,36 +31,9 @@
 
       <div class="ui dividing header">Tu itinerario del día</div>
       {{> cards}}
-
-      <button type="button" name="button" class="ui add green button">
-        Agregar
-      </button>
     </div>
     <div class="eleven wide column" style="margin: 0px; padding: 0px;height: 100%;">
       {{> map}}
     </div>
   </div>
 </body>
-
-<template name="tmpModal">
-    <div class="header">
-      Agregar paso al itinerario
-    </div>
-    <div class="image content">
-      <div class="description">
-        <form id="createStepForm" class="ui form">
-          <div class="field">
-            <input type="text" name="name" placeholder="Nombre...">
-          </div>
-          <div class="field">
-            <input type="text" name="description" placeholder="Descripción...">
-          </div>
-          <button class="ui green labeled icon button right floated" type="submit">
-            <i class="checkmark icon"></i>
-            Agregar
-          </button>
-        </form>
-
-      </div>
-    </div>
-</template>

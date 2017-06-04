@@ -7,7 +7,19 @@
         <i class="right floated angle up icon" data-step="{{@index}}"></i>
         <div class="header">{{getIndex @index}}. {{this.name}}</div>
         <div class="description">
-          <p>{{this.description}}</p>
+          <p>
+            <ul>
+              <li>
+                <b>Dirección: </b>{{this.address}}
+              </li>
+              <li>
+                <b>Teléfono: </b> {{this.phone}}
+              </li>
+              <li>
+                <b>Página web: </b> {{this.webpage}}
+              </li>
+            </ul>           
+          </p>
         </div>
       </div>
       <div class="extra content">
