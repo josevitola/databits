@@ -19,3 +19,16 @@ Template.body.onRendered(function bodyOnRendered() {
   this.$('.ui.dropdown').dropdown();
   SemanticModal.generalModal('welcomeModal');
 });
+
+Template.body.helpers({
+  searchOnMap: function() {
+    return Session.get("searchOnMap")=="yes";
+  }
+});
+
+Template.body.events({
+  'click #cancelSearchOnMapButton': (event) => {
+    template.$('.ui.modal').show();
+    Session.set("searchOnMap", "no");
+  }
+});
