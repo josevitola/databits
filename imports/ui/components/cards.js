@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
+import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Itineraries } from '/imports/api/itinerary.js';
@@ -26,6 +27,7 @@ Template.cards.helpers({
     for(var i = 0; i < steps.length; i++) {
       price += steps[i].price;
     }
+    Session.set("totalPrice", price);
     return price;
   }
 });
@@ -85,8 +87,13 @@ Template.cardsModal.events({
     console.log("lala");
 
     var steps = Session.get("steps");
+    var price = Session.get("totalPrice");
     console.log(steps);
 
-    // Itineraries.insert({name: "success", when: "now"});
+    Itineraries.insert({
+      belongsTo: Meteor.userId(),
+      steps: steps,
+      price: price
+    });
   }
 });

@@ -12,5 +12,10 @@ Template.userMenu.events({
     Meteor.logout(() => {
       location.reload();
     });
+  },
+
+  'click .iteneraries.item'() {
+    console.log("item");
+    SemanticModal.generalModal('myItinerariesModal');
   }
 })

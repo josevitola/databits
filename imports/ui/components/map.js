@@ -67,8 +67,6 @@ Template.map.events({
     var web = $(target).data("web");
     var price = $(target).data("price");
 
-    console.log(name, phone, address, web);
-
     var step = {
       name: name,
       phone: phone,
