@@ -85,7 +85,7 @@ Template.cardsModal.helpers({
   },
   isYep: function() {
     return Session.get("yep") == "yes";
-  }
+  },
 
   totalPrice: function() {
     return Session.get("totalPrice");
@@ -96,7 +96,7 @@ Template.cardsModal.events({
   'click .ui.yep.button'() {
     Session.set("yep", "yes");
     concole.log("ingresar nombre");
-  }
+  },
 
   'click .ui.positive.button'(event) {
     console.log("lala");

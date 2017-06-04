@@ -25,7 +25,7 @@ Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
     // var latLng = Geolocation.latLng();
     initialMarker = new google.maps.Marker({map: map.instance, position: candelariaLatLng, draggable: true, animation: google.maps.Animation.DROP, icon: "map_icons/start_m.png"});
-    var infowindow = new google.maps.InfoWindow({addres: "", content: '<center>¿Dónde inicia tu recorrido?<br><b>Arrástrame</b></center>'+'<button class="ui labeled icon green addStart start button right floated"><i class="plus icon"></i>Empezar</button>'});
+    var infowindow = new google.maps.InfoWindow({addres: "", content: '<center>¿Dónde inicia tu recorrido?<br><b>Arrástrame</b></center>'+'<br><button class="ui labeled icon green addStart start button right floated"><i class="plus icon"></i>Empezar</button>'});
     infowindow.open(map.instance, initialMarker);
     google.maps.event.addListener(initialMarker, 'click', function(){
       infowindow.open(map.instance, initialMarker);
