@@ -21,6 +21,6 @@ body, html {
 }
 
 #chart {
-  max-height: 250px!important;
+  max-height: 300px!important;
   width: 100%;
 }

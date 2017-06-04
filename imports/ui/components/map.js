@@ -20,13 +20,16 @@ var restMarkers = [];
 var musMarkers = [];
 var theMarkers = [];
 
+var initialMarker;
 Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
     // var latLng = Geolocation.latLng();
-    var initialMarker = new google.maps.Marker({map: map.instance, position: candelariaLatLng, draggable: true, animation: google.maps.Animation.DROP, icon: "map_icons/start_m.png"});
-
-    var infowindow = new google.maps.InfoWindow({content: '<center>¿Dónde inicia tu recorrido?<br><b>Arrástrame</b></center>'});
+    initialMarker = new google.maps.Marker({map: map.instance, position: candelariaLatLng, draggable: true, animation: google.maps.Animation.DROP, icon: "map_icons/start_m.png"});
+    var infowindow = new google.maps.InfoWindow({addres: "", content: '<center>¿Dónde inicia tu recorrido?<br><b>Arrástrame</b></center>'+'<button class="ui labeled icon green addStart start button right floated"><i class="plus icon"></i>Empezar</button>'});
     infowindow.open(map.instance, initialMarker);
+    google.maps.event.addListener(initialMarker, 'click', function(){
+      infowindow.open(map.instance, initialMarker);
+    });
 
     setPlacesInfo("ghc6-jiw3.json", restData, 'food_m.png', map.instance, infowindow);
     setPlacesInfo("mdh3-rurf.json", musData, 'museum_m.png', map.instance, infowindow);
@@ -62,6 +65,7 @@ Template.map.events({
     var phone = $(target).data("phone");
     var address = $(target).data("address");
     var web = $(target).data("web");
+    var price = $(target).data("price");
 
     console.log(name, phone, address, web);
 
@@ -69,8 +73,10 @@ Template.map.events({
       name: name,
       phone: phone,
       address: address,
-      webpage: web
+      webpage: web,
+      price: price
     };
+
 
     var steps = Session.get("steps");
     if(typeof steps === "undefined") {
@@ -80,5 +86,35 @@ Template.map.events({
     steps.push(step);
 
     Session.set("steps", steps);
+  },
+
+
+  'click .ui.addStart.start.button' (event) {
+    var latt = initialMarker.position.lat();
+    var lngg = initialMarker.position.lng();
+    var latlng = {lat: latt, lng: lngg};
+
+    // var address;
+    // var geocoder = new google.maps.Geocoder;
+    // console.log(initialMarker.getPosition());
+    // geocoder.geocode({'location': latlng}, function(results, status) {
+    //   if (status === 'OK') {
+    //     if (results[1]) {
+    //       address = results[1].formatted_address;
+    //     } else {
+    //       window.alert('No results found');
+    //     }
+    //   } else {
+    //     window.alert('Geocoder failed due to: ' + status);
+    //   }
+    // });
+    // console.log(address);
+
+
+    var start = {
+      latlng: latlng
+    };
+
+    Session.set("start", start);
   }
 })
