@@ -1,4 +1,10 @@
 <template name="cards">
+  {{#unless steps}}
+    <div class="text">
+      ¡No tienes todavía lugares para tu itinerario! Selecciona un marcador y haz clic en <b>Agregar</b> para adicionarlo.
+    </div>
+  {{/unless}}
+
   {{#each steps}}
     <div class="ui link card" style="width: 100%;" draggable="true">
       <div class="content">
@@ -18,7 +24,7 @@
               <li>
                 <b>Página web: </b> {{this.webpage}}
               </li>
-            </ul>           
+            </ul>
           </p>
         </div>
       </div>
@@ -34,4 +40,43 @@
       </div>
     </div>
   {{/each}}
+
+  {{#if steps}}
+  <div class="ui green end steps button">
+    Finalizar
+  </div>
+  {{/if}}
+</template>
+
+<template name="cardsModal">
+  <div class="header">
+    Finalizar tu itinerario
+  </div>
+  <div class="content">
+    <div class="description">
+      <p>
+        Verifica lo que ingresaste. <b>¿Es éste tu itinerario?</b>
+      </p>
+      <div class="ui breadcrumb">
+        {{#each steps}}
+          <div class="section">
+            {{this.name}}
+          </div>
+          <i class="right chevron icon divider"></i>
+        {{/each}}
+        <div class="section">
+          <b>Fin</b>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Nope
+    </div>
+    <div class="ui positive right labeled icon button">
+      Yep, that's me
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
 </template>

@@ -55,5 +55,16 @@ Template.cards.events({
 
       Session.set("steps", steps);
     }
+  },
+
+  'click .ui.end.steps.button'() {
+    SemanticModal.generalModal('cardsModal');
   }
-})
+});
+
+Template.cardsModal.helpers({
+  steps: function() {
+    var steps = Session.get("steps");
+    return steps;
+  },
+});
