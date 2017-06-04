@@ -57,15 +57,19 @@
         Verifica lo que ingresaste. <b>¿Es éste tu itinerario?</b>
       </p>
       <div class="ui breadcrumb">
-        {{#each steps}}
-          <div class="section">
-            {{this.name}}
-          </div>
-          <i class="right chevron icon divider"></i>
-        {{/each}}
-        <div class="section">
-          <b>Fin</b>
-        </div>
+        <ol>
+          {{#each steps}}
+            <li>
+              {{this.name}} ($ {{this.price}})
+            </li>
+          {{/each}}
+        </ol>
+      </div>
+      <div>
+      <div class="ui green horizontal label">Total
+        <div class="detail">{{totalPrice}}</div>
+      </div>
+
       </div>
     </div>
   </div>
