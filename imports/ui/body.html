@@ -1,9 +1,13 @@
 <body>
   <div class="ui grid">
-    <div class="four wide column">
-      <h2 class="header">Databits!</h2>
+    <div class="five wide column">
+      <h2 class="ui dividing header">Databits!</h2>
+
+      <div class="ui dividing header">Tu itinerario del día</div>
+      {{> stepCard name="1. Museo Nacional"}}
+      {{> stepCard name="2. La Puerta Falsa"}}
     </div>
-    <div class="twelve wide column" style="margin: 0px; padding: 0px;height: 100%;">
+    <div class="eleven wide column" style="margin: 0px; padding: 0px;height: 100%;">
       {{> map}}
     </div>
   </div>
