@@ -1,19 +1,51 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { setPlacesInfo } from '../../api/datasets.js';
 
 import './map.html';
 
-Meteor.startup(function() {
-  GoogleMaps.load();
+var MAP_ZOOM = 13;
+var bogLat = 4.6381991;
+var bogLng = -74.0862351;
+
+// Data Arrays
+var restsData = [];
+// Marker arrays
+var restsMarkers = [];
+
+Template.map.onCreated(function() {
+  GoogleMaps.ready('map', function(map) {
+    var latLng = Geolocation.latLng();
+
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(latLng.lat, latLng.lng),
+      map: map.instance
+    });
+
+    setPlacesInfo("https://www.datos.gov.co/resource/ghc6-jiw3.json", restsData, restsMarkers);
+    console.log(restsData);
+  });
 });
 
 Template.map.helpers({
+  geolocationError: function() {
+    var error = Geolocation.error();
+    return error && error.message;
+  },
   mapOptions: function() {
-    if (GoogleMaps.loaded()) {
+    var latLng = Geolocation.latLng();
+    // Initialize the map once we have the latLng.
+    if (GoogleMaps.loaded() && latLng) {
       return {
-        center: new google.maps.LatLng(4.6381991, -74.0862351),
-        zoom: 13
+        center: new google.maps.LatLng(latLng.lat, latLng.lng),
+        zoom: MAP_ZOOM
       };
     }
+  },
+  getPlacesInfo: () => {
+    if(GoogleMaps.loaded()) {
+      setPlacesInfo("https://www.datos.gov.co/resource/ghc6-jiw3.json", restsData, restsMarkers);
+      console.log(restsData);
+    } else console.log("false");
   }
 });

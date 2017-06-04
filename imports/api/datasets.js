@@ -1,14 +1,5 @@
 // Google Maps Key: AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g
 
-// Data Arrays
-var restsData = [];
-// Marker arrays
-var restsMarkers = [];
-
-// set restaurants information
-setPlacesInfo("https://www.datos.gov.co/resource/ghc6-jiw3.json", restsData, restsMarkers);
-console.log(restsData);
-
 // direction to LatLng
 function setLatLng(direction, latlng) {
   $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
@@ -26,7 +17,7 @@ function setPlaceId(direction, placeId) {
 }
 
 // import places data and markers
-function setPlacesInfo(url, array, markers) {
+export const setPlacesInfo = function(url, array, markers) {
   $.getJSON(url + "?localidad=Candelaria", function(data) {
     $.each(data, function(i, entry) {
       var location, placeId;
