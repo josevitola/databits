@@ -48,6 +48,7 @@ localstorage@1.1.0
 logging@1.1.17
 meteor@1.6.1
 meteor-base@1.1.0
+mhwheeler:semantic-ui-modal@1.1.0_1
 minifier-css@1.2.16
 minifier-js@2.1.0
 minimongo@1.2.0
@@ -70,6 +71,8 @@ retry@1.0.9
 routepolicy@1.0.12
 semantic:ui@2.2.6_5
 semantic:ui-data@2.2.6_4
+semantic:ui-dimmer@2.1.7
+semantic:ui-modal@2.1.7
 service-configuration@1.0.11
 session@1.1.7
 shell-server@0.2.3
