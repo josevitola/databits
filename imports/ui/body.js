@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+import './components/stepCard.js';
 import './components/welcomeModal.js';
 import './components/map.js';
 import './body.html';
