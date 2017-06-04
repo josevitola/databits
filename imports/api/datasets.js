@@ -34,7 +34,7 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
         if(url=='ghc6-jiw3.json') {
           name = entry.nombre_comercial;
           phone = entry.telefono;
-        } else if (url=='mdh3-rurf.json') {
+        } else {
           name = entry.nombre_del_museo;
           phone = entry.telefono_fijo;
         }
@@ -50,9 +50,18 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
           name: name,
           address: entry.direccion,
           phone: phone,
+          web: entry.pagina_web,
           placeId: placeId,
           marker: marker,
-          html: '<b>'+ name +'</b><br>'+ entry.direccion
+          html: '<center><h3>'+ name +'</h3>' +
+          '<img src="' +
+              'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + entry.direccion +
+              '&size=600x300' + '&key=AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA' +
+          '" class="ui medium rounded image"></img></center>' +
+          '<br><b>Dirección:</b> '+ name +
+          '<br><b>Teléfono:</b> ' + phone +
+          '<br><b>Sitio web:</b> <a href="' + entry.pagina_web + '">' + entry.pagina_web + '</a>' +
+          '<br><br><button class="ui labeled icon green button right floated"><i class="plus icon"></i>Agregar</button>'
         }
         google.maps.event.addListener(marker, 'click', function() {
           setInfoWindow(map, item.html, marker, infowindow);

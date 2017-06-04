@@ -11,11 +11,11 @@ var candelariaLatLng = {lat: 4.5964417, lng: -74.0765273};
 // Data Arrays
 var restData = [];
 var musData = [];
-var theatData = [];
+var theData = [];
 // Marker arrays
 var restMarkers = [];
 var musMarkers = [];
-var theatMarkers = [];
+var theMarkers = [];
 
 Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
@@ -33,6 +33,7 @@ Template.map.onCreated(function() {
 
     setPlacesInfo("ghc6-jiw3.json", restData, 'food_m.png', map.instance, infowindow);
     setPlacesInfo("mdh3-rurf.json", musData, 'museum_m.png', map.instance, infowindow);
+    setPlacesInfo("h3hv-wumd.json", theData, 'theater_m.png', map.instance, infowindow);
   });
 });
 
