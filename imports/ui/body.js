@@ -25,7 +25,7 @@ Meteor.startup(function() {
 });
 
 Template.body.onRendered(function bodyOnRendered() {
-  // SemanticModal.generalModal('welcomeModal');
+  this.$('.ui.accordion').accordion();  
 });
 
 Template.body.events({
