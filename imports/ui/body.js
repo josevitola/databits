@@ -2,6 +2,8 @@ import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
 import {Session} from 'meteor/session';
 
+import { Itineraries } from '/imports/api/itinerary.js';
+
 import './components/signUpModal.js';
 import './components/userMenu.js';
 import './components/cards.js';
