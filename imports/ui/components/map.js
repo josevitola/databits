@@ -59,3 +59,9 @@ Template.map.helpers({
     } else console.log("false");
   }
 });
+
+Template.map.events({
+  'click .ui.add.step.button'() {
+    console.log("lala");
+  }
+})

@@ -24,20 +24,6 @@
       <button type="button" name="button" class="ui add green button">
         Agregar
       </button>
-
-      {{#if searchOnMap}}
-      <form id="startPoint" class="ui form">
-        <button class="ui green labeled icon button" type="submit">
-          <i class="checkmark icon"></i>
-          Comenzar
-        </button>
-        <button class="ui red labeled icon button" id="cancelSearchOnMapButton">
-          <i class="remove icon"></i>
-          Cancelar
-        </button>
-      </form>
-      {{/if}}
-
     </div>
     <div class="eleven wide column" style="margin: 0px; padding: 0px;height: 100%;">
       {{> map}}

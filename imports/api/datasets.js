@@ -61,7 +61,7 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
           '<br><b>Dirección:</b> '+ name +
           '<br><b>Teléfono:</b> ' + phone +
           '<br><b>Sitio web:</b> <a href="' + entry.pagina_web + '">' + entry.pagina_web + '</a>' +
-          '<br><br><button class="ui labeled icon green button right floated"><i class="plus icon"></i>Agregar</button>'
+          '<br><br><button class="ui labeled icon green add step button right floated"><i class="plus icon"></i>Agregar</button>'
         }
         google.maps.event.addListener(marker, 'click', function() {
           setInfoWindow(map, item.html, marker, infowindow);
