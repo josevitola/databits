@@ -15,5 +15,6 @@ function initModal(template) {
 
 Template.body.onRendered(function bodyOnRendered() {
   initSidebar(this);
+  this.$('.ui.dropdown').dropdown();
   SemanticModal.generalModal('welcomeModal');
 });

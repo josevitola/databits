@@ -1,16 +1,10 @@
 <body>
-  <div class="ui wide visible red sidebar inverted vertical menu">
-    <a class="item">
-      <b>&lt;Nombre de la aplicación&gt;</b>
-    </a>
-    <a class="item">
-      Itinerario actual
-    </a>
-    <a class="item">
-      Estadísticas del itinerario
-    </a>
-  </div>
-  <div class="pusher" style="height: 100%;">
-    {{> map}}
+  <div class="ui grid">
+    <div class="four wide column">
+      <h2 class="header">Databits!</h2>
+    </div>
+    <div class="twelve wide column" style="margin: 0px; padding: 0px;height: 100%;">
+      {{> map}}
+    </div>
   </div>
 </body>
