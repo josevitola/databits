@@ -22,7 +22,7 @@ function setInfoWindow(map, html, marker) {
 
 
 // import places data and markers
-export const setPlacesInfo = function(url, array, markers, map) {
+export const setPlacesInfo = function(url, array, markers, icon, map) {
   $.getJSON(url + "?localidad=Candelaria", function(data) {
     $.each(data, function(i, entry) {
       $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ entry.direccion +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
@@ -40,10 +40,12 @@ export const setPlacesInfo = function(url, array, markers, map) {
           name: entry.nombre_comercial,
           address: entry.direccion,
           phone: entry.telefono,
-          placeId: placeId
+          placeId: placeId,
+          marker: marker,
+          html: '<b>'+entry.nombre_comercial+'</b><br>'+entry.direccion
         }
         google.maps.event.addListener(marker, 'click', function() {
-          setInfoWindow(map, '<b>'+entry.nombre_comercial+'</b><br>'+entry.direccion, marker);
+          setInfoWindow(map, html, marker);
         });
         // add marker and item to arrays
         markers.push(marker);
