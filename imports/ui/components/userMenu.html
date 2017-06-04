@@ -1,0 +1,18 @@
+<template name="userMenu">
+  {{#with user}}
+  <div class="ui dropdown">
+    <div class="text">
+      Bienvenido, <b>{{profile.name}}</b>!
+    </div>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      <div class="item">
+        Mis itinerarios
+      </div>
+      <div class="logout item">
+        Cerrar sesión
+      </div>
+    </div>
+  </div>
+  {{/with}}
+</template>
