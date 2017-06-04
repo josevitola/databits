@@ -2,15 +2,13 @@
   {{#each steps}}
     <div class="ui link card" style="width: 100%;" draggable="true">
       <div class="content">
-        <i class="right floated remove icon"></i>
-        <i class="right floated angle down icon"></i>
-          <i class="right floated angle up icon"></i>
-        {{#if getStep @index}}
-        <div class="header">{{getIndex @index}}. {{name}}</div>
+        <i class="right floated remove icon" data-step="{{this.id}}"></i>
+        <i class="right floated angle down icon" data-step="{{this.id}}"></i>
+        <i class="right floated angle up icon" data-step="{{this.id}}"></i>
+        <div class="header">{{this.id}}. {{this.name}}</div>
         <div class="description">
-          <p>{{description}}</p>
+          <p>{{this.description}}</p>
         </div>
-        {{/if}}
       </div>
       <div class="extra content">
         <span class="left floated like">

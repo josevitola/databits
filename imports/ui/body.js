@@ -13,9 +13,11 @@ function initModal(template) {
 
 Meteor.startup(function() {
   var steps = [{
+    id: 1,
     name: "Museo Nacional",
     description: "Descripción del Museo Nacional"
   }, {
+    id: 2,
     name: "La Puerta Falsa",
     description: "Descripción de la Puerta Falsa"
   }];
@@ -38,17 +40,23 @@ Template.tmpModal.events({
     event.preventDefault();
     var name = $('input[name=name]').val();
     var desc = $('input[name=description]').val();
+    var id = 1;
+
+    var steps = Session.get("steps");
+    if (typeof steps === "undefined") {
+      steps = new Array();
+    } else id = steps.length;
 
     var step = {
+      id: id,
       name: name,
       description: desc
     };
 
     var steps = Session.get("steps");
     if (typeof steps === "undefined") {
-      console.log("undefined");
       steps = new Array();
-    } else console.log(steps);
+    }
 
     steps.push(step);
     Session.set("steps", steps);
