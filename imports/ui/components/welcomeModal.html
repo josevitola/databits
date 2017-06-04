@@ -1,26 +1,35 @@
 <template name="welcomeModal">
     <div class="header">
-      Bienvenido a &lt;nombre de la aplicación&gt;!
+      <img src="logo.png" class="ui small image">
     </div>
     <div class="image content">
       <div class="description">
         <div class="ui header">En esta aplicación podrás crear un itinerario para tu día como turista.</div>
-        <p>Dinos dónde vas a empezar tu recorrido.</p>
+        <p>Selecciona dónde vas a empezar tu recorrido.</p>
 
+<<<<<<< HEAD
+        <button class="ui blue labeled icon button">
+          <i class="marker icon"></i>
+          Buscar en mapa
+        </button>
+        <button class="ui teal labeled icon button">
+          <i class="street view icon"></i>
+          Mi ubicación
+        </button>
+
+        <p style="margin-top: 20px">O escribe la dirección aquí:</p>
+=======
         {{> loginButtons}}
 
+>>>>>>> 6eb47ac7f4508aa5eff716c084800b6c54e4d476
         <!-- START MODAL FORM -->
         <form id="initialAddressModal" class="ui form">
           <div class="field">
             <input type="text" name="address" placeholder="Dirección...">
           </div>
-          <button class="ui green labeled icon button" type="submit">
+          <button class="ui green labeled icon button right floated" type="submit">
             <i class="checkmark icon"></i>
             Comenzar
-          </button>
-          <button class="ui red labeled icon button">
-            <i class="marker icon"></i>
-            Buscar en mapa
           </button>
         </form>
 
