@@ -62,6 +62,7 @@ Template.map.events({
     var phone = $(target).data("phone");
     var address = $(target).data("address");
     var web = $(target).data("web");
+    var price = $(target).data("price");
 
     console.log(name, phone, address, web);
 
@@ -69,7 +70,8 @@ Template.map.events({
       name: name,
       phone: phone,
       address: address,
-      webpage: web
+      webpage: web,
+      price: price
     };
 
     var steps = Session.get("steps");

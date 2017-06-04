@@ -2,8 +2,6 @@ import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
 import {Session} from 'meteor/session';
 
-import { Itineraries } from '/imports/api/itinerary.js';
-
 import './components/signUpModal.js';
 import './components/userMenu.js';
 import './components/cards.js';
@@ -30,10 +28,10 @@ Template.body.onRendered(function bodyOnRendered() {
   initLoginMessage(this);
   $('.ui.sticky').sticky({});
 
-  this.$('.ui.accordion').accordion();Session.set('x', ['x', 30, 50, 75, 100, 120]);
+  this.$('.ui.accordion').accordion();
 
+  Session.set('x', ['x', 30, 50, 75, 100, 120]);
   Session.set('data1', ['data1', 30, 200, 100, 400, 150]);
-  Session.set('data2', ['data2', 20, 180, 240, 100, 190]);
 
   var crimeData = [];
   var count;

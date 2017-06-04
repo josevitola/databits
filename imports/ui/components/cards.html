@@ -29,17 +29,16 @@
         </div>
       </div>
       <div class="extra content">
-        <span class="left floated like">
-          <i class="like icon"></i>
-          Like
-        </span>
-        <span class="right floated star">
-          <i class="star icon"></i>
-          Favorite
+        <span class="right floated" style="color: green; font-size: 1.3em">
+          <b>$ {{this.price}}</b>
         </span>
       </div>
     </div>
   {{/each}}
+
+  <div class="ui green message">
+    Precio Total: $
+  </div>
 
   {{#if steps}}
   <div class="ui green end steps button">
