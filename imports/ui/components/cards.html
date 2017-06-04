@@ -1,0 +1,27 @@
+<template name="cards">
+  {{#each steps}}
+    <div class="ui link card" style="width: 100%;" draggable="true">
+      <div class="content">
+        <i class="right floated remove icon"></i>
+        <i class="right floated angle down icon"></i>
+          <i class="right floated angle up icon"></i>
+        {{#if getStep @index}}
+        <div class="header">{{getIndex @index}}. {{name}}</div>
+        <div class="description">
+          <p>{{description}}</p>
+        </div>
+        {{/if}}
+      </div>
+      <div class="extra content">
+        <span class="left floated like">
+          <i class="like icon"></i>
+          Like
+        </span>
+        <span class="right floated star">
+          <i class="star icon"></i>
+          Favorite
+        </span>
+      </div>
+    </div>
+  {{/each}}
+</template>
