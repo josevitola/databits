@@ -88,6 +88,8 @@ Template.map.events({
 
 
   'click .ui.addStart.start.button' (event) {
+    initialMarker.infowindow.close();
+
     var latt = initialMarker.position.lat();
     var lngg = initialMarker.position.lng();
     var latlng = {lat: latt, lng: lngg};
