@@ -1,7 +1,7 @@
 <body>
-  <div class="ui grid">
+  <div class="ui grid" id="body-grid">
     <div class="five wide column">
-      <h2 class="ui dividing header">Puente Bogotá</h2>
+      <h2 class="ui dividing header">Puerta Bogotá</h2>
 
       {{#unless currentUser}}
       <div class="ui warning message">
@@ -18,7 +18,81 @@
         {{> userMenu user=this}}
       {{/with}}
 
-      {{> dropdown}}
+      <div class="ui styled fluid accordion">
+        <div class="title">
+          <i class="dropdown icon"></i>
+          Antes del viaje ...
+        </div>
+        <div class="content">
+          <p>¡Ten en cuenta estos datos del clima antes de que salgas de tu casa!</p>
+          <div id="chart" class="ui attached message"></div>
+        </div>
+        <div class="title">
+          <i class="dropdown icon"></i>
+          Transporte en la ciudad
+        </div>
+        <div class="content">
+          <p>Para que te muevas por la ciudad cuentas con los siguientes tipos de transporte:</p>
+
+          <div class="ui cards">
+            <div class="ui fluid card">
+              <div class="image">
+                <img src="/transport/taxi.jpg">
+              </div>
+              <div class="content">
+                <a class="header">Taxis</a>
+                <div class="description">
+                  Son amarillos. Su cobro se mide por unidades.
+                </div>
+              </div>
+              <div class="extra content">
+                <a>
+                  <i class="minus icon"></i>Tarifa mínima: $4100<br>
+                  <i class="moon icon"></i>Recargo nocturno de 8pm a 5am: $2000<br>
+                  <i class="plane icon"></i>Recargo desde y al aeropuerto: $4100<br>
+                  <i class="bus icon"></i>Recargo desde y al terminal de transporte $500<br>
+                </a>
+              </div>
+            </div>
+            <div class="ui fluid card">
+              <div class="image">
+                <img src="/transport/transmi.jpg">
+              </div>
+              <div class="content">
+                <a class="header">Transmilenio</a>
+                <div class="description">
+                  De color Rojo. Debes comprar una tarjeta en cualquier estación.
+                </div>
+              </div>
+              <div class="extra content">
+                <a>
+                  <i class="credit card alternative icon"></i> Precio de la tarjeta: $2000<br>
+                  <i class="suitcase icon"></i> Precio del pasaje: $2200
+                </a>
+              </div>
+            </div>
+
+            <div class="ui fluid card">
+              <div class="image">
+                <img src="/transport/sitp.jpg">
+              </div>
+              <div class="content">
+                <a class="header">SITP</a>
+                <div class="description">
+                  De color azul, están por toda Bogotá. Necesitas la tarjeta para acceder.
+                </div>
+              </div>
+              <div class="extra content">
+                <a>
+                  <i class="suitcase icon"></i> Precio del pasaje: $2000<br>
+                  <i class="credit card alternative icon"></i> Transbordo en SITP(máx 95min): gratis<br>
+                  <i class="bus icon"></i> Transbordo en Transmilenio: $200 adicionales
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="ui dividing header">Tu itinerario del día</div>
       {{> cards}}

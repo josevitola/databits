@@ -17,4 +17,5 @@ body, html {
 
 #chart {
   max-height: 250px!important;
+  width: 100%;
 }

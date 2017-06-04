@@ -1,7 +1,7 @@
-import './c3.js';
 import './d3plus.js';
+import { generate } from './c3.js';
 
-var chart = c3.generate({
+var chart = generate({
     bindto: '#chart',
     size: {
       height: 200,
