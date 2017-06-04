@@ -31,11 +31,8 @@ Template.map.onCreated(function() {
     var infowindow = new google.maps.InfoWindow({ content: '<center>¿Dónde inicia tu recorrido?<br><b>Arrástrame</b></center>' });
     infowindow.open(map.instance, initialMarker);
 
-    setPlacesInfo("https://www.datos.gov.co/resource/ghc6-jiw3.json", restData, restMarkers, 'food_m.png', map.instance, infowindow);
-
-    restMarkers.forEach(function(marker) {
-      marker.setMap(map.instance);
-    });
+    setPlacesInfo("ghc6-jiw3.json", restData, 'food_m.png', map.instance, infowindow);
+    setPlacesInfo("mdh3-rurf.json", musData, 'museum_m.png', map.instance, infowindow);
   });
 });
 
