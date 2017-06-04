@@ -64,3 +64,16 @@ Template.tmpModal.events({
     $('#generalModal').modal('hide');
   }
 });
+
+Template.body.helpers({
+  searchOnMap: function() {
+    return Session.get("searchOnMap")=="yes";
+  }
+});
+
+Template.body.events({
+  'click #cancelSearchOnMapButton': (event) => {
+    template.$('.ui.modal').show();
+    Session.set("searchOnMap", "no");
+  }
+});
