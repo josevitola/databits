@@ -62,9 +62,21 @@ Template.cards.events({
   }
 });
 
+
+Session.set("yep", "no");
 Template.cardsModal.helpers({
   steps: function() {
     var steps = Session.get("steps");
     return steps;
   },
+  isYep: function() {
+    return Session.get("yep") == "yes";
+  }
+});
+
+Template.cardsModal.events({
+  'click .ui.yep.button'() {
+    Session.set("yep", "yes");
+    concole.log("ingresar nombre");
+  }
 });
