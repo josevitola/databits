@@ -1,0 +1,67 @@
+<template name="signUpModal">
+  <div class="header">
+    Registrarse
+  </div>
+  <div class="content">
+    <div class="description">
+      <!-- <p>
+        <b>¿Ya estás registrado?</b> Haz clic <a id="changeToLogin" href="#"><b>aquí</b></a>.
+      </p> -->
+      <p>
+        Al registarse en Databits! puedes <b>guardar, compartir y personalizar</b>
+        las mejores rutinas para tus viajes. ¡Ingresa tus datos y haz parte de la comunidad!
+        <br />
+      </p>
+      <form id="signUpForm" class="ui form">
+        <div class="field">
+          <input type="text" name="name" placeholder="Tu nombre...">
+        </div>
+        <div class="field">
+          <input type="email" name="email" placeholder="Correo electrónico...">
+        </div>
+        <div class="field">
+          <input type="password" name="password" placeholder="Contraseña...">
+        </div>
+        <div class="field">
+          <input type="password" name="checkPassword" placeholder="Verifica tu contraseña...">
+        </div>
+        <button class="ui labeled icon button right floated">
+          <i class="remove icon"></i>
+          Cancelar
+        </button>
+
+        <button class="ui blue labeled icon button right floated"  type="submit">
+          <i class="checkmark icon"></i>
+          Registrarse
+        </button>
+      </form>
+
+    </div>
+  </div>
+</template>
+
+<template name="loginModal">
+  <div class="header">
+    Iniciar sesión
+  </div>
+  <div class="image content">
+    <div class="description">
+      <p>
+        Ingresa ya a Databits! para poder ver y guardar tus itinerarios.
+      </p>
+      <form id="loginForm" class="ui form">
+        <div class="field">
+          <input type="text" name="loginEmail" placeholder="Correo electrónico...">
+        </div>
+        <div class="field">
+          <input type="text" name="loginPassword" placeholder="Contraseña...">
+        </div>
+        <button class="ui green labeled icon button right floated" type="submit">
+          <i class="checkmark icon"></i>
+          Iniciar sesión
+        </button>
+      </form>
+
+    </div>
+  </div>
+</template>
