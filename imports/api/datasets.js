@@ -23,9 +23,15 @@ function setInfoWindow(map, html, marker, infowindow) {
 
 // import places data and markers
 export const setPlacesInfo = function(url, array, icon, map, infowindow) {
-  $.getJSON("https://www.datos.gov.co/resource/" + url + "?localidad=Candelaria", function(data) {
+  var localidad;
+  if (url=='ghc6-jiw3.json') {
+    localidad = "Candelaria";
+  } else {
+    localidad = "CANDELARIA";
+  }
+  $.getJSON("https://www.datos.gov.co/resource/" + url + "?localidad=" + localidad, function(data) {
     $.each(data, function(i, entry) {
-      $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ entry.direccion +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
+      $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ entry.direccion + ' Bogota, Colombia' +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
         // variables
         var location = new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
         var placeId = data.results[0].place_id;
@@ -56,7 +62,7 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
           html: '<center><h3>'+ name +'</h3>' +
           '<img src="' +
               'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + entry.direccion +
-              '&size=600x300' + '&key=AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA' +
+              ' Bogota, Colombia&size=600x300' + '&key=AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA' +
           '" class="ui medium rounded image"></img></center>' +
           '<br><b>Dirección:</b> '+ name +
           '<br><b>Teléfono:</b> ' + phone +
@@ -90,4 +96,33 @@ export const showMarkers = function(markers) {
       marker.setMap(map);
     });
   }
+}
+
+// direction to LatLng
+function setLatLng(direction, latlng) {
+  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
+    latlng = new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
+  });
+}
+
+// direction to place_id
+function setPlaceId(direction, placeId) {
+  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
+    placeId = data.results[0].place_id;
+  });
+}
+
+// set info window
+function setInfoWindow(map, html, marker, infowindow) {
+  infowindow.setContent(html);
+  infowindow.open(map, marker);
+}
+
+// import climate data
+export const setClimateInfo = function(array) {
+  $.getJSON("https://www.datos.gov.co/resource/ckse-r6ms.json" + "?departamento=Bogota DC", function(data) {
+    $.each(data, function(i, entry) {
+      console.log(entry);
+    });
+  });
 }

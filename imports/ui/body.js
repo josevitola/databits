@@ -30,6 +30,7 @@ Meteor.startup(function() {
 });
 
 Template.body.onRendered(function bodyOnRendered() {
+  this.$('.ui.accordion').accordion();
   initLoginMessage(this);
 });
 

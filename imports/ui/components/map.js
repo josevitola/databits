@@ -5,7 +5,7 @@ import { showMarkers } from '../../api/datasets.js';
 
 import './map.html';
 
-var MAP_ZOOM = 15;
+var MAP_ZOOM = 16;
 var candelariaLatLng = {lat: 4.5964417, lng: -74.0765273};
 
 // Data Arrays

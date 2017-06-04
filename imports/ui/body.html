@@ -3,6 +3,17 @@
     <div class="five wide column">
       <h2 class="ui dividing header">Databits!</h2>
 
+      <div class="ui styled fluid accordion">
+        <div class="title">
+          <i class="dropdown icon"></i>
+          Antes del viaje ...
+        </div>
+        <div class="content">
+          <p>¡Ten en cuenta estos datos del clima antes de que salgas de tu casa!</p>
+          <div id="chart" class="ui attached message"></div>
+        </div>
+      </div>
+
       {{#unless currentUser}}
       <div class="ui warning message">
         <i class="close icon"></i>
