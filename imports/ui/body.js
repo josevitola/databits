@@ -31,18 +31,8 @@ Template.body.onRendered(function bodyOnRendered() {
 
   this.$('.ui.accordion').accordion();
 
-  Session.set('x', ['x', 30, 50, 75, 100, 120]);
-  Session.set('data1', ['data1', 30, 200, 100, 400, 150]);
-
-  var crimeData = [];
-  var count;
-
-  setCrimeDataByDay('Lunes', count);
-  crimeData.push({
-    day: 'Lunes',
-    count: count
-  });
-  console.log(crimeData);
+  Session.set('x', ['x', Lunes, 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']);
+  Session.set('Delitos', ['Delitos', 1.5, 2.0, 2.1, 1.7, 4.5, 3.2, 3.1]);
 
   var chart = c3.generate({
     bindto: this.find('#chart'),
@@ -52,10 +42,9 @@ Template.body.onRendered(function bodyOnRendered() {
     },
     data: {
       xs: {
-        'data1': 'x',
-        'data2': 'x'
+        'Delitos': 'x'
       },
-      columns: [['x'],['data1'],['data2']],
+      columns: [['x'],['Delitos']],
       type: 'bar'
     }
   });
@@ -63,8 +52,7 @@ Template.body.onRendered(function bodyOnRendered() {
   this.autorun(function (tracker) {
     chart.load({columns: [
       Session.get('x'),
-      Session.get('data1'),
-      Session.get('data2'),
+      Session.get('Delitos'),
       []
     ]});
   });

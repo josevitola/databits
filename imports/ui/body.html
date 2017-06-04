@@ -1,7 +1,8 @@
 <body>
   <div class="ui grid">
     <div class="five wide column" id="sidebar">
-      <h2 class="ui dividing header">Puerta Bogotá</h2>
+      <h2 class="ui header">Puerta Bogotá - Tu itinerario de viaje</h2>
+      <h4 class="ui dividing header">Selecciona un lugar y agrégalo a tu itinerario</h4>
 
       {{#unless currentUser}}
       <div class="ui warning message">
@@ -24,7 +25,7 @@
           Antes del viaje ...
         </div>
         <div class="content">
-          <p>¡Ten en cuenta estos datos del clima antes de que salgas de tu casa!</p>
+          <p>¡Ten en cuenta estos datos antes de salir!</p>
           <div id="chart" class="ui attached message"></div>
         </div>
         <div class="title">
