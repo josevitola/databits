@@ -12,22 +12,48 @@ Template.cards.helpers({
   steps: function() {
     var steps = Session.get("steps");
     return steps;
+  },
+
+  getIndex: function(idx) {
+    return idx + 1;
   }
 });
 
 Template.cards.events({
-  'click .remove.icon'(event) {
+  'click .remove.icon'() {
     var steps = Session.get("steps");
-    var idx = $(event.target).data("step") -1;
+    var idx = $(event.target).data("step");
 
     if(idx > -1) {
       steps.splice(idx, 1);
     }
 
-    for(var i = idx; i < steps.length; i++) {
-      steps[i].id -=1;
-    }
-
     Session.set("steps", steps);
+  },
+
+  'click .angle.down.icon'() {
+    var steps = Session.get("steps");
+    var idx = $(event.target).data("step");
+
+    if(steps.length >= 2 && idx+1 < steps.length) {
+      var aux = steps[idx+1];
+      steps[idx+1] = steps[idx];
+      steps[idx] = aux;
+
+      Session.set("steps", steps);
+    }
+  },
+
+  'click .angle.up.icon'() {
+    var steps = Session.get("steps");
+    var idx = $(event.target).data("step");
+
+    if(steps.length >= 2 && idx-1 >= 0) {
+      var aux = steps[idx-1];
+      steps[idx-1] = steps[idx];
+      steps[idx] = aux;
+
+      Session.set("steps", steps);
+    }
   }
 })
