@@ -14,6 +14,16 @@ function initLoginMessage(template) {
   });
 }
 
+function setCrimeDataByDay(day, count) {
+  var municipio = "BOGOTÁ D.C. (CT)";
+  count = 0;
+  $.getJSON("https://www.datos.gov.co/resource/nic7-3tzj.json" + "?MUNICIPIO=" + municipio + "$DIA=" + day, function(data) {
+    $.each(data, function(i, entry) {
+      count ++;
+    });
+  });
+}
+
 Template.body.onRendered(function bodyOnRendered() {
   initLoginMessage(this);
   $('.ui.sticky').sticky({});
@@ -22,15 +32,31 @@ Template.body.onRendered(function bodyOnRendered() {
 
   Session.set('data1', ['data1', 30, 200, 100, 400, 150]);
   Session.set('data2', ['data2', 20, 180, 240, 100, 190]);
+
+  var crimeData = [];
+  var count;
+
+  setCrimeDataByDay('Lunes', count);
+  crimeData.push({
+    day: 'Lunes',
+    count: count
+  });
+  console.log(crimeData);
+
   var chart = c3.generate({
     bindto: this.find('#chart'),
-      data: {
-        xs: {
-          'data1': 'x',
-          'data2': 'x'
-        },
-        columns: [['x'],['data1'],['data2']]
-      }
+    size: {
+      height: 250,
+      width: 300
+    },
+    data: {
+      xs: {
+        'data1': 'x',
+        'data2': 'x'
+      },
+      columns: [['x'],['data1'],['data2']],
+      type: 'bar'
+    }
   });
 
   this.autorun(function (tracker) {
