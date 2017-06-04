@@ -1,18 +1,48 @@
 <template name="userMenu">
   {{#with user}}
-  <div class="ui dropdown">
-    <div class="text">
-      Bienvenido, <b>{{profile.name}}</b>!
-    </div>
+  <div class="ui vertical menu">
+  <div class="ui dropdown item">
+    Bienvenido, {{profile.name}}
     <i class="dropdown icon"></i>
     <div class="menu">
-      <div class="item">
-        Mis itinerarios
-      </div>
-      <div class="logout item">
-        Cerrar sesión
-      </div>
+      <a class="itineraries item">Mis itinerarios</a>
+      <a class="logout item">Cerrar sesión</a>
     </div>
   </div>
+</div>
   {{/with}}
+</template>
+
+<template name="myItinerariesModal">
+  <div class="header">
+    Mis itinerarios
+  </div>
+  <div class="content">
+    <div class="description">
+      {{#each itineraries}}
+      <p>
+        Itinerario creado el {{this.createdAt}}.
+        <div class="ui green horizontal label">Total
+          <div class="detail">{{this.price}}</div>
+        </div>
+        <ol>
+          {{#each this.steps}}
+            <li>
+              {{this.name}}
+            </li>
+          {{/each}}
+        </ol>
+      </p>
+      {{/each}}
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Nope
+    </div>
+    <div class="ui positive right labeled icon button">
+      Yep, that's me
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
 </template>
