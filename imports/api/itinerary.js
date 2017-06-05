@@ -1,5 +1,4 @@
 import { Mongo } from 'meteor/mongo';
-console.log("mongo!");
 Itinerary = new Mongo.Collection('itineraries');
 
 // Itinerary.schema = new SimpleSchema({

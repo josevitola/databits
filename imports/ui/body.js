@@ -30,7 +30,7 @@ Template.body.onRendered(function bodyOnRendered() {
   $('.ui.sticky').sticky({});
 
   this.$('.ui.accordion').accordion();
-  Session.set('x', ['x', Lunes, 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']);
+  Session.set('x', ['x', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']);
   Session.set('Delitos', ['Delitos', 1.5, 2.0, 2.1, 1.7, 4.5, 3.2, 3.1]);
 
   var chart = c3.generate({

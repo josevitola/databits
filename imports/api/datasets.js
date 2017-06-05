@@ -36,53 +36,55 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
     $.each(data, function(i, entry) {
       $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ entry.direccion + ' Bogota, Colombia' +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
         // variables
-        var location = new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
-        var placeId = data.results[0].place_id;
-        var name, phone, address;
-        var price = parseInt(getRandomArbitrary(25, 250))*100;
-        // variables definition
-        if(url=='ghc6-jiw3.json') {
-          name = entry.nombre_comercial;
-          phone = entry.telefono;
-        } else {
-          name = entry.nombre_del_museo;
-          phone = entry.telefono_fijo;
+        if(typeof data.results[0] !== "undefined") {
+          var location = new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
+          var placeId = data.results[0].place_id;
+          var name, phone, address;
+          var price = parseInt(getRandomArbitrary(25, 250))*100;
+          // variables definition
+          if(url=='ghc6-jiw3.json') {
+            name = entry.nombre_comercial;
+            phone = entry.telefono;
+          } else {
+            name = entry.nombre_del_museo;
+            phone = entry.telefono_fijo;
+          }
+          // marker definition
+          var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            title: name,
+            icon: "map_icons/" + icon
+          });
+          // data item definition
+          var item = {
+            name: name,
+            address: entry.direccion,
+            phone: phone,
+            price: price,
+            web: entry.pagina_web,
+            placeId: placeId,
+            marker: marker,
+            html: '<center><h3>'+ name +'</h3>' +
+            '<img src="' +
+                'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + entry.direccion +
+                ' Bogota, Colombia&size=600x300' + '&key=AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA' +
+            '" class="ui medium rounded image"></img></center>' +
+            '<br><b>Dirección: </b> '+ entry.direccion +
+            '<br><b>Teléfono: </b> ' + phone +
+            '<br><b>Sitio web: </b> <a href="' + entry.pagina_web + '">' + entry.pagina_web + '</a>' +
+            '<br><b style="color: green">Precio Promedio: $</b> ' + price +
+            '<br><br><button class="ui labeled icon green add step button right floated"' +
+            'data-name="' + name + '" data-phone="' + phone + '" data-address="'
+            + entry.direccion + '" data-web="' + entry.pagina_web + '" data-price="' + price +
+            '"><i class="plus icon"></i>Agregar</button>'
+          }
+          google.maps.event.addListener(marker, 'click', function() {
+            setInfoWindow(map, item.html, marker, infowindow);
+          });
+          // add item to array
+          array.push(item);
         }
-        // marker definition
-        var marker = new google.maps.Marker({
-          position: location,
-          map: map,
-          title: name,
-          icon: "map_icons/" + icon
-        });
-        // data item definition
-        var item = {
-          name: name,
-          address: entry.direccion,
-          phone: phone,
-          price: price,
-          web: entry.pagina_web,
-          placeId: placeId,
-          marker: marker,
-          html: '<center><h3>'+ name +'</h3>' +
-          '<img src="' +
-              'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + entry.direccion +
-              ' Bogota, Colombia&size=600x300' + '&key=AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA' +
-          '" class="ui medium rounded image"></img></center>' +
-          '<br><b>Dirección: </b> '+ entry.direccion +
-          '<br><b>Teléfono: </b> ' + phone +
-          '<br><b>Sitio web: </b> <a href="' + entry.pagina_web + '">' + entry.pagina_web + '</a>' +
-          '<br><b style="color: green">Precio Promedio: $</b> ' + price +
-          '<br><br><button class="ui labeled icon green add step button right floated"' +
-          'data-name="' + name + '" data-phone="' + phone + '" data-address="'
-          + entry.direccion + '" data-web="' + entry.pagina_web + '" data-price="' + price +
-          '"><i class="plus icon"></i>Agregar</button>'
-        }
-        google.maps.event.addListener(marker, 'click', function() {
-          setInfoWindow(map, item.html, marker, infowindow);
-        });
-        // add item to array
-        array.push(item);
       });
     });
   });

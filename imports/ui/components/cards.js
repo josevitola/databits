@@ -24,12 +24,14 @@ Template.cards.helpers({
 
   totalPrice: function() {
     var steps = Session.get("steps");
-    var price = 0;
-    for(var i = 0; i < steps.length; i++) {
-      price += steps[i].price;
-    }
-    Session.set("totalPrice", price);
-    return price;
+    if(typeof steps !== "undefined") {
+      var price = 0;
+      for(var i = 0; i < steps.length; i++) {
+        price += steps[i].price;
+      }
+      Session.set("totalPrice", price);
+      return price;
+    } else return 0;
   }
 });
 
@@ -95,7 +97,7 @@ Template.cardsModal.helpers({
 Template.cardsModal.events({
   'click .ui.yep.button'() {
     Session.set("yep", "yes");
-    concole.log("ingresar nombre");
+    console.log("ingresar nombre");
   },
 
   'click .ui.positive.button'(event) {
