@@ -1,33 +1,42 @@
 import { Meteor } from 'meteor/meteor';
 
 import '/imports/startup/server/index.js';
+import { Places } from '/imports/api/places.js';
 import '/imports/api/itinerary.js';
 
 Meteor.startup(() => {
-  /* Imports for server-side startup go here. */
-//   var user = "postmaster@sandbox11d7438fbdc6432fbe532aa1b1aa2637.mailgun.org",
-//     pass = "bd70c56c1def29482d67807d55a47b87",
-//     host = "smtp.mailgun.org",
-//     port = 587,
-//     url = "smtp://" + user + ":" + pass + "@" + host + ":" + port + "/";
-//
-//     console.log(url);
-//
-//   process.env.MAIL_URL = url;
-//   Email.send({
-//   to: "jdnietov@unal.edu.co",
-//   from: "jdnv.123@hotmail.com",
-//   subject: "Example Email",
-//   text: "The contents of our email in plain text.",
-// });
-//   CSV.readCsvFileLineByLine(process.env.PWD + '/server/museos.csv', function (line, index, rawParsedLine) {
-//      console.log(line.precio);
-//  });
-//
-//  CSV.readCsvFileLineByLine(process.env.PWD + '/server/museos.csv', Meteor.bindEnvironment(function (line, index, rawParsedLine) {
-//     Museums.insert({
-//       nombre_del_museo: line.nombre_del_museo,
-//       precio: line.precio
-//     });
-//   }));
+  var restaurants = Places.find({type: "restaurant"}).fetch();
+  var museums = Places.find({type: "museum"}).fetch();
+
+  console.log(restaurants.length);
+  console.log(museums.length);
+
+  if(restaurants.length == 0) {
+    CSV.readCsvFileLineByLine(process.env.PWD + '/server/restaurantes.csv', Meteor.bindEnvironment(function (line, index, rawParsedLine) {
+      if(index != 0) {
+        Places.insert({
+          name: line[0],
+          address: line[1],
+          schedule: line[2],
+          type: "restaurant",
+          food: line[3],
+          price: line[4]
+        });
+      }
+   }));
+  }
+
+  if(museums.length == 0) {
+    CSV.readCsvFileLineByLine(process.env.PWD + '/server/museos.csv', Meteor.bindEnvironment(function (line, index, rawParsedLine) {
+      if(index != 0) {
+        Places.insert({
+          name: line[0],
+          schedule: line[1],
+          price: line[2],
+          description: line[3],
+          type: "museum"
+        });
+      }
+   }));
+  }
 });

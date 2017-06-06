@@ -1,16 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-Itinerary = new Mongo.Collection('itineraries');
 
-// Itinerary.schema = new SimpleSchema({
-//   start: {
-//     type: Object,
-//   },
-//   steps: {
-//     type: Array,
-//   },
-//   price: {
-//     type: Number
-//   }
-// });
+Itinerary = new Mongo.Collection('itineraries');
 
 export const Itineraries = Itinerary;
