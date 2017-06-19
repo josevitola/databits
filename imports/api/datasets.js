@@ -67,7 +67,7 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
             marker: marker,
             html: '<center><h3>'+ name +'</h3>' +
             '<img src="' +
-                'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + entry.direccion +
+                'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + name +
                 ' Bogota, Colombia&size=600x300' + '&key=AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA' +
             '" class="ui medium rounded image"></img></center>' +
             '<br><b>Dirección: </b> '+ entry.direccion +
