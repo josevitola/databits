@@ -8,9 +8,6 @@ Meteor.startup(() => {
   var restaurants = Places.find({type: "restaurant"}).fetch();
   var museums = Places.find({type: "museum"}).fetch();
 
-  console.log(restaurants.length);
-  console.log(museums.length);
-
   if(restaurants.length == 0) {
     CSV.readCsvFileLineByLine(process.env.PWD + '/server/restaurantes.csv', Meteor.bindEnvironment(function (line, index, rawParsedLine) {
       if(index != 0) {
