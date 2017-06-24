@@ -5,11 +5,14 @@ import { Places } from '/imports/api/places.js';
 import '/imports/api/itinerary.js';
 
 Meteor.startup(() => {
+  const pwd =process.cwd() + '/../../../../../';
+
   var restaurants = Places.find({type: "restaurant"}).fetch();
   var museums = Places.find({type: "museum"}).fetch();
 
   if(restaurants.length == 0) {
-    CSV.readCsvFileLineByLine(process.env.PWD + '/server/restaurantes.csv', Meteor.bindEnvironment(function (line, index, rawParsedLine) {
+    console.log(process.cwd() );
+    CSV.readCsvFileLineByLine(pwd + 'private/restaurantes.csv', Meteor.bindEnvironment(function (line, index, rawParsedLine) {
       if(index != 0) {
         Places.insert({
           name: line[0],
@@ -24,7 +27,7 @@ Meteor.startup(() => {
   }
 
   if(museums.length == 0) {
-    CSV.readCsvFileLineByLine(process.env.PWD + '/server/museos.csv', Meteor.bindEnvironment(function (line, index, rawParsedLine) {
+    CSV.readCsvFileLineByLine(pwd + 'private/museos.csv', Meteor.bindEnvironment(function (line, index, rawParsedLine) {
       if(index != 0) {
         Places.insert({
           name: line[0],
