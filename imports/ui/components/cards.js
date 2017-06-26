@@ -3,6 +3,8 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+import Sortable from 'sortablejs';
+
 import { Itineraries } from '/imports/api/itinerary.js';
 
 import './cards.html';
@@ -10,6 +12,13 @@ import './cards.html';
 Template.cards.onCreated(function() {
   this.state = new ReactiveDict();
   Session.set("totalPrice", 0);
+});
+
+Template.cards.onRendered(function() {
+  var list = document.getElementById('sortable-cards');
+  var sortable = Sortable.create(list, {
+    animation: 150
+  });
 });
 
 Template.cards.helpers({

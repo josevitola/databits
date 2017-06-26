@@ -5,7 +5,8 @@
     </div>
   {{/unless}}
 
-  {{#each steps}}
+  <div id="sortable-cards">
+    {{#each steps}}
     <div class="ui link card" style="width: 100%;" draggable="true">
       <div class="content">
         <i class="right floated remove icon" data-step="{{@index}}"></i>
@@ -21,9 +22,6 @@
               <li>
                 <b>Teléfono: </b> {{this.phone}}
               </li>
-              <li>
-                <b>Página web: </b> {{this.webpage}}
-              </li>
             </ul>
           </p>
         </div>
@@ -34,7 +32,8 @@
         </span>
       </div>
     </div>
-  {{/each}}
+    {{/each}}
+  </div>
 
   <div class="ui green message">
     Precio Total: $ {{totalPrice}}
