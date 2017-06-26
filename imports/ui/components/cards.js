@@ -88,14 +88,10 @@ Template.cards.events({
 });
 
 
-Session.set("yep", "no");
 Template.cardsModal.helpers({
   steps: function() {
     var steps = Session.get("steps");
     return steps;
-  },
-  isYep: function() {
-    return Session.get("yep") == "yes";
   },
 
   totalPrice: function() {
@@ -104,23 +100,23 @@ Template.cardsModal.helpers({
 });
 
 Template.cardsModal.events({
-  'click .ui.yep.button'() {
-    Session.set("yep", "yes");
-    console.log("ingresar nombre");
-  },
-
   'click .ui.positive.button'(event) {
-    console.log("lala");
-
     var steps = Session.get("steps");
     var price = Session.get("totalPrice");
-    console.log(steps);
 
-    Itineraries.insert({
-      belongsTo: Meteor.userId(),
-      createdAt: new Date(),
-      steps: steps,
-      price: price
-    });
+    var email = $('.ui.send.email.input').val();
+    console.log(email);
+
+
+    Meteor.call('sendItineraryToEmail',
+      email,
+      'jdnietov@unal.edu.co',
+      steps,
+      price,
+      Meteor.user(),
+      (error, result) => {
+        alert(error.message);
+      }
+    );
   }
 });
