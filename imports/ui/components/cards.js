@@ -15,9 +15,34 @@ Template.cards.onCreated(function() {
 });
 
 Template.cards.onRendered(function() {
-  var list = document.getElementById('sortable-cards');
-  var sortable = Sortable.create(list, {
-    animation: 150
+  var el = document.getElementById('sortable-cards');
+  var sortable = Sortable.create(el, {
+    handle: '.bars',
+    animation: 200,
+  	onEnd: function (evt) {
+      var oldIdx = Session.get('oldIdx');
+      var newIdx = Session.get('newIdx');
+        // console.log('end:', oldIdx, newIdx);
+
+      var steps = Session.get('steps');
+
+      var aux = steps[newIdx];
+      steps[newIdx] = steps[oldIdx];
+      steps[oldIdx] = aux;
+
+      Session.set('steps', steps);
+        // console.log(steps);
+  	},
+    onMove: function (evt, originalEvent) {
+      var oldIdx = evt.dragged.getAttribute('data-step');
+      var newIdx = evt.related.getAttribute('data-step');
+        // console.log('move:', oldIdx, newIdx);
+
+      Session.set('oldIdx', oldIdx);
+      Session.set('newIdx', newIdx);
+
+      return false;
+  	}
   });
 });
 

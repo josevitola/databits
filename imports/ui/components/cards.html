@@ -7,13 +7,14 @@
 
   <div id="sortable-cards">
     {{#each steps}}
-    <div class="ui link card" style="width: 100%;" draggable="true">
+    <div class="ui link card" style="width: 100%;" data-step="{{@index}}">
       <div class="content">
         <i class="right floated remove icon" data-step="{{@index}}"></i>
         <i class="right floated angle down icon" data-step="{{@index}}"></i>
         <i class="right floated angle up icon" data-step="{{@index}}"></i>
+        <i class="left floated bars icon"></i>
         <div class="header">{{getIndex @index}}. {{this.name}}</div>
-        <div class="description">
+        <!-- <div class="description">
           <p>
             <ul>
               <li>
@@ -24,9 +25,10 @@
               </li>
             </ul>
           </p>
-        </div>
+        </div> -->
       </div>
       <div class="extra content">
+        <b>{{this.address}}</b>
         <span class="right floated" style="color: green; font-size: 1.3em">
           <b>$ {{this.price}}</b>
         </span>
