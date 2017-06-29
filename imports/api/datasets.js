@@ -123,12 +123,6 @@ function setPlaceId(direction, placeId) {
   });
 }
 
-// set info window
-function setInfoWindow(map, html, marker, infowindow) {
-  infowindow.setContent(html);
-  infowindow.open(map, marker);
-}
-
 // import climate data
 export const setClimateInfo = function(array) {
   $.getJSON("https://www.datos.gov.co/resource/ckse-r6ms.json" + "?departamento=Bogota DC", function(data) {
