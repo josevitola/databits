@@ -27,4 +27,19 @@ body, html {
 
 #main-menu {
   margin: 0;
+  background: #0e3a4b;
+  color: white !important;
+  height: 70px;
+}
+
+.iso {
+  margin: 7px 0 7px 20px;
+  height: 56px;
+  width: auto;
+}
+
+.logo {
+  margin: 20px;
+  height: 30px;
+  width: auto;
 }
