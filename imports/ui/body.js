@@ -5,7 +5,6 @@ import {Session} from 'meteor/session';
 import './components/signUpModal.js';
 import './components/userMenu.js';
 import './components/cards.js';
-import './components/start.js';
 import './components/map.js';
 import './body.html';
 
@@ -58,11 +57,11 @@ Template.body.onRendered(function bodyOnRendered() {
 });
 
 Template.body.events({
-  'click #login' () {
+  'click .login' () {
     SemanticModal.generalModal('loginModal');
   },
 
-  'click #signup' () {
+  'click .signup' () {
     SemanticModal.generalModal('signUpModal');
   }
 });

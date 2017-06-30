@@ -85,36 +85,4 @@ Template.map.events({
 
     Session.set("steps", steps);
   },
-
-
-  'click .ui.addStart.start.button' (event) {
-    initialMarker.infowindow.close();
-
-    var latt = initialMarker.position.lat();
-    var lngg = initialMarker.position.lng();
-    var latlng = {lat: latt, lng: lngg};
-
-    // var address;
-    // var geocoder = new google.maps.Geocoder;
-    // console.log(initialMarker.getPosition());
-    // geocoder.geocode({'location': latlng}, function(results, status) {
-    //   if (status === 'OK') {
-    //     if (results[1]) {
-    //       address = results[1].formatted_address;
-    //     } else {
-    //       window.alert('No results found');
-    //     }
-    //   } else {
-    //     window.alert('Geocoder failed due to: ' + status);
-    //   }
-    // });
-    // console.log(address);
-
-
-    var start = {
-      latlng: latlng
-    };
-
-    Session.set("start", start);
-  }
 })
