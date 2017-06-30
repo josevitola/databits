@@ -1,0 +1,28 @@
+<template name="mainMenu">
+  <div class="ui menu" id="main-menu">
+    <a class="active item">
+      <img>
+    </a>
+    <div class="right menu">
+      <!-- <div class="item">
+        <div class="ui icon input">
+          <input placeholder="Search..." type="text">
+          <i class="search link icon"></i>
+        </div>
+      </div> -->
+
+      {{#unless currentUser}}
+      <a id="signup" class="ui item" href="#">
+        Registrarse
+      </a>.
+      <a id="login" class="ui item" href="#">
+        Iniciar Sesión
+      </a>
+      {{/unless}}
+
+      {{#with currentUser}}
+        {{> userMenu user=this}}
+      {{/with}}
+    </div>
+  </div>
+</template>

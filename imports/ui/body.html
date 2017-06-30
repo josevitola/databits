@@ -1,23 +1,9 @@
 <body>
+  {{> mainMenu}}
   <div class="ui grid">
     <div class="five wide column" id="sidebar">
-      <h2 class="ui header">Puerta Bogotá - Tu itinerario de viaje</h2>
+      <!-- <h2 class="ui header">Puerta Bogotá - Tu itinerario de viaje</h2> -->
       <h4 class="ui dividing header">Selecciona un lugar y agrégalo a tu itinerario</h4>
-
-      {{#unless currentUser}}
-      <div class="ui warning message">
-        <i class="close icon"></i>
-        <div class="header">
-          ¿Eres nuevo aquí?
-        </div>
-        <p>Recuerda que puedes registrarte haciendo clic <a id="signup" href="#">aquí</a>.
-          Si ya tienes una cuenta, también puedes <a id="login" href="#">iniciar sesión</a>!</p>
-      </div>
-      {{/unless}}
-
-      {{#with currentUser}}
-        {{> userMenu user=this}}
-      {{/with}}
 
       <div class="ui dividing header">Tu itinerario del día</div>
       {{> start}}

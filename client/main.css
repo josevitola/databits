@@ -24,3 +24,7 @@ body, html {
   max-height: 300px!important;
   width: 100%;
 }
+
+#main-menu {
+  margin: 0;
+}

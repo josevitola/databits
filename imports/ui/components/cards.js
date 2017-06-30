@@ -17,7 +17,7 @@ Template.cards.onCreated(function() {
 Template.cards.onRendered(function() {
   var el = document.getElementById('sortable-cards');
   var sortable = Sortable.create(el, {
-    handle: '.bars',
+    handle: '.move',
     animation: 200,
   	onEnd: function (evt) {
       var oldIdx = Session.get('oldIdx');
