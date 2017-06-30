@@ -5,7 +5,7 @@ import {showMarkers} from '../../api/datasets.js';
 
 import './map.html';
 
-var MAP_ZOOM = 16;
+var MAP_ZOOM = 17;
 var candelariaLatLng = {
   lat: 4.5964417,
   lng: -74.0765273
@@ -45,9 +45,9 @@ Template.map.onCreated(function() {
       mewPointMarkerInfo(map.instancem, newMarker, infowindow);
     });
 
-    setPlacesInfo("ghc6-jiw3.json", restData, 'food_m.png', map.instance, infowindow);
-    setPlacesInfo("mdh3-rurf.json", musData, 'museum_m.png', map.instance, infowindow);
-    setPlacesInfo("h3hv-wumd.json", theData, 'theater_m.png', map.instance, infowindow);
+    setPlacesInfo("ghc6-jiw3.json", restData, 'rest-pin.png', map.instance, infowindow);
+    setPlacesInfo("mdh3-rurf.json", musData, 'muse-pin.png', map.instance, infowindow);
+    setPlacesInfo("h3hv-wumd.json", theData, 'teat-pin.png', map.instance, infowindow);
   });
 });
 

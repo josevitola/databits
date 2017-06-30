@@ -7,7 +7,7 @@ body, html {
 .ui.grid {
   margin: 0px;
   padding: 0px;
-  height: 100%;
+  height: calc(100% - 70px)
 }
 
 .map-container {
@@ -27,13 +27,13 @@ body, html {
 
 #main-menu {
   margin: 0;
+  padding: 0 20px;
   background: #0e3a4b;
-  color: white !important;
   height: 70px;
 }
 
 .iso {
-  margin: 7px 0 7px 20px;
+  margin: 7px 0;
   height: 56px;
   width: auto;
 }
@@ -42,4 +42,8 @@ body, html {
   margin: 20px;
   height: 30px;
   width: auto;
+}
+
+#user-menu {
+  color: white;
 }
