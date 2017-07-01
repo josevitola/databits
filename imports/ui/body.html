@@ -1,40 +1,9 @@
 <body>
-  <div id="navbar" class="ui secondary pointing menu">
-    <a class="active item">
-    Home
-  </a>
-    <a class="item">
-    Messages
-  </a>
-    <a class="item">
-    Friends
-  </a> {{#unless currentUser}}
-    <div class="right menu">
-      <a class="ui login item">
-      Iniciar sesión
-    </a>
-      <a class="ui signup item">
-      Regístrate
-    </a>
-    </div>
-    {{/unless}}
-    {{#with currentUser}}
-      {{> userMenu user=this}}
-    {{/with}}
-  </div>
-
-
+  {{> mainMenu}}
   <div class="ui grid">
     <div class="five wide column" id="sidebar">
-      <h2 class="ui header">Puerta Bogotá - Tu itinerario de viaje</h2> {{#unless currentUser}}
-      <div class="ui warning message">
-        <i class="close icon"></i>
-        <div class="header">
-          ¿Eres nuevo aquí?
-        </div>
-        <p>Recuerda que puedes registrarte haciendo clic <a class="signup" href="#">aquí</a>. Si ya tienes una cuenta, también puedes <a class="login" href="#">iniciar sesión</a>!</p>
-      </div>
-      {{/unless}}
+      <!-- <h2 class="ui header">Puerta Bogotá - Tu itinerario de viaje</h2> -->
+      <!-- <h4 class="ui dividing header">Selecciona un lugar y agrégalo a tu itinerario</h4> -->
 
       <div class="ui dividing header">Tu itinerario del día</div>
       {{> cards}}

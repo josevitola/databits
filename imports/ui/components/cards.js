@@ -3,6 +3,8 @@ import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+import Sortable from 'sortablejs';
+
 import { Itineraries } from '/imports/api/itinerary.js';
 
 import './cards.html';
@@ -10,6 +12,38 @@ import './cards.html';
 Template.cards.onCreated(function() {
   this.state = new ReactiveDict();
   Session.set("totalPrice", 0);
+});
+
+Template.cards.onRendered(function() {
+  var el = document.getElementById('sortable-cards');
+  var sortable = Sortable.create(el, {
+    handle: '.move',
+    animation: 200,
+  	onEnd: function (evt) {
+      var oldIdx = Session.get('oldIdx');
+      var newIdx = Session.get('newIdx');
+        // console.log('end:', oldIdx, newIdx);
+
+      var steps = Session.get('steps');
+
+      var aux = steps[newIdx];
+      steps[newIdx] = steps[oldIdx];
+      steps[oldIdx] = aux;
+
+      Session.set('steps', steps);
+        // console.log(steps);
+  	},
+    onMove: function (evt, originalEvent) {
+      var oldIdx = evt.dragged.getAttribute('data-step');
+      var newIdx = evt.related.getAttribute('data-step');
+        // console.log('move:', oldIdx, newIdx);
+
+      Session.set('oldIdx', oldIdx);
+      Session.set('newIdx', newIdx);
+
+      return false;
+  	}
+  });
 });
 
 Template.cards.helpers({

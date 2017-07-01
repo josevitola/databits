@@ -1,0 +1,27 @@
+<template name="mainMenu">
+  <div class="ui secondary menu" id="main-menu">
+    <a href="#">
+      <img class="iso" src="/logo/isotipo-circle-pin.png">
+      <img class="logo" src="/logo/logo-white.png">
+    </a>
+    <div class="right menu">
+
+      {{#unless currentUser}}
+      <a id="signup" class="ui item" href="#">
+        <div class="ui green button">
+          Registrarse
+        </div>
+      </a>
+      <a id="login" class="ui item" href="#">
+        <div class="ui blue button">
+          Iniciar Sesión
+        </div>
+      </a>
+      {{/unless}}
+
+      {{#with currentUser}}
+        {{> userMenu user=this}}
+      {{/with}}
+    </div>
+  </div>
+</template>

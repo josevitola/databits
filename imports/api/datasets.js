@@ -1,5 +1,10 @@
 // Google Maps Key: AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g
 
+//  first letter to uppercase
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 // direction to LatLng
 function setLatLng(direction, latlng) {
   $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
@@ -46,7 +51,7 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
             name = entry.nombre_comercial;
             phone = entry.telefono;
           } else {
-            name = entry.nombre_del_museo;
+            name = capitalizeFirstLetter(entry.nombre_del_museo);
             phone = entry.telefono_fijo;
           }
           // marker definition
@@ -54,7 +59,7 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
             position: location,
             map: map,
             title: name,
-            icon: "map_icons/" + icon
+            icon: "markers/" + icon
           });
           // data item definition
           var item = {
@@ -121,12 +126,6 @@ function setPlaceId(direction, placeId) {
   $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
     placeId = data.results[0].place_id;
   });
-}
-
-// set info window
-function setInfoWindow(map, html, marker, infowindow) {
-  infowindow.setContent(html);
-  infowindow.open(map, marker);
 }
 
 // import climate data
