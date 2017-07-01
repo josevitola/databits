@@ -56,26 +56,34 @@ Template.map.onCreated(function() {
 function mewPointMarkerInfo(map, marker, infowindow){
   var id = pointsData.length +1;
   var name = "Punto " + id;
-  var address = "Falta dirección";
-
   var lat = newMarker.position.lat();
   var lng = newMarker.position.lng();
+  var location = {lat: lat, lng: lng};
 
-  var html = '<center><h3>'+ name +'</h3></center>' +
-              '<br><b>Dirección: </b> '+ address +
-              '<br><b>Lat: </b> '+ lat +
-              '<br><b>Lng: </b> '+ lng +
-              '<br><br><button class="ui labeled icon green add point button right floated"' +
-              'data-name="' + name +
-              '" data-address="' + address +
-              '" data-lat="' + lat +
-              '" data-lng="' + lng +
-              '"><i class="plus icon"></i>Agregar</button>';
-
-  infowindow.setContent(html);
-  infowindow.open(map, marker);
+  var address = "Falta direccion";
+  var geocoder = new google.maps.Geocoder;
+  geocoder.geocode({'location': location}, function(results, status) {
+    if (status === 'OK') {
+      if (results[0]) {
+        address = results[0].formatted_address;
+      } else {
+        window.alert('No results found');
+      }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+    var html = '<center><h3>'+ name +'</h3></center>' +
+                '<br><b>Dirección: </b> '+ address +
+                '<br><br><button class="ui labeled icon green add point button right floated"' +
+                'data-name="' + name +
+                '" data-address="' + address +
+                '" data-lat="' + lat +
+                '" data-lng="' + lng +
+                '"><i class="plus icon"></i>Agregar</button>';
+    infowindow.setContent(html);
+    infowindow.open(map, marker);
+  });
 }
-
 
 
 Template.map.helpers({
@@ -141,22 +149,6 @@ Template.map.events({
     newMarker.setVisible(false);
     //infowindow.close();
 
-    // var address;
-    // var geocoder = new google.maps.Geocoder;
-    // console.log(initialMarker.getPosition());
-    // geocoder.geocode({'location': latlng}, function(results, status) {
-    //   if (status === 'OK') {
-    //     if (results[1]) {
-    //       address = results[1].formatted_address;
-    //     } else {
-    //       window.alert('No results found');
-    //     }
-    //   } else {
-    //     window.alert('Geocoder failed due to: ' + status);
-    //   }
-    // });
-    // console.log(address);
-
     const target = event.target;
     var name = $(target).data("name");
     var address = $(target).data("address");
@@ -177,8 +169,6 @@ Template.map.events({
       marker: marker,
       html: '<center><h3>'+ name +'</h3></center>' +
             '<br><b>Dirección: </b> '+ address +
-            '<br><b>Lat: </b> '+ lat +
-            '<br><b>Lng: </b> '+ lng +
             '<br><br><button class="ui labeled icon green add point button right floated"' +
             'data-name="' + name +
             '" data-address="' + address +
@@ -208,7 +198,6 @@ Template.map.events({
     }
 
     steps.push(step);
-
     Session.set("steps", steps);
   }
 })
