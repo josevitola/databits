@@ -30,7 +30,14 @@ var newMarker;
 Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
 
-    newMarker = new google.maps.Marker({map: map.instance, visible: false, position: candelariaLatLng, draggable: true, animation: google.maps.Animation.DROP});
+    newMarker = new google.maps.Marker({
+      map: map.instance,
+      visible: false,
+      position: candelariaLatLng,
+      draggable: true,
+      animation: google.maps.Animation.DROP,
+      icon: "markers/new-pin.png"
+    });
     infowindow = new google.maps.InfoWindow({content: ''});
     google.maps.event.addListener(newMarker, 'click', function(){
       mewPointMarkerInfo(map.instancem, newMarker, infowindow);
@@ -160,6 +167,7 @@ Template.map.events({
       position: location,
       map: GoogleMaps.maps.map.instance,
       title: name,
+      icon: "markers/new-pin.png"
     });
     // data item definition
     var item = {
