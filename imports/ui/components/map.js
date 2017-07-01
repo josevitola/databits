@@ -24,7 +24,9 @@ var restMarkers = [];
 var musMarkers = [];
 var theMarkers = [];
 
+
 var newMarker;
+
 Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
 
@@ -99,7 +101,12 @@ Template.map.helpers({
 
 Template.map.events({
   'click .ui.add.step.button' (event) {
-    const target = event.target;
+    var target = event.target;
+
+    if(typeof $(target).data("name") === "undefined") {
+      target = $(target).parent();
+    }
+
     var name = $(target).data("name");
     var phone = $(target).data("phone");
     var address = $(target).data("address");
@@ -155,7 +162,7 @@ Template.map.events({
     var lng = $(target).data("lng");
     var location = {lat: lat, lng: lng};
 
-
+    console.log(name);
 
 
     var marker = new google.maps.Marker({
