@@ -65,7 +65,7 @@ function mewPointMarkerInfo(map, marker, infowindow){
   geocoder.geocode({'location': location}, function(results, status) {
     if (status === 'OK') {
       if (results[0]) {
-        address = results[0].formatted_address;
+        address = results[0].formatted_address.split(',', 1)[0];
       } else {
         window.alert('No results found');
       }
