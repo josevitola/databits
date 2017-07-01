@@ -61,11 +61,15 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
           var hours = parseInt(getRandomArbitrary(0, 5));
           var minutes = 0;
           if(hours == 0){
-            minutes = parseInt(getRandomArbitrary(1, 59));
+            minutes = parseInt(getRandomArbitrary(30, 59));
           }else{
             minutes = parseInt(getRandomArbitrary(0, 59));
           }
-
+          var time;
+          if(minutes < 10)
+            time = hours + ':0' + minutes;
+          else
+            time = hours + ':' + minutes;
 
           // variables definition
           if(url=='ghc6-jiw3.json') {
@@ -91,8 +95,7 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
             location: location,
             phone: phone,
             price: price,
-            hours: hours,
-            minutes: minutes,
+            time: time,
             web: entry.pagina_web,
             placeId: placeId,
             marker: marker,
@@ -105,12 +108,12 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
             '<br><b>Teléfono: </b> ' + phone +
             '<br><b>Sitio web: </b> <a href="' + entry.pagina_web + '">' + entry.pagina_web + '</a>' +
             '<br><b style="color: green">Precio Promedio: $</b> ' + price +
-            '<br><b style="color: green">Tiempo Promedio: </b> ' + hours + ':' + minutes +
+            '<br><b style="color: green">Tiempo Promedio: </b> ' + time +
             '<br><br><button class="ui labeled icon green add step button right floated"' +
             'data-name="' + name + '" data-phone="' + phone + '" data-address="'
             + entry.direccion + '" data-web="' + entry.pagina_web + '" data-price="' + price +
             '" data-lat="' + lat + '" data-lng="' + lng + '" data-type="' + type +
-            '" data-hours="' + hours + '" data-minutes="' + minutes +
+            '" data-time="' + time +
             '"><i class="plus icon"></i>Agregar</button>'
           }
           google.maps.event.addListener(marker, 'click', function() {
