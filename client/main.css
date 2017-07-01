@@ -3,6 +3,7 @@
   --primary-blue: #0e3a4b;
   --secondary-blue: #009c8c;
   --museum-orange: #E87300;
+  --light-museum: lighten(var(--museum-orange), 15%);
   --food-red: #DA052F;
   --theather-green: #007562;
 }
@@ -63,6 +64,18 @@ body, html {
   margin: 20px;
   height: 30px;
   width: auto;
+}
+
+.ui.museum .meta {
+  color: var(--museum-orange);
+}
+
+.ui.theatre .meta {
+  color: var(--theather-green);
+}
+
+.ui.restaurant .meta {
+  color: var(--food-red)
 }
 
 #user-menu {

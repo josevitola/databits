@@ -1,7 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
-import {setPlacesInfo} from '../../api/datasets.js';
-import {showMarkers} from '../../api/datasets.js';
+import {setPlacesInfo, showMarkers, setInfWin, setAppMap} from '../../api/datasets.js';
 
 import './map.html';
 
@@ -11,25 +10,15 @@ var candelariaLatLng = {
   lng: -74.0765273
 };
 
-var infowindow;
-
 // Data Arrays
-var restData = [];
-var musData = [];
-var theData = [];
 var pointsData = [];
 
-// Marker arrays
-var restMarkers = [];
-var musMarkers = [];
-var theMarkers = [];
-
-
 var newMarker;
+var infowindow;
 
 Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
-
+    instance = map.instance;
     newMarker = new google.maps.Marker({
       map: map.instance,
       visible: false,
@@ -39,11 +28,13 @@ Template.map.onCreated(function() {
       icon: "markers/new-pin.png"
     });
     infowindow = new google.maps.InfoWindow({content: ''});
+
     google.maps.event.addListener(newMarker, 'click', function(){
-      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+      mewPointMarkerInfo(map.instance, newMarker, infowindow);
     });
+
     google.maps.event.addListener(newMarker, 'dragend', function(){
-      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+      mewPointMarkerInfo(map.instance, newMarker, infowindow);
     });
 
     google.maps.event.addListener(map.instance, 'click', function(event){
@@ -51,12 +42,11 @@ Template.map.onCreated(function() {
       if(!newMarker.getVisible()){
         newMarker.setVisible(true);
       }
-      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+      mewPointMarkerInfo(map.instance, newMarker, infowindow);
     });
 
-    setPlacesInfo("ghc6-jiw3.json", restData, 'rest-pin.png', map.instance, infowindow);
-    setPlacesInfo("mdh3-rurf.json", musData, 'muse-pin.png', map.instance, infowindow);
-    setPlacesInfo("h3hv-wumd.json", theData, 'teat-pin.png', map.instance, infowindow);
+    setAppMap(map);
+    setInfWin(infowindow);
   });
 });
 
@@ -92,7 +82,6 @@ function mewPointMarkerInfo(map, marker, infowindow){
   });
 }
 
-
 Template.map.helpers({
   geolocationError: function() {
     var error = Geolocation.error();
@@ -104,15 +93,8 @@ Template.map.helpers({
     if (GoogleMaps.loaded() && latLng) {
       return {center: candelariaLatLng, zoom: MAP_ZOOM};
     }
-  },
-  getPlacesInfo: () => {
-    if (GoogleMaps.loaded()) {
-      setPlacesInfo("https://www.datos.gov.co/resource/ghc6-jiw3.json", restsData, restsMarkers);
-      console.log(restsData);
-    } else
-      console.log("false");
-    }
-  });
+  }
+});
 
 Template.map.events({
   'click .ui.add.step.button' (event) {
@@ -127,10 +109,18 @@ Template.map.events({
     var address = $(target).data("address");
     var lat = $(target).data("lat");
     var lng = $(target).data("lng");
-    var location = {lat: lat, lng: lng};
-    console.log(location);
     var web = $(target).data("web");
     var price = $(target).data("price");
+    var type = $(target).data("type");
+
+    var location = {
+      lat: lat,
+      lng: lng
+    };
+
+    var hours = $(target).data("hours");
+    var minutes = $(target).data("minutes");
+
 
     var step = {
       name: name,
@@ -138,7 +128,10 @@ Template.map.events({
       address: address,
       location: location,
       webpage: web,
-      price: price
+      price: price,
+      type: type,
+      hours: hours,
+      minutes: minutes
     };
 
 
@@ -197,7 +190,9 @@ Template.map.events({
       address: address,
       location: location,
       webpage: "",
-      price: 0
+      price: 0,
+      hours: 0,
+      minutes: 0
     };
 
     var steps = Session.get("steps");
@@ -208,4 +203,4 @@ Template.map.events({
     steps.push(step);
     Session.set("steps", steps);
   }
-})
+});
