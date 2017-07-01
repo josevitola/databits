@@ -1,3 +1,4 @@
+import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
 
 import './components/mainMenu.js';
@@ -5,10 +6,13 @@ import './components/searchForm.js';
 import './components/userMenu.js';
 import './components/cards.js';
 import './components/map.js';
+import './components/introModal.js';
 import './body.html';
 
-import './components/introModal.html';
-SemanticModal.generalModal('introModal');
+
+if(!Meteor.user()) {
+  SemanticModal.generalModal('introModal');
+}
 
 function setCrimeDataByDay(day, count) {
   var municipio = "BOGOTÁ D.C. (CT)";
