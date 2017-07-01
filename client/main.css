@@ -2,6 +2,9 @@
 :root {
   --primary-blue: #0e3a4b;
   --secondary-blue: #009c8c;
+  --museum-orange: #E87300;
+  --food-red: #DA052F;
+  --theather-green: #007562;
 }
 
 body, html {
