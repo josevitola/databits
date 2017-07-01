@@ -1,0 +1,34 @@
+<template name="searchForm">
+  <div class="ui icon form search">
+    <div class="ui icon input">
+      <input type="text" placeholder="Busca por nombre...">
+      <i class="search icon"></i>
+    </div>
+
+    <div class="grouped fields">
+      <label for="filter">Selecciona fitros de búsqueda:</label>
+      <div class="field">
+        <div class="ui checkbox">
+          <input class="filterCheckbox" type="checkbox" value="restaurant" name="field" tabindex="0" />
+          <label>Restaurantes</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui checkbox">
+          <input class="filterCheckbox" type="checkbox" value="museum" name="field" tabindex="0" />
+          <label>Museos</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui checkbox">
+          <input class="filterCheckbox" type="checkbox" value="theatre" name="field" tabindex="0" />
+          <label>Teatros</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui form">
+
+  </div>
+</template>

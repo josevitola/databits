@@ -56,6 +56,8 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
             name = capitalizeFirstLetter(entry.nombre_del_museo);
             phone = entry.telefono_fijo;
           }
+
+          console.log(name);
           // marker definition
           var marker = new google.maps.Marker({
             position: location,
