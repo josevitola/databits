@@ -1,6 +1,5 @@
 import {Template} from 'meteor/templating';
 
-import './components/signUpModal.js';
 import './components/mainMenu.js';
 import './components/userMenu.js';
 import './components/cards.js';
