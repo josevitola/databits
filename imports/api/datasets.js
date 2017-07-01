@@ -42,7 +42,9 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
       $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ entry.direccion + ' Bogota, Colombia' +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
         // variables
         if(typeof data.results[0] !== "undefined") {
-          var location = new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
+          var lat = data.results[0].geometry.location.lat;
+          var lng = data.results[0].geometry.location.lng;
+          var location = new google.maps.LatLng(lat, lng);
           var placeId = data.results[0].place_id;
           var name, phone, address;
           var price = parseInt(getRandomArbitrary(25, 250))*100;
@@ -65,6 +67,7 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
           var item = {
             name: name,
             address: entry.direccion,
+            location: location,
             phone: phone,
             price: price,
             web: entry.pagina_web,
@@ -81,7 +84,7 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
             '<br><b style="color: green">Precio Promedio: $</b> ' + price +
             '<br><br><button class="ui labeled icon green add step button right floated"' +
             'data-name="' + name + '" data-phone="' + phone + '" data-address="'
-            + entry.direccion + '" data-web="' + entry.pagina_web + '" data-price="' + price +
+            + entry.direccion + '" data-web="' + entry.pagina_web + '" data-price="' + price + '" data-lat="' + lat + '" data-lng="' + lng +
             '"><i class="plus icon"></i>Agregar</button>'
           }
           google.maps.event.addListener(marker, 'click', function() {

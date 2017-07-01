@@ -110,6 +110,10 @@ Template.map.events({
     var name = $(target).data("name");
     var phone = $(target).data("phone");
     var address = $(target).data("address");
+    var lat = $(target).data("lat");
+    var lng = $(target).data("lng");
+    var location = {lat: lat, lng: lng};
+    console.log(location);
     var web = $(target).data("web");
     var price = $(target).data("price");
 
@@ -117,6 +121,7 @@ Template.map.events({
       name: name,
       phone: phone,
       address: address,
+      location: location,
       webpage: web,
       price: price
     };
@@ -152,9 +157,6 @@ Template.map.events({
     // });
     // console.log(address);
 
-
-
-
     const target = event.target;
     var name = $(target).data("name");
     var address = $(target).data("address");
@@ -174,17 +176,18 @@ Template.map.events({
     var item = {
       name: name,
       address: address,
+      location: location,
       marker: marker,
       html: '<center><h3>'+ name +'</h3></center>' +
-                  '<br><b>Dirección: </b> '+ address +
-                  '<br><b>Lat: </b> '+ lat +
-                  '<br><b>Lng: </b> '+ lng +
-                  '<br><br><button class="ui labeled icon green add point button right floated"' +
-                  'data-name="' + name +
-                  '" data-address="' + address +
-                  '" data-lat="' + lat +
-                  '" data-lng="' + lng +
-                  '"><i class="plus icon"></i>Agregar</button>'
+            '<br><b>Dirección: </b> '+ address +
+            '<br><b>Lat: </b> '+ lat +
+            '<br><b>Lng: </b> '+ lng +
+            '<br><br><button class="ui labeled icon green add point button right floated"' +
+            'data-name="' + name +
+            '" data-address="' + address +
+            '" data-lat="' + lat +
+            '" data-lng="' + lng +
+            '"><i class="plus icon"></i>Agregar</button>'
     }
     google.maps.event.addListener(marker, 'click', function() {
       infowindow.setContent(item.html);
@@ -199,6 +202,7 @@ Template.map.events({
       name: name,
       phone: "",
       address: address,
+      location: location,
       webpage: "",
       price: 0
     };
