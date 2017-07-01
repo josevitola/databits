@@ -114,13 +114,19 @@ Template.map.events({
     var web = $(target).data("web");
     var price = $(target).data("price");
 
+    var hours = $(target).data("hours");
+    var minutes = $(target).data("minutes");
+
+
     var step = {
       name: name,
       phone: phone,
       address: address,
       location: location,
       webpage: web,
-      price: price
+      price: price,
+      hours: hours,
+      minutes: minutes
     };
 
 
@@ -178,7 +184,9 @@ Template.map.events({
       address: address,
       location: location,
       webpage: "",
-      price: 0
+      price: 0,
+      hours: 0,
+      minutes: 0
     };
 
     var steps = Session.get("steps");

@@ -33,12 +33,19 @@
           <b>$ {{this.price}}</b>
         </span>
       </div>
+      <div class="extra content">
+        <b>Tiempo promedio</b>
+        <span class="right floated" style="color: green; font-size: 1.3em">
+          <b>{{this.hours}}:{{this.minutes}}</b>
+        </span>
+      </div>
     </div>
     {{/each}}
   </div>
 
   <div class="ui green message">
-    Precio Total: $ {{totalPrice}}
+    Precio Total: $ {{totalPrice}}<br>
+    Tiempo total: {{totalTime}}
   </div>
 
   {{#if steps}}
