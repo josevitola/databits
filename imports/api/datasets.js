@@ -37,13 +37,17 @@ function getRandomArbitrary(min, max) {
 }
 
 // import places data and markers
-export const setPlacesInfo = function(url, array, icon, map, infowindow) {
-  var localidad;
-  if (url=='ghc6-jiw3.json') {
-    localidad = "Candelaria";
-  } else {
-    localidad = "CANDELARIA";
+export const setPlacesInfo = function(type, array, icon, map, infowindow) {
+  var localidad, url;
+
+  if(type == "restaurant") {
+    url = "ghc6-jiw3.json";
+  } else if(type == "museum") {
+    url = "mdh3-rurf.json";
+  } else if(type == "theatre") {
+    url = "h3hv-wumd.json";
   }
+
   $.getJSON("https://www.datos.gov.co/resource/" + url, function(data) {
     $.each(data, function(i, entry) {
       $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ entry.direccion + ' Bogota, Colombia' +"&key=" + MAP_KEY, function(data) {

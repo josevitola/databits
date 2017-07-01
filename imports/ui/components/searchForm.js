@@ -27,19 +27,19 @@ Template.searchForm.events({
     if(input.prop('checked')) {
       if(input.val() == "restaurant") {
         if(restaurantMapData.length == 0) {
-          setPlacesInfo("ghc6-jiw3.json", restaurantMapData, 'rest-pin.png', getAppMap().instance, getInfWin());
+          setPlacesInfo(input.val(), restaurantMapData, 'rest-pin.png', getAppMap().instance, getInfWin());
         } else {
           setDataOnMap(restaurantMapData, getAppMap().instance);
         }
       } else if(input.val() == "museum") {
         if(museumMapData.length == 0) {
-          setPlacesInfo("mdh3-rurf.json", museumMapData, 'muse-pin.png', getAppMap().instance, getInfWin());
+          setPlacesInfo(input.val(), museumMapData, 'muse-pin.png', getAppMap().instance, getInfWin());
         } else {
           setDataOnMap(museumMapData, getAppMap().instance);
         }
       } else if(input.val() == "theatre") {
         if(theatreMapData.length == 0) {
-          setPlacesInfo("h3hv-wumd.json", theatreMapData, 'teat-pin.png', getAppMap().instance, getInfWin());
+          setPlacesInfo(input.val(), theatreMapData, 'teat-pin.png', getAppMap().instance, getInfWin());
         } else {
           setDataOnMap(theatreMapData, getAppMap().instance);
         }
