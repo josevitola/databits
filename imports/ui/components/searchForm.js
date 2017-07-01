@@ -9,13 +9,12 @@ Template.searchForm.onRendered(() => {
 });
 
 Template.searchForm.events({
-  'click .ui.checkbox' (event) {
-    let filters = Session.get("filters");
-
+  'click #rest-checkbox' (event) {
     $(".filterCheckbox:checked").each(function(){
-      filters.push($(this).val());
+      console.log('checked');
     });
-
-    console.log(filters);
+    $(".filterCheckbox:unchecked").each(function(){
+      console.log('unchecked');
+    });
   }
 });

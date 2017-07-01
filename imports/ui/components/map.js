@@ -27,31 +27,31 @@ var theMarkers = [];
 
 var newMarker;
 
-// Template.map.onCreated(function() {
-//   GoogleMaps.ready('map', function(map) {
-//
-//     newMarker = new google.maps.Marker({map: map.instance, visible: false, position: candelariaLatLng, draggable: true, animation: google.maps.Animation.DROP});
-//     infowindow = new google.maps.InfoWindow({content: ''});
-//     google.maps.event.addListener(newMarker, 'click', function(){
-//       mewPointMarkerInfo(map.instancem, newMarker, infowindow);
-//     });
-//     google.maps.event.addListener(newMarker, 'dragend', function(){
-//       mewPointMarkerInfo(map.instancem, newMarker, infowindow);
-//     });
-//
-//     google.maps.event.addListener(map.instance, 'click', function(event){
-//       newMarker.setPosition(event.latLng);
-//       if(!newMarker.getVisible()){
-//         newMarker.setVisible(true);
-//       }
-//       mewPointMarkerInfo(map.instancem, newMarker, infowindow);
-//     });
-//
-//     setPlacesInfo("ghc6-jiw3.json", restData, 'rest-pin.png', map.instance, infowindow);
-//     setPlacesInfo("mdh3-rurf.json", musData, 'muse-pin.png', map.instance, infowindow);
-//     setPlacesInfo("h3hv-wumd.json", theData, 'teat-pin.png', map.instance, infowindow);
-//   });
-// });
+Template.map.onCreated(function() {
+  GoogleMaps.ready('map', function(map) {
+
+    newMarker = new google.maps.Marker({map: map.instance, visible: false, position: candelariaLatLng, draggable: true, animation: google.maps.Animation.DROP});
+    infowindow = new google.maps.InfoWindow({content: ''});
+    google.maps.event.addListener(newMarker, 'click', function(){
+      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+    });
+    google.maps.event.addListener(newMarker, 'dragend', function(){
+      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+    });
+
+    google.maps.event.addListener(map.instance, 'click', function(event){
+      newMarker.setPosition(event.latLng);
+      if(!newMarker.getVisible()){
+        newMarker.setVisible(true);
+      }
+      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+    });
+
+    setPlacesInfo("ghc6-jiw3.json", restData, 'rest-pin.png', map.instance, infowindow);
+    setPlacesInfo("mdh3-rurf.json", musData, 'muse-pin.png', map.instance, infowindow);
+    setPlacesInfo("h3hv-wumd.json", theData, 'teat-pin.png', map.instance, infowindow);
+  });
+});
 
 function mewPointMarkerInfo(map, marker, infowindow){
   var id = pointsData.length +1;

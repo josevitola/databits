@@ -57,13 +57,14 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
             phone = entry.telefono_fijo;
           }
 
-          console.log(name);
+          // console.log(name);
           // marker definition
           var marker = new google.maps.Marker({
             position: location,
             map: map,
             title: name,
-            icon: "markers/" + icon
+            icon: "markers/" + icon,
+            visible: true
           });
           // data item definition
           var item = {
@@ -103,7 +104,6 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
 export const showMarkers = function(markers) {
   var count = 0;
   markers.forEach(function(marker) {
-    console.log('Ok!!!!!!!!!!!!!!');
     if (marker.map != null) {
       count ++;
     }
@@ -117,27 +117,4 @@ export const showMarkers = function(markers) {
       marker.setMap(map);
     });
   }
-}
-
-// direction to LatLng
-function setLatLng(direction, latlng) {
-  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
-    latlng = new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
-  });
-}
-
-// direction to place_id
-function setPlaceId(direction, placeId) {
-  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
-    placeId = data.results[0].place_id;
-  });
-}
-
-// import climate data
-export const setClimateInfo = function(array) {
-  $.getJSON("https://www.datos.gov.co/resource/ckse-r6ms.json" + "?departamento=Bogota DC", function(data) {
-    $.each(data, function(i, entry) {
-      console.log(entry);
-    });
-  });
 }

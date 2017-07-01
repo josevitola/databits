@@ -1,28 +1,37 @@
 <template name="searchForm">
   <div class="ui icon form search">
-    <div class="ui icon input">
+    <!-- <div class="ui icon input">
       <input type="text" placeholder="Busca por nombre...">
       <i class="search icon"></i>
-    </div>
+    </div> -->
 
     <div class="grouped fields">
-      <label for="filter">Selecciona fitros de búsqueda:</label>
+      Selecciona fitros de búsqueda:<br>
       <div class="field">
-        <div class="ui checkbox">
+        <div class="ui checkbox" id="rest-checkbox">
           <input class="filterCheckbox" type="checkbox" value="restaurant" name="field" tabindex="0" />
-          <label>Restaurantes</label>
+          <label>
+            Restaurantes
+            <img class="ui left floated image" src="/markers/rest-pin.png" style="width:20px;">
+          </label>
         </div>
       </div>
       <div class="field">
         <div class="ui checkbox">
           <input class="filterCheckbox" type="checkbox" value="museum" name="field" tabindex="0" />
-          <label>Museos</label>
+          <label>
+            Museos
+            <img class="ui left floated image" src="/markers/muse-pin.png" style="width:20px;">
+          </label>
         </div>
       </div>
       <div class="field">
         <div class="ui checkbox">
           <input class="filterCheckbox" type="checkbox" value="theatre" name="field" tabindex="0" />
-          <label>Teatros</label>
+          <label>
+            Teatros
+            <img class="ui left floated image" src="/markers/teat-pin.png" style="width:20px;">
+          </label>
         </div>
       </div>
     </div>
