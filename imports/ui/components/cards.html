@@ -7,25 +7,14 @@
 
   <div id="sortable-cards">
     {{#each steps}}
-    <div class="ui link card" style="width: 100%;" data-step="{{@index}}">
-      <div class="content">
+    <div class="ui link {{this.type}} card" style="width: 100%;" data-step="{{@index}}">
+      <div class="main content">
         <i class="right floated remove icon" data-step="{{@index}}"></i>
         <i class="right floated angle down icon" data-step="{{@index}}"></i>
         <i class="right floated angle up icon" data-step="{{@index}}"></i>
         <i class="right floated move icon"></i>
         <div class="header">{{getIndex @index}}. {{this.name}}</div>
-        <!-- <div class="description">
-          <p>
-            <ul>
-              <li>
-                <b>Dirección: </b>{{this.address}}
-              </li>
-              <li>
-                <b>Teléfono: </b> {{this.phone}}
-              </li>
-            </ul>
-          </p>
-        </div> -->
+        <div class="meta">{{beautifyType this.type}}</div>
       </div>
       <div class="extra content">
         <b>{{this.address}}</b>

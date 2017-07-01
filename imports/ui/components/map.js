@@ -109,10 +109,14 @@ Template.map.events({
     var address = $(target).data("address");
     var lat = $(target).data("lat");
     var lng = $(target).data("lng");
-    var location = {lat: lat, lng: lng};
-    console.log(location);
     var web = $(target).data("web");
     var price = $(target).data("price");
+    var type = $(target).data("type");
+
+    var location = {
+      lat: lat,
+      lng: lng
+    };
 
     var step = {
       name: name,
@@ -120,7 +124,8 @@ Template.map.events({
       address: address,
       location: location,
       webpage: web,
-      price: price
+      price: price,
+      type: type
     };
 
 

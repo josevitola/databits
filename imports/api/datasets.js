@@ -27,7 +27,6 @@ function setPlaceId(direction, placeId) {
 
 // set info window
 function setInfoWindow(map, html, marker, infowindow) {
-  console.log(infowindow);
   infowindow.setContent(html);
   infowindow.open(map, marker);
 }
@@ -97,7 +96,8 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
             '<br><b style="color: green">Precio Promedio: $</b> ' + price +
             '<br><br><button class="ui labeled icon green add step button right floated"' +
             'data-name="' + name + '" data-phone="' + phone + '" data-address="'
-            + entry.direccion + '" data-web="' + entry.pagina_web + '" data-price="' + price + '" data-lat="' + lat + '" data-lng="' + lng +
+            + entry.direccion + '" data-web="' + entry.pagina_web + '" data-price="' + price +
+            '" data-lat="' + lat + '" data-lng="' + lng + '" data-type="' + type +
             '"><i class="plus icon"></i>Agregar</button>'
           }
           google.maps.event.addListener(marker, 'click', function() {

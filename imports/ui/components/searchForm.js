@@ -21,7 +21,6 @@ Template.searchForm.onRendered(() => {
 
 Template.searchForm.events({
   'click .ui.checkbox' (event) {
-    console.log(getInfWin());
     let input = $(event.target).parent().find("input");
 
     if(input.prop('checked')) {
