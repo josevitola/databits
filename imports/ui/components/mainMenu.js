@@ -1,11 +1,11 @@
 import { Template } from 'meteor/templating';
 
+import './mainMenu.html';
 import './signUpModal.js';
 
-import './mainMenu.html';
 
 Template.mainMenu.events({
-  'click .login' () { 
+  'click .login' () {
     SemanticModal.generalModal('loginModal');
   },
 

@@ -164,9 +164,6 @@ Template.map.events({
     var lng = $(target).data("lng");
     var location = {lat: lat, lng: lng};
 
-    console.log(name);
-
-
     var marker = new google.maps.Marker({
       position: location,
       map: GoogleMaps.maps.map.instance,
@@ -196,8 +193,6 @@ Template.map.events({
     // add item to array
     pointsData.push(item);
 
-
-
     var step = {
       name: name,
       phone: "",
@@ -206,7 +201,6 @@ Template.map.events({
       webpage: "",
       price: 0
     };
-
 
     var steps = Session.get("steps");
     if(typeof steps === "undefined") {
