@@ -3,6 +3,9 @@
 
 export const MAP_KEY = "AIzaSyBrkIfbZo3xfBNw6IPkv5Gbizc4mUGWGAY";
 
+let infwin; // global varible for infowindow
+let appMap; // global variable for map
+
 //  first letter to uppercase
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -103,38 +106,6 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
   });
 }
 
-export const showMarkers = function(markers) {
-  var count = 0;
-  markers.forEach(function(marker) {
-    console.log('Ok!!!!!!!!!!!!!!');
-    if (marker.map != null) {
-      count ++;
-    }
-  });
-  if (count != 0) {
-    markers.forEach(function(marker) {
-      marker.setMap(null);
-    });
-  } else {
-    markers.forEach(function(marker) {
-      marker.setMap(map);
-    });
-  }
-}
-
-// import climate data
-export const setClimateInfo = function(array) {
-  $.getJSON("https://www.datos.gov.co/resource/ckse-r6ms.json" + "?departamento=Bogota DC", function(data) {
-    $.each(data, function(i, entry) {
-      console.log(entry);
-    });
-  });
-}
-
-
-let infwin;
-let appMap;
-
 export const getAppMap = function() {
   return appMap;
 }
@@ -149,4 +120,13 @@ export const getInfWin = function() {
 
 export const setInfWin = function(inf) {
   infwin = inf;
+}
+
+// import climate data
+export const setClimateInfo = function(array) {
+  $.getJSON("https://www.datos.gov.co/resource/ckse-r6ms.json" + "?departamento=Bogota DC", function(data) {
+    $.each(data, function(i, entry) {
+      console.log(entry);
+    });
+  });
 }

@@ -1,7 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
-import {setPlacesInfo} from '../../api/datasets.js';
-import {showMarkers, setInfWin, setAppMap} from '../../api/datasets.js';
+import {setPlacesInfo, showMarkers, setInfWin, setAppMap} from '../../api/datasets.js';
 
 import './map.html';
 
@@ -12,14 +11,9 @@ var candelariaLatLng = {
 };
 
 // Data Arrays
-var restData = [];
-var musData = [];
-var theData = [];
 var pointsData = [];
 
 var newMarker;
-
-var instance;
 var infowindow;
 
 Template.map.onCreated(function() {
@@ -36,11 +30,11 @@ Template.map.onCreated(function() {
     infowindow = new google.maps.InfoWindow({content: ''});
 
     google.maps.event.addListener(newMarker, 'click', function(){
-      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+      mewPointMarkerInfo(map.instance, newMarker, infowindow);
     });
 
     google.maps.event.addListener(newMarker, 'dragend', function(){
-      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+      mewPointMarkerInfo(map.instance, newMarker, infowindow);
     });
 
     google.maps.event.addListener(map.instance, 'click', function(event){
