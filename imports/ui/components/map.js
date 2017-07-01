@@ -118,6 +118,10 @@ Template.map.events({
       lng: lng
     };
 
+    var hours = $(target).data("hours");
+    var minutes = $(target).data("minutes");
+
+
     var step = {
       name: name,
       phone: phone,
@@ -125,7 +129,9 @@ Template.map.events({
       location: location,
       webpage: web,
       price: price,
-      type: type
+      type: type,
+      hours: hours,
+      minutes: minutes
     };
 
 
@@ -183,7 +189,9 @@ Template.map.events({
       address: address,
       location: location,
       webpage: "",
-      price: 0
+      price: 0,
+      hours: 0,
+      minutes: 0
     };
 
     var steps = Session.get("steps");

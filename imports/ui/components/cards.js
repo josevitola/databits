@@ -75,6 +75,26 @@ Template.cards.helpers({
       return "Museo";
     else if(type == "theatre")
       return "Teatro";
+  },
+
+  totalTime: function() {
+    var steps = Session.get("steps");
+    if(typeof steps !== "undefined") {
+      var hours = 0;
+      var minutes = 0;
+      for(var i = 0; i < steps.length; i++) {
+        hours += steps[i].hours;
+        minutes += steps[i].minutes;
+      }
+
+      hours += parseInt(minutes/60);
+      minutes = minutes%60;
+
+      if(minutes == 0)
+        return hours + ':00';
+      else
+        return hours + ':' + minutes;
+    } else return 0;
   }
 });
 
