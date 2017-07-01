@@ -24,9 +24,9 @@ Template.map.onCreated(function() {
       visible: false,
       position: candelariaLatLng,
       draggable: true,
-      animation: google.maps.Animation.DROP
+      animation: google.maps.Animation.DROP,
+      icon: "markers/new-pin.png"
     });
-
     infowindow = new google.maps.InfoWindow({content: ''});
 
     google.maps.event.addListener(newMarker, 'click', function(){
@@ -160,6 +160,7 @@ Template.map.events({
       position: location,
       map: GoogleMaps.maps.map.instance,
       title: name,
+      icon: "markers/new-pin.png"
     });
     // data item definition
     var item = {

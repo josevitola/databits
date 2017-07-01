@@ -8,6 +8,10 @@
   --theather-green: #007562;
 }
 
+.ui.primary.button {
+  background: #009c8c!important
+}
+
 body, html {
   width: 100%;
   height: 100%;

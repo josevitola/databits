@@ -1,13 +1,35 @@
 <template name="introModal">
+  <i class="close icon"></i>
   <div class="header">
-    Introducción
+    <h1 class="ui inverted header">
+      <img class="ui spaced mini image" src="/logo/isotipo-circle-pin.png">
+      ¡Bienvenido a <img class="ui image" src="/logo/logo-white.png" style="height:35px; width:auto; margin-left:10px; padding-bottom:5px">!<br>
+    </h1>
+    <!-- <h3 class="ui inverted header">Tu irinerario de viaje</h3> -->
   </div>
   <div class="content">
     <ol type="1">
-      <li>Selecciona o crea un marcador</li>
-      <li>Agrega el marcador a tu itinerario</li>
-      <li>Ordena tu itinerario</li>
-      <li>Envía tu itinerario por correo o guardalo en tu cuenta</li>
+      <li>
+        Selecciona uno de los lugares disponibles
+        <img class="ui spaced image" src="/markers/rest-pin.png" style="height:20px">
+        <img class="ui spaced image" src="/markers/muse-pin.png" style="height:20px">
+        <img class="ui spaced image" src="/markers/teat-pin.png" style="height:20px">
+        o crea uno haciendo click sobre el mapa
+        <img class="ui spaced image" src="/markers/new-pin.png" style="height:20px">
+      </li><br>
+      <li>
+        Agrega el marcador a tu itinerario <i class="add icon"></i>
+      </li><br>
+      <li>
+        Ordena tu itinerario <i class="move icon"></i>
+      </li><br>
+      <li>
+        Envía tu itinerario por correo o guardalo en tu cuenta  <i class="send icon"></i>
+      </li><br>
     </ol>
+    <button class="ui labeled icon primary right floated close button">
+      <i class="checkmark icon"></i>
+      Comenzar mi itinerario
+    </button>
   </div>
 </template>
