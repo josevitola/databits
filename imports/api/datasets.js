@@ -1,4 +1,7 @@
-// Google Maps Key: AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g
+// Yeliana's Key: AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g
+// Key for Images: AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA
+
+export const MAP_KEY = "AIzaSyBrkIfbZo3xfBNw6IPkv5Gbizc4mUGWGAY";
 
 //  first letter to uppercase
 function capitalizeFirstLetter(string) {
@@ -7,20 +10,21 @@ function capitalizeFirstLetter(string) {
 
 // direction to LatLng
 function setLatLng(direction, latlng) {
-  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
+  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=" + MAP_KEY, function(data) {
     latlng = new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
   });
 }
 
 // direction to place_id
 function setPlaceId(direction, placeId) {
-  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
+  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=" + MAP_KEY, function(data) {
     placeId = data.results[0].place_id;
   });
 }
 
 // set info window
 function setInfoWindow(map, html, marker, infowindow) {
+  console.log(infowindow);
   infowindow.setContent(html);
   infowindow.open(map, marker);
 }
@@ -39,7 +43,7 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
   }
   $.getJSON("https://www.datos.gov.co/resource/" + url, function(data) {
     $.each(data, function(i, entry) {
-      $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ entry.direccion + ' Bogota, Colombia' +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
+      $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ entry.direccion + ' Bogota, Colombia' +"&key=" + MAP_KEY, function(data) {
         // variables
         if(typeof data.results[0] !== "undefined") {
           var lat = data.results[0].geometry.location.lat;
@@ -57,7 +61,6 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
             phone = entry.telefono_fijo;
           }
 
-          console.log(name);
           // marker definition
           var marker = new google.maps.Marker({
             position: location,
@@ -119,20 +122,6 @@ export const showMarkers = function(markers) {
   }
 }
 
-// direction to LatLng
-function setLatLng(direction, latlng) {
-  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
-    latlng = new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
-  });
-}
-
-// direction to place_id
-function setPlaceId(direction, placeId) {
-  $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+ direction +"&key=AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g", function(data) {
-    placeId = data.results[0].place_id;
-  });
-}
-
 // import climate data
 export const setClimateInfo = function(array) {
   $.getJSON("https://www.datos.gov.co/resource/ckse-r6ms.json" + "?departamento=Bogota DC", function(data) {
@@ -140,4 +129,24 @@ export const setClimateInfo = function(array) {
       console.log(entry);
     });
   });
+}
+
+
+let infwin;
+let appMap;
+
+export const getAppMap = function() {
+  return appMap;
+}
+
+export const setAppMap = function(map) {
+  appMap = map;
+}
+
+export const getInfWin = function() {
+  return infwin;
+}
+
+export const setInfWin = function(inf) {
+  infwin = inf;
 }

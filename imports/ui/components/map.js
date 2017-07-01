@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
 import {setPlacesInfo} from '../../api/datasets.js';
-import {showMarkers} from '../../api/datasets.js';
+import {showMarkers, setInfWin, setAppMap} from '../../api/datasets.js';
 
 import './map.html';
 
@@ -11,47 +11,50 @@ var candelariaLatLng = {
   lng: -74.0765273
 };
 
-var infowindow;
-
 // Data Arrays
 var restData = [];
 var musData = [];
 var theData = [];
 var pointsData = [];
 
-// Marker arrays
-var restMarkers = [];
-var musMarkers = [];
-var theMarkers = [];
-
-
 var newMarker;
 
-// Template.map.onCreated(function() {
-//   GoogleMaps.ready('map', function(map) {
-//
-//     newMarker = new google.maps.Marker({map: map.instance, visible: false, position: candelariaLatLng, draggable: true, animation: google.maps.Animation.DROP});
-//     infowindow = new google.maps.InfoWindow({content: ''});
-//     google.maps.event.addListener(newMarker, 'click', function(){
-//       mewPointMarkerInfo(map.instancem, newMarker, infowindow);
-//     });
-//     google.maps.event.addListener(newMarker, 'dragend', function(){
-//       mewPointMarkerInfo(map.instancem, newMarker, infowindow);
-//     });
-//
-//     google.maps.event.addListener(map.instance, 'click', function(event){
-//       newMarker.setPosition(event.latLng);
-//       if(!newMarker.getVisible()){
-//         newMarker.setVisible(true);
-//       }
-//       mewPointMarkerInfo(map.instancem, newMarker, infowindow);
-//     });
-//
-//     setPlacesInfo("ghc6-jiw3.json", restData, 'rest-pin.png', map.instance, infowindow);
-//     setPlacesInfo("mdh3-rurf.json", musData, 'muse-pin.png', map.instance, infowindow);
-//     setPlacesInfo("h3hv-wumd.json", theData, 'teat-pin.png', map.instance, infowindow);
-//   });
-// });
+var instance;
+var infowindow;
+
+Template.map.onCreated(function() {
+  GoogleMaps.ready('map', function(map) {
+    instance = map.instance;
+    newMarker = new google.maps.Marker({
+      map: map.instance,
+      visible: false,
+      position: candelariaLatLng,
+      draggable: true,
+      animation: google.maps.Animation.DROP
+    });
+
+    infowindow = new google.maps.InfoWindow({content: ''});
+
+    google.maps.event.addListener(newMarker, 'click', function(){
+      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+    });
+
+    google.maps.event.addListener(newMarker, 'dragend', function(){
+      mewPointMarkerInfo(map.instancem, newMarker, infowindow);
+    });
+
+    google.maps.event.addListener(map.instance, 'click', function(event){
+      newMarker.setPosition(event.latLng);
+      if(!newMarker.getVisible()){
+        newMarker.setVisible(true);
+      }
+      mewPointMarkerInfo(map.instance, newMarker, infowindow);
+    });
+
+    setAppMap(map);
+    setInfWin(infowindow);
+  });
+});
 
 function mewPointMarkerInfo(map, marker, infowindow){
   var id = pointsData.length +1;
@@ -85,7 +88,6 @@ function mewPointMarkerInfo(map, marker, infowindow){
   });
 }
 
-
 Template.map.helpers({
   geolocationError: function() {
     var error = Geolocation.error();
@@ -97,15 +99,8 @@ Template.map.helpers({
     if (GoogleMaps.loaded() && latLng) {
       return {center: candelariaLatLng, zoom: MAP_ZOOM};
     }
-  },
-  getPlacesInfo: () => {
-    if (GoogleMaps.loaded()) {
-      setPlacesInfo("https://www.datos.gov.co/resource/ghc6-jiw3.json", restsData, restsMarkers);
-      console.log(restsData);
-    } else
-      console.log("false");
-    }
-  });
+  }
+});
 
 Template.map.events({
   'click .ui.add.step.button' (event) {
@@ -200,4 +195,4 @@ Template.map.events({
     steps.push(step);
     Session.set("steps", steps);
   }
-})
+});
