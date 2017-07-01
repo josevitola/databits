@@ -7,6 +7,9 @@ import './components/cards.js';
 import './components/map.js';
 import './body.html';
 
+import './components/introModal.html';
+SemanticModal.generalModal('introModal');
+
 function setCrimeDataByDay(day, count) {
   var municipio = "BOGOTÁ D.C. (CT)";
   count = 0;
