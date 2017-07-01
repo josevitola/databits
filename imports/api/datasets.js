@@ -69,7 +69,8 @@ export const setPlacesInfo = function(url, array, icon, map, infowindow) {
             position: location,
             map: map,
             title: name,
-            icon: "markers/" + icon
+            icon: "markers/" + icon,
+            visible: true
           });
           // data item definition
           var item = {
