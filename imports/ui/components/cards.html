@@ -58,19 +58,36 @@
       <p>
         Verifica lo que ingresaste. <b>¿Es éste tu itinerario?</b>
       </p>
-      <div class="ui breadcrumb">
-        <ol>
-          {{#each steps}}
-            <li>
-              {{this.name}} ($ {{this.price}})
-            </li>
-          {{/each}}
-        </ol>
+
+      <div class="ui divided items">
+        {{#each steps}}
+        <div class="item">
+          <div class="image" style="width:20px; margin-top:10px;">
+            <img class="ui left floated image" src="/markers/{{getPinImgName this.type}}-pin.png" style="width:20px;">
+          </div>
+          <div class="content">
+            <div class="{{this.type}} meta">
+              {{beautifyType this.type}}
+            </div>
+            <div class="header">
+               {{this.name}}
+            </div>
+            <div class="description">
+              ${{this.price}} - {{this.hours}}h {{this.minutes}}m de recorrido
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        <div class="item">
+          <div class="content">
+            <div class="header">
+               Total: ${{totalPrice}}
+            </div>
+          </div>
+        </div>
       </div>
       <div>
-      <div class="ui green horizontal label">Total
-        <div class="detail">{{totalPrice}}</div>
-      </div>
+
       <p>
         Si este realmente es tu itinerario, ingresa aquí un correo electrónico
         a donde podamos enviarlo para llevarlo a donde necesites.

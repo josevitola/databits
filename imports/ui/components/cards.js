@@ -5,6 +5,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import Sortable from 'sortablejs';
 
 import { Itineraries } from '/imports/api/itinerary.js';
+import {beautifyType} from '/imports/ui/lib/beautify.js';
 
 import './cards.html';
 
@@ -146,6 +147,20 @@ Template.cardsModal.helpers({
 
   totalPrice: function() {
     return Session.get("totalPrice");
+  },
+
+  beautifyType: function(type) {
+    return beautifyType(type);
+  },
+
+  getPinImgName: function(type) {
+    if(type == "restaurant") {
+      return "rest";
+    } else if(type == "museum") {
+      return "muse";
+    } else if(type == "theatre") {
+      return "teat";
+    }
   }
 });
 
