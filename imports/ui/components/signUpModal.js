@@ -13,8 +13,7 @@ Template.signUpModal.onCreated(function() {
 });
 
 Template.signUpModal.helpers({
-  isEmailValid: function() {
-    console.log("not valid");
+  isEmailInvalid: function() {
     return Template.instance().checking.get() && !Template.instance().validEmail.get();
   },
 
@@ -55,11 +54,7 @@ Template.signUpModal.events({
       }
     } else Template.instance().isPass.set( false );
 
-    if(validateEmail(email)) {
-      Template.instance().validEmail.set( true );
-    } else {
-      Template.instance().validEmail.set( false );
-    }
+    Template.instance().validEmail.set( validateEmail(email) );
 
     Template.instance().checking.set( true );
 
