@@ -118,8 +118,7 @@ Template.map.events({
       lng: lng
     };
 
-    var hours = $(target).data("hours");
-    var minutes = $(target).data("minutes");
+    var time = $(target).data("time");
 
 
     var step = {
@@ -130,8 +129,7 @@ Template.map.events({
       webpage: web,
       price: price,
       type: type,
-      hours: hours,
-      minutes: minutes
+      time: time
     };
 
 
@@ -191,8 +189,7 @@ Template.map.events({
       location: location,
       webpage: "",
       price: 0,
-      hours: 0,
-      minutes: 0
+      time: "0:00"
     };
 
     var steps = Session.get("steps");

@@ -78,19 +78,21 @@ Template.cards.helpers({
     if(typeof steps !== "undefined") {
       var hours = 0;
       var minutes = 0;
+      var time;
       for(var i = 0; i < steps.length; i++) {
-        hours += steps[i].hours;
-        minutes += steps[i].minutes;
+        time = steps[i].time.split(":",2);
+        hours += parseInt(time[0]);
+        minutes += parseInt(time[1]);
       }
 
       hours += parseInt(minutes/60);
       minutes = minutes%60;
 
-      if(minutes == 0)
-        return hours + ':00';
+      if(minutes < 10)
+        return hours + ':0' + minutes;
       else
         return hours + ':' + minutes;
-    } else return 0;
+    } else return "0:00";
   }
 });
 
