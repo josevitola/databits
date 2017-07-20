@@ -66,15 +66,15 @@ body, html {
   width: auto;
 }
 
-.ui.museum .meta {
+.ui.museum .meta, .ui.items > .item .museum.meta {
   color: var(--museum-orange);
 }
 
-.ui.theatre .meta {
+.ui.theatre .meta, .ui.items > .item .theatre.meta {
   color: var(--theather-green);
 }
 
-.ui.restaurant .meta {
+.ui.restaurant .meta, .ui.items > .item .restaurant.meta {
   color: var(--food-red)
 }
 

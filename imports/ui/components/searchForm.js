@@ -17,6 +17,9 @@ function setDataOnMap(data, map) {
 
 Template.searchForm.onRendered(() => {
   $('.ui.checkbox').checkbox();
+  GoogleMaps.ready('map', (map) => {
+    $('.ui.checkbox').click();
+  })
 });
 
 Template.searchForm.events({

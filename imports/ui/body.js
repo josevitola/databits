@@ -10,7 +10,7 @@ import './components/introModal.js';
 import './body.html';
 
 
-if(!Meteor.user()) {
+if(!Meteor.user() && !Meteor.loggingIn()) {
   SemanticModal.generalModal('introModal');
 }
 

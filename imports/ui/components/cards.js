@@ -6,6 +6,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import Sortable from 'sortablejs';
 
 import { Itineraries } from '/imports/api/itinerary.js';
+import {beautifyType} from '/imports/ui/lib/beautify.js';
 
 import './cards.html';
 
@@ -69,12 +70,7 @@ Template.cards.helpers({
   },
 
   beautifyType: function(type) {
-    if(type == "restaurant")
-      return "Restaurante";
-    else if(type == "museum")
-      return "Museo";
-    else if(type == "theatre")
-      return "Teatro";
+    return beautifyType(type);
   },
 
   totalTime: function() {
@@ -150,6 +146,20 @@ Template.cardsModal.helpers({
 
   totalPrice: function() {
     return Session.get("totalPrice");
+  },
+
+  beautifyType: function(type) {
+    return beautifyType(type);
+  },
+
+  getPinImgName: function(type) {
+    if(type == "restaurant") {
+      return "rest";
+    } else if(type == "museum") {
+      return "muse";
+    } else if(type == "theatre") {
+      return "teat";
+    }
   }
 });
 
