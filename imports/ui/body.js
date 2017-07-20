@@ -11,7 +11,7 @@ import './body.html';
 
 
 if(!Meteor.user()) {
-  SemanticModal.generalModal('introModal');
+  // SemanticModal.generalModal('introModal');
 }
 
 function setCrimeDataByDay(day, count) {

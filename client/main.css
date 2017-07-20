@@ -66,18 +66,34 @@ body, html {
   width: auto;
 }
 
-.ui.museum .meta {
-  color: var(--museum-orange);
+.ui.horizontal.label {
+  color: rgba(255, 255, 255, 0.92);
 }
 
-.ui.theatre .meta {
-  color: var(--theather-green);
+.ui.museum.horizontal.label {
+  background-color: var(--museum-orange) !important;
 }
 
-.ui.restaurant .meta {
-  color: var(--food-red)
+.ui.theatre.horizontal.label {
+  background-color: var(--theather-green) !important;
+}
+
+.ui.restaurant.horizontal.label {
+  background-color: var(--food-red) !important;
+}
+
+.ui.card > .extra {
+  background: #f7f7f7;
+}
+
+.ui.card > .content > .header:not(.ui) {
+  margin-bottom: 7px;
 }
 
 #user-menu {
   color: white;
+}
+
+#search-input {
+  margin-bottom: 10px;
 }

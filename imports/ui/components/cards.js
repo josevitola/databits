@@ -1,4 +1,3 @@
-import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
@@ -17,31 +16,29 @@ Template.cards.onCreated(function() {
 Template.cards.onRendered(function() {
   var el = document.getElementById('sortable-cards');
   var sortable = Sortable.create(el, {
-    handle: '.move',
+    // handle: '.move',
     animation: 200,
-  	onEnd: function (evt) {
-      var oldIdx = Session.get('oldIdx');
-      var newIdx = Session.get('newIdx');
-        // console.log('end:', oldIdx, newIdx);
-
-      var steps = Session.get('steps');
-
-      var aux = steps[newIdx];
-      steps[newIdx] = steps[oldIdx];
-      steps[oldIdx] = aux;
-
-      Session.set('steps', steps);
-        // console.log(steps);
-  	},
+    onStart: function (evt) {
+      var auxSteps = Session.get('steps');
+      Session.set('auxSteps', auxSteps);
+        console.log('auxSteps:', auxSteps);
+    },
     onMove: function (evt, originalEvent) {
       var oldIdx = evt.dragged.getAttribute('data-step');
       var newIdx = evt.related.getAttribute('data-step');
-        // console.log('move:', oldIdx, newIdx);
+      var auxSteps = Session.get('auxSteps');
+        console.log('move:', oldIdx, newIdx);
 
-      Session.set('oldIdx', oldIdx);
-      Session.set('newIdx', newIdx);
+      var aux = auxSteps[newIdx];
+      auxSteps[newIdx] = auxSteps[oldIdx];
+      auxSteps[oldIdx] = aux;
 
-      return false;
+      Session.set('auxSteps', auxSteps);
+  	},
+  	onEnd: function (evt) {
+      var steps = Session.get('auxSteps');
+      Session.set('steps', steps);
+        console.log('steps', steps);
   	}
   });
 });
@@ -68,15 +65,6 @@ Template.cards.helpers({
     } else return 0;
   },
 
-  beautifyType: function(type) {
-    if(type == "restaurant")
-      return "Restaurante";
-    else if(type == "museum")
-      return "Museo";
-    else if(type == "theatre")
-      return "Teatro";
-  },
-
   totalTime: function() {
     var steps = Session.get("steps");
     if(typeof steps !== "undefined") {
@@ -84,7 +72,7 @@ Template.cards.helpers({
       var minutes = 0;
       var time;
       for(var i = 0; i < steps.length; i++) {
-        time = steps[i].time.split(":",2);
+        time = steps[i].time.split("h ", 2);
         hours += parseInt(time[0]);
         minutes += parseInt(time[1]);
       }
@@ -92,11 +80,17 @@ Template.cards.helpers({
       hours += parseInt(minutes/60);
       minutes = minutes%60;
 
-      if(minutes < 10)
-        return hours + ':0' + minutes;
-      else
-        return hours + ':' + minutes;
-    } else return "0:00";
+      return hours + 'h ' + minutes + 'min';
+    } else return "0h 0min";
+  },
+
+  beautifyType: function(type) {
+    if(type == "restaurant")
+      return "Restaurante";
+    else if(type == "museum")
+      return "Museo";
+    else if(type == "theatre")
+      return "Teatro";
   }
 });
 

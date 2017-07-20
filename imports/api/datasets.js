@@ -65,11 +65,7 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
           }else{
             minutes = parseInt(getRandomArbitrary(0, 59));
           }
-          var time;
-          if(minutes < 10)
-            time = hours + ':0' + minutes;
-          else
-            time = hours + ':' + minutes;
+          var time = hours + 'h ' + minutes + 'min';
 
           // variables definition
           if(url=='ghc6-jiw3.json') {
@@ -78,6 +74,12 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
           } else {
             name = capitalizeFirstLetter(entry.nombre_del_museo);
             phone = entry.telefono_fijo;
+          }
+
+          // pagina web
+          var web = entry.pagina_web;
+          if(web == 'N.D') {
+            web = 'No Disponible';
           }
 
           // marker definition
@@ -96,7 +98,7 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
             phone: phone,
             price: price,
             time: time,
-            web: entry.pagina_web,
+            web: web,
             placeId: placeId,
             marker: marker,
             html: '<center><h3>'+ name +'</h3>' +
@@ -106,12 +108,12 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
             '" class="ui medium rounded image"></img></center>' +
             '<br><b>Dirección: </b> '+ entry.direccion +
             '<br><b>Teléfono: </b> ' + phone +
-            '<br><b>Sitio web: </b> <a href="' + entry.pagina_web + '">' + entry.pagina_web + '</a>' +
+            '<br><b>Sitio web: </b> <a href="' + web + '">' + web + '</a>' +
             '<br><b style="color: green">Precio Promedio: $</b> ' + price +
             '<br><b style="color: green">Tiempo Promedio: </b> ' + time +
             '<br><br><button class="ui labeled icon green add step button right floated"' +
             'data-name="' + name + '" data-phone="' + phone + '" data-address="'
-            + entry.direccion + '" data-web="' + entry.pagina_web + '" data-price="' + price +
+            + entry.direccion + '" data-web="' + web + '" data-price="' + price +
             '" data-lat="' + lat + '" data-lng="' + lng + '" data-type="' + type +
             '" data-time="' + time +
             '"><i class="plus icon"></i>Agregar</button>'
