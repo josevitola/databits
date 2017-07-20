@@ -11,22 +11,21 @@
     <div class="ui link {{this.type}} card" style="width: 100%;" data-step="{{@index}}">
       <div class="main content">
         <i class="right floated remove icon" data-step="{{@index}}"></i>
-        <i class="right floated angle down icon" data-step="{{@index}}"></i>
-        <i class="right floated angle up icon" data-step="{{@index}}"></i>
-        <i class="right floated move icon"></i>
-        <div class="header">{{getIndex @index}}. {{this.name}}</div>
-        <div class="meta">{{beautifyType this.type}}</div>
+        <div class="header">
+          {{getIndex @index}}. {{this.name}}
+        </div>
+        <div class="meta">
+          <div class="ui {{this.type}} horizontal label">
+            <!-- <i class="hotel icon"></i> -->
+            {{beautifyType this.type}}
+          </div>
+          <b>{{this.address}}</b>
+        </div>
       </div>
-      <div class="extra content">
-        <b>{{this.address}}</b>
-        <span class="right floated" style="color: green; font-size: 1.3em">
+      <div class="extra content" style="color:rgba(0, 0, 0, 0.85); font-size:1.3em">
+        <b>{{this.time}}</b>
+        <span class="right floated">
           <b>$ {{this.price}}</b>
-        </span>
-      </div>
-      <div class="extra content">
-        <b>Tiempo promedio</b>
-        <span class="right floated" style="color: green; font-size: 1.3em">
-          <b>{{this.time}}</b>
         </span>
       </div>
     </div>
@@ -37,12 +36,17 @@
     Precio Total: $ {{totalPrice}}<br>
     Tiempo total: {{totalTime}}
   </div>
-
   {{#if steps}}
   <div class="ui green end steps button">
     Finalizar
   </div>
   {{/if}}
+  <div class="ui grid">
+    <div class="eleven wide column" style="padding-left:0; width:100%">
+    </div>
+    <div class="five wide column" style="width:100%">
+    </div>
+  </div>
 </template>
 
 <template name="cardsModal">

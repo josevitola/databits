@@ -10,8 +10,8 @@ import './components/introModal.js';
 import './body.html';
 
 
-if(!Meteor.user() && !Meteor.loggingIn()) {
-  SemanticModal.generalModal('introModal');
+if(!Meteor.user()) {
+  // SemanticModal.generalModal('introModal');
 }
 
 function setCrimeDataByDay(day, count) {
