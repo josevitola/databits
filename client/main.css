@@ -20,7 +20,7 @@ body, html {
 .ui.grid {
   margin: 0px;
   padding: 0px;
-  height: calc(100% - 70px)
+  height: calc(100% - 70px);
 }
 
 .map-container {
@@ -28,9 +28,16 @@ body, html {
   height: 100%;
 }
 
-#sidebar {
+#sortable-cards {
+  padding: 5px;
+  max-height: calc(100% - 145px);
   overflow-x: hidden;
   overflow-y: visible;
+}
+
+#sidebar{
+  margin-top: -20px;
+  /*background: black;*/
 }
 
 #main-menu {

@@ -8,7 +8,7 @@
 
   <div id="sortable-cards">
     {{#each steps}}
-    <div class="ui link {{this.type}} card" style="width: 100%;" data-step="{{@index}}">
+    <div class="ui link {{this.type}} fluid card" data-step="{{@index}}">
       <div class="main content">
         <i class="right floated remove icon" data-step="{{@index}}"></i>
         <div class="header">
@@ -32,21 +32,15 @@
     {{/each}}
   </div>
 
-  <div class="ui green message">
+  <div class="ui green compact message">
     Precio Total: $ {{totalPrice}}<br>
     Tiempo total: {{totalTime}}
   </div>
   {{#if steps}}
-  <div class="ui green end steps button">
+  <div class="ui green end steps right floated button">
     Finalizar
   </div>
   {{/if}}
-  <div class="ui grid">
-    <div class="eleven wide column" style="padding-left:0; width:100%">
-    </div>
-    <div class="five wide column" style="width:100%">
-    </div>
-  </div>
 </template>
 
 <template name="cardsModal">
