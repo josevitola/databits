@@ -9,6 +9,7 @@
     "bcrypt": "^1.0.2",
     "c3": "^0.4.12",
     "meteor-node-stubs": "~0.2.4",
+    "moment": "^2.18.1",
     "sortablejs": "^1.6.0"
   },
   "devDependencies": {

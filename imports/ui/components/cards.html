@@ -80,26 +80,27 @@
           </div>
         </div>
       </div>
-      <div>
 
       <p>
         Si este realmente es tu itinerario, ingresa aquí un correo electrónico
         a donde podamos enviarlo para llevarlo a donde necesites.
-
-        <form class="ui form">
-          <input type="text" class="ui send email input" placeholder="Correo electrónico...">
-        </form>
       </p>
+
+      <form class="ui form">
+        <div class="field">
+          <input type="text" class="ui send email input" placeholder="Correo electrónico...">
+          {{#if isEmailInvalid}}
+          <div class="ui pointing red basic label">
+            Ingresa un correo electrónico válido (ej. micorreo@electronico.com).
+          </div>
+          {{/if}}
+        </div>
+      </form>
+
+      <div class="ui yep positive right labeled icon button right floated">
+        Agregar Itinerario
+        <i class="checkmark icon"></i>
       </div>
-    </div>
-  </div>
-  <div class="actions">
-    <div class="ui black deny button">
-      Cancelar
-    </div>
-    <div class="ui yep positive right labeled icon button">
-      Agregar Itinerario
-      <i class="checkmark icon"></i>
     </div>
   </div>
 </template>

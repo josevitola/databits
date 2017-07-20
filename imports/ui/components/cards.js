@@ -5,6 +5,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import Sortable from 'sortablejs';
 
 import { Itineraries } from '/imports/api/itinerary.js';
+import {validateEmail} from '/imports/api/users.js';
 import {beautifyType} from '/imports/ui/lib/beautify.js';
 
 import './cards.html';
@@ -138,6 +139,10 @@ Template.cards.events({
   }
 });
 
+Template.cardsModal.onCreated(function() {
+  this.checking = new ReactiveVar( false );
+  this.validEmail = new ReactiveVar( false );
+});
 
 Template.cardsModal.helpers({
   steps: function() {
@@ -161,27 +166,36 @@ Template.cardsModal.helpers({
     } else if(type == "theatre") {
       return "teat";
     }
+  },
+
+  isEmailInvalid: function() {
+    return Template.instance().checking.get() && !Template.instance().validEmail.get();
   }
 });
 
 Template.cardsModal.events({
   'click .ui.positive.button'(event) {
-    var steps = Session.get("steps");
-    var price = Session.get("totalPrice");
-
+    event.preventDefault();
     var email = $('.ui.send.email.input').val();
-    console.log(email);
+    Template.instance().validEmail.set( validateEmail(email) );
+    Template.instance().checking.set( true );
 
+    if(Template.instance().validEmail.get()) {
+      var steps = Session.get("steps");
+      var price = Session.get("totalPrice");
 
-    Meteor.call('sendItineraryToEmail',
-      email,
-      'jdnietov@unal.edu.co',
-      steps,
-      price,
-      Meteor.user(),
-      (error, result) => {
-        alert(error.message);
-      }
-    );
+      Meteor.call('sendItineraryToEmail',
+        email,
+        'jdnietov@unal.edu.co',
+        steps,
+        price,
+        Meteor.user(),
+        (error, result) => {
+          if(error) alert(error.message);
+        }
+      );
+
+      $('#generalModal').modal('hide');
+    }
   }
 });

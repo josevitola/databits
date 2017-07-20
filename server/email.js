@@ -1,4 +1,5 @@
 import { check } from 'meteor/check';
+import { beautifyDate, formatTime } from '/imports/ui/lib/beautify.js';
 
 const user = "postmaster@sandbox11d7438fbdc6432fbe532aa1b1aa2637.mailgun.org";
 const pass = "bd70c56c1def29482d67807d55a47b87";
@@ -11,9 +12,10 @@ Meteor.startup(() => {
 });
 
 function applyTextTemplate(user, steps, price) {
-  var message = "Hola, " +
-    user == null ?
-    Meteor.users.find({_id: user}).fetch().profile.name : "usuario" +
+  var username;
+  if(user == null) username = "usuario";
+  else username = Meteor.users.find({_id: user}).fetch().profile.name;
+  var message = "Hola, " + username +
     "! Recientemente usaste el servicio de Puerta Bogotá " +
     "y creaste un itinerario para tu día de turista. Te lo enviamos de forma " +
     "simplificada aquí: \n\n";
@@ -42,7 +44,7 @@ Meteor.methods({
 
     // Input
     var d = new Date();
-    var subject = "Itinerario creado el " + d.toString();
+    var subject = "Itinerario creado el " + beautifyDate(d) + " a las " + formatTime(d);
     var text = applyTextTemplate(user, steps, price);
 
     Email.send({
