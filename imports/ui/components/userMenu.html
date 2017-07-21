@@ -35,6 +35,10 @@
   </div>
   <div class="content">
     <div class="description">
+      {{#unless itineraries}}
+        No tienes itinerarios todavía! Crea uno usando la interfaz de mapa de Planit.
+      {{/unless}}
+
       {{#each itineraries}}
       <p>
         Itinerario creado el {{this.createdAt}}.
@@ -50,11 +54,6 @@
         </ol>
       </p>
       {{/each}}
-    </div>
-  </div>
-  <div class="actions">
-    <div class="ui blue deny button">
-      Volver
     </div>
   </div>
 </template>

@@ -120,7 +120,6 @@ Template.map.events({
 
     var time = $(target).data("time");
 
-
     var step = {
       name: name,
       phone: phone,
@@ -189,6 +188,7 @@ Template.map.events({
       location: location,
       webpage: "",
       price: 0,
+      type: "point",
       time: "0:00"
     };
 

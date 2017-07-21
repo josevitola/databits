@@ -176,26 +176,32 @@ Template.cardsModal.helpers({
 Template.cardsModal.events({
   'click .ui.positive.button'(event) {
     event.preventDefault();
-    var email = $('.ui.send.email.input').val();
-    Template.instance().validEmail.set( validateEmail(email) );
-    Template.instance().checking.set( true );
 
-    if(Template.instance().validEmail.get()) {
-      var steps = Session.get("steps");
+    var steps = Session.get("steps");
+
+    if(Meteor.user()) {
+      Meteor.call('insertItinerary', steps, (error, result) => {
+        if(error) alert(error.message);
+      });
+    } else {
+      var email = $('.ui.send.email.input').val();
       var price = Session.get("totalPrice");
+      
+      Template.instance().validEmail.set( validateEmail(email) );
+      Template.instance().checking.set( true );
 
-      Meteor.call('sendItineraryToEmail',
-        email,
-        'jdnietov@unal.edu.co',
-        steps,
-        price,
-        Meteor.user(),
-        (error, result) => {
-          if(error) alert(error.message);
+      if(Template.instance().validEmail.get()) {
+          Meteor.call('sendItineraryToEmail',
+            email,
+            steps,
+            price,
+            (error, result) => {
+              if(error) alert(error.message);
+            }
+          );
         }
-      );
-
-      $('#generalModal').modal('hide');
     }
+
+    $('#generalModal').modal('hide');
   }
 });

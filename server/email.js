@@ -11,10 +11,10 @@ Meteor.startup(() => {
   process.env.MAIL_URL = url;
 });
 
-function applyTextTemplate(user, steps, price) {
+function applyTextTemplate(userId, steps, price) {
   var username;
-  if(user == null) username = "usuario";
-  else username = Meteor.users.find({_id: user}).fetch().profile.name;
+  if(userId == null) username = "usuario";
+  else username = Meteor.users.find({_id: userId}).fetch().profile.name;
   var message = "Hola, " + username +
     "! Recientemente usaste el servicio de Puerta Bogotá " +
     "y creaste un itinerario para tu día de turista. Te lo enviamos de forma " +
@@ -34,9 +34,11 @@ function applyTextTemplate(user, steps, price) {
 }
 
 Meteor.methods({
-  sendItineraryToEmail(to, from, steps, price, user) {
+  sendItineraryToEmail(to, steps, price) {
     // Make sure that all arguments are strings.
-    check([to, from], [String]);
+    check(to, String);
+    check(steps, [Object]);
+    check(price, Number);
 
     // Let other method calls from the same client start running, without
     // waiting for the email sending to complete.
@@ -44,8 +46,9 @@ Meteor.methods({
 
     // Input
     var d = new Date();
+    var from = 'jdnietov@unal.edu.co';
     var subject = "Itinerario creado el " + beautifyDate(d) + " a las " + formatTime(d);
-    var text = applyTextTemplate(user, steps, price);
+    var text = applyTextTemplate(this.userId, steps, price);
 
     Email.send({
       to,

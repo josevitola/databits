@@ -50,7 +50,25 @@
   <div class="content">
     <div class="description">
       <p>
-        Verifica lo que ingresaste. <b>¿Es éste tu itinerario?</b>
+        Verifica lo que ingresaste. <b>¿Es éste tu itinerario?</b><br/>
+        Si así es,
+        {{#if currentUser}}
+        presiona "Continuar" para guardar tu itinerario en tu cuenta y que puedas
+        acceder a él cuando quieras.
+        {{else}}
+        ingresa aquí un correo electrónico a donde podamos enviarlo para llevarlo a donde necesites. <br><br>
+
+        <form class="ui form">
+          <div class="field">
+            <input type="text" class="ui send email input" placeholder="Correo electrónico...">
+            {{#if isEmailInvalid}}
+            <div class="ui pointing red basic label">
+              Ingresa un correo electrónico válido (ej. micorreo@electronico.com).
+            </div>
+            {{/if}}
+          </div>
+        </form>
+        {{/if}}
       </p>
 
       <div class="ui divided items">
@@ -74,33 +92,17 @@
         {{/each}}
         <div class="item">
           <div class="content">
-            <div class="header">
+            <div class="right floated header">
                Total: ${{totalPrice}}
             </div>
           </div>
         </div>
       </div>
 
-      <p>
-        Si este realmente es tu itinerario, ingresa aquí un correo electrónico
-        a donde podamos enviarlo para llevarlo a donde necesites.
-      </p>
-
-      <form class="ui form">
-        <div class="field">
-          <input type="text" class="ui send email input" placeholder="Correo electrónico...">
-          {{#if isEmailInvalid}}
-          <div class="ui pointing red basic label">
-            Ingresa un correo electrónico válido (ej. micorreo@electronico.com).
-          </div>
-          {{/if}}
-        </div>
-      </form>
-
-      <div class="ui yep positive right labeled icon button right floated">
-        Agregar Itinerario
+      <button class="ui yep positive right labeled icon button right floated">
+        Continuar
         <i class="checkmark icon"></i>
-      </div>
+      </button>
     </div>
   </div>
 </template>
