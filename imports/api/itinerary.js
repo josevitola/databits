@@ -30,5 +30,13 @@ Meteor.methods({
 
     Itineraries.schema.validate(itinerary);
     Itineraries.insert(itinerary);
+  },
+
+  removeItinerary( id ) {
+    // check(id, Meteor.Collection.ObjectID);
+    var itinerary = Itineraries.find({"_id": id}).fetch()[0];
+    if(itinerary.userId == this.userId) {
+      Itineraries.remove(id);
+    }
   }
 });

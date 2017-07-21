@@ -112,13 +112,14 @@ Template.map.events({
     var web = $(target).data("web");
     var price = $(target).data("price");
     var type = $(target).data("type");
+    var time = $(target).data("time");
 
+    phone = phone.toString();
     var location = {
       lat: lat,
       lng: lng
     };
 
-    var time = $(target).data("time");
 
     var step = {
       name: name,

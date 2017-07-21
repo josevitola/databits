@@ -39,21 +39,36 @@
         No tienes itinerarios todavía! Crea uno usando la interfaz de mapa de Planit.
       {{/unless}}
 
-      {{#each itineraries}}
-      <p>
-        Itinerario creado el {{this.createdAt}}.
-        <div class="ui green horizontal label">Total
-          <div class="detail">{{this.price}}</div>
+      {{#if itineraries}}
+      <div class="ui accordion">
+        {{#each itineraries}}
+        <div class="title">
+          <i class="dropdown icon"></i>
+          Itinerario creado el {{getItinDate this}}.
         </div>
-        <ol>
-          {{#each this.steps}}
-            <li>
-              {{this.name}}
-            </li>
-          {{/each}}
-        </ol>
-      </p>
-      {{/each}}
+        <div class="content">
+
+          <div class="ui tablet stackable steps">
+            {{#each this.steps}}
+            <div class="link step"><div class="ui floating {{this.type}} horizontal label">
+            {{beautifyType this.type}}
+            </div>
+              <div class="content">
+                <div class="title">{{this.name}}
+                </div>
+                <div class="description">
+                  ${{this.price}}, {{this.time}}
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+
+          <a href="#" class="itin remove" data-id="{{this._id}}">Eliminar itinerario</a>
+        </div>
+        {{/each}}
+      </div>
+    {{/if}}
     </div>
   </div>
 </template>
