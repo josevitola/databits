@@ -3,8 +3,8 @@ import { Template } from 'meteor/templating';
 import './introModal.html';
 
 Template.introModal.events({
-  'click .ui.close.button' {
+  'click .ui.labeled.icon.close.button'() {
+    console.log('template');
     $('#generalModal').modal('hide');
-    console.log('jalsk');
-  };
+  }
 });

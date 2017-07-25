@@ -2,31 +2,84 @@ import { Template } from 'meteor/templating';
 
 import './signUpModal.html';
 
-Template.signUpModal.events({
-  // 'click #changeToLogin'() {
-  //   console.log("close");
-  //   $('#generalModal').modal('hide');
-  //   SemanticModal.generalModal('loginModal');
-  // },
+import {validateEmail} from '/imports/api/users.js';
 
+Template.signUpModal.onCreated(function() {
+  this.checking = new ReactiveVar( false );
+  this.isName = new ReactiveVar( false );
+  this.isPass = new ReactiveVar( false );
+  this.validEmail = new ReactiveVar( false );
+  this.matchPass = new ReactiveVar( false );
+});
+
+Template.signUpModal.helpers({
+  isEmailValid: function() {
+    console.log("not valid");
+    return Template.instance().checking.get() && !Template.instance().validEmail.get();
+  },
+
+  doPassMatch: function() {
+    return Template.instance().checking.get() && Template.instance().isPass.get() && !Template.instance().matchPass.get();
+  },
+
+  isNotPass: function() {
+    return Template.instance().checking.get() && !Template.instance().isPass.get();
+  },
+
+  isNotName: function() {
+    return Template.instance().checking.get() && !Template.instance().isName.get();
+  },
+});
+
+
+Template.signUpModal.events({
   'submit #signUpForm'(event) {
+    event.preventDefault();
     var name = $('input[name=name]').val();
     var email = $('input[name=email]').val();
     var password = $('input[name=password]').val();
     var checkPassword = $('input[name=checkPassword]').val();
 
-    Accounts.createUser({
-      email: email,
-      password: password,
-      profile: {
-        name: name
-      }
-    }, () => {
-      location.reload();
-    });
+    if(name.length != 0) {
+      Template.instance().isName.set( true );
+    } else {
+      Template.instance().isName.set( false );
+    }
 
-    console.log("success");
-    event.preventDefault();
+    if(password.length != 0) {
+      Template.instance().isPass.set( true );
+      if(password === checkPassword) {
+        Template.instance().matchPass.set( true );
+      } else {
+        Template.instance().matchPass.set( false );
+      }
+    } else Template.instance().isPass.set( false );
+
+    if(validateEmail(email)) {
+      Template.instance().validEmail.set( true );
+    } else {
+      Template.instance().validEmail.set( false );
+    }
+
+    Template.instance().checking.set( true );
+
+    var instance = Template.instance();
+    if(instance.isName.get() &&
+      instance.validEmail.get() &&
+      instance.matchPass.get() &&
+      instance.isPass.get()) {
+      Accounts.createUser({
+        email: email,
+        password: password,
+        profile: {
+          name: name
+        }
+      }, () => {
+        location.reload();
+      });
+
+      console.log("success");
+    }
   }
 });
 

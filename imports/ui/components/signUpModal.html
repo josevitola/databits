@@ -13,12 +13,32 @@
       <form id="signUpForm" class="ui form">
         <div class="field">
           <input type="text" name="name" placeholder="Tu nombre...">
+          {{#if isNotName}}
+          <div class="ui pointing red basic label">
+            Por favor ingrese un nombre.
+          </div>
+          {{/if}}
         </div>
         <div class="field">
           <input type="email" name="email" placeholder="Correo electrónico...">
+          {{#if isEmailValid}}
+          <div class="ui pointing red basic label">
+            El email no es válido.
+          </div>
+          {{/if}}
         </div>
         <div class="field">
           <input type="password" name="password" placeholder="Tu contraseña de Planit...">
+          {{#if isNotPass}}
+          <div class="ui pointing red basic label">
+            Por favor ingresa una contraseña.
+          </div>
+          {{/if}}
+          {{#if doPassMatch}}
+          <div class="ui pointing red basic label">
+            Las contraseñas no coinciden.
+          </div>
+          {{/if}}
         </div>
         <div class="field">
           <input type="password" name="checkPassword" placeholder="Verifica tu contraseña...">

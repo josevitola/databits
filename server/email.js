@@ -53,5 +53,3 @@ Meteor.methods({
     });
   }
 });
-
-console.log("email module loaded");
