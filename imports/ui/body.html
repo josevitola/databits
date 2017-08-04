@@ -2,8 +2,10 @@
   {{> mainMenu}}
   <div class="ui grid">
     <div class="five wide column" id="sidebar">
-      <div class="ui dividing header">Búsqueda de lugares</div>
-      {{> searchForm}}
+      <div style="display:none;">
+        <div class="ui dividing header">Búsqueda de lugares</div>
+        {{> searchForm}}
+      </div>
       <div class="ui dividing header">Tu itinerario del día</div>
       {{> cards}}
     </div>

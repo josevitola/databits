@@ -30,11 +30,11 @@ Template.map.onCreated(function() {
     infowindow = new google.maps.InfoWindow({content: ''});
 
     google.maps.event.addListener(newMarker, 'click', function(){
-      mewPointMarkerInfo(map.instance, newMarker, infowindow);
+      newPointMarkerInfo(map.instance, newMarker, infowindow);
     });
 
     google.maps.event.addListener(newMarker, 'dragend', function(){
-      mewPointMarkerInfo(map.instance, newMarker, infowindow);
+      newPointMarkerInfo(map.instance, newMarker, infowindow);
     });
 
     google.maps.event.addListener(map.instance, 'click', function(event){
@@ -42,7 +42,7 @@ Template.map.onCreated(function() {
       if(!newMarker.getVisible()){
         newMarker.setVisible(true);
       }
-      mewPointMarkerInfo(map.instance, newMarker, infowindow);
+      newPointMarkerInfo(map.instance, newMarker, infowindow);
     });
 
     setAppMap(map);
@@ -50,12 +50,15 @@ Template.map.onCreated(function() {
   });
 });
 
-function mewPointMarkerInfo(map, marker, infowindow){
+function newPointMarkerInfo(map, marker, infowindow){
   var id = pointsData.length +1;
   var name = "Punto " + id;
   var lat = newMarker.position.lat();
   var lng = newMarker.position.lng();
   var location = {lat: lat, lng: lng};
+
+  var type = "new";
+  var time = "0h 30min";
 
   var address = "Falta direccion";
   var geocoder = new google.maps.Geocoder;
@@ -76,6 +79,8 @@ function mewPointMarkerInfo(map, marker, infowindow){
                 '" data-address="' + address +
                 '" data-lat="' + lat +
                 '" data-lng="' + lng +
+                '" data-type="' + type +
+                '" data-time="' + time +
                 '"><i class="plus icon"></i>Agregar</button>';
     infowindow.setContent(html);
     infowindow.open(map, marker);
@@ -88,9 +93,9 @@ Template.map.helpers({
     return error && error.message;
   },
   mapOptions: function() {
-    var latLng = Geolocation.latLng();
+    // var latLng = Geolocation.latLng();
     // Initialize the map once we have the latLng.
-    if (GoogleMaps.loaded() && latLng) {
+    if (GoogleMaps.loaded()) {
       return {center: candelariaLatLng, zoom: MAP_ZOOM};
     }
   }
@@ -112,14 +117,13 @@ Template.map.events({
     var web = $(target).data("web");
     var price = $(target).data("price");
     var type = $(target).data("type");
+    var time = $(target).data("time");
 
+    phone = phone.toString();
     var location = {
       lat: lat,
       lng: lng
     };
-
-    var hours = $(target).data("hours");
-    var minutes = $(target).data("minutes");
 
 
     var step = {
@@ -130,8 +134,7 @@ Template.map.events({
       webpage: web,
       price: price,
       type: type,
-      hours: hours,
-      minutes: minutes
+      time: time
     };
 
 
@@ -155,6 +158,8 @@ Template.map.events({
     var lat = $(target).data("lat");
     var lng = $(target).data("lng");
     var location = {lat: lat, lng: lng};
+    var type = $(target).data("type");
+    var time = $(target).data("time");
 
     var marker = new google.maps.Marker({
       position: location,
@@ -175,6 +180,8 @@ Template.map.events({
             '" data-address="' + address +
             '" data-lat="' + lat +
             '" data-lng="' + lng +
+            '" data-type="' + type +
+            '" data-time="' + time +
             '"><i class="plus icon"></i>Agregar</button>'
     }
     google.maps.event.addListener(marker, 'click', function() {
@@ -191,8 +198,8 @@ Template.map.events({
       location: location,
       webpage: "",
       price: 0,
-      hours: 0,
-      minutes: 0
+      type: type,
+      time: time
     };
 
     var steps = Session.get("steps");

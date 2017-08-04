@@ -1,4 +1,3 @@
-import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
@@ -6,6 +5,8 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import Sortable from 'sortablejs';
 
 import { Itineraries } from '/imports/api/itinerary.js';
+import {validateEmail} from '/imports/api/users.js';
+import {beautifyType} from '/imports/ui/lib/beautify.js';
 
 import './cards.html';
 
@@ -17,31 +18,29 @@ Template.cards.onCreated(function() {
 Template.cards.onRendered(function() {
   var el = document.getElementById('sortable-cards');
   var sortable = Sortable.create(el, {
-    handle: '.move',
+    // handle: '.move',
     animation: 200,
-  	onEnd: function (evt) {
-      var oldIdx = Session.get('oldIdx');
-      var newIdx = Session.get('newIdx');
-        // console.log('end:', oldIdx, newIdx);
-
-      var steps = Session.get('steps');
-
-      var aux = steps[newIdx];
-      steps[newIdx] = steps[oldIdx];
-      steps[oldIdx] = aux;
-
-      Session.set('steps', steps);
-        // console.log(steps);
-  	},
+    onStart: function (evt) {
+      var auxSteps = Session.get('steps');
+      Session.set('auxSteps', auxSteps);
+        console.log('auxSteps:', auxSteps);
+    },
     onMove: function (evt, originalEvent) {
       var oldIdx = evt.dragged.getAttribute('data-step');
       var newIdx = evt.related.getAttribute('data-step');
-        // console.log('move:', oldIdx, newIdx);
+      var auxSteps = Session.get('auxSteps');
+        console.log('move:', oldIdx, newIdx);
 
-      Session.set('oldIdx', oldIdx);
-      Session.set('newIdx', newIdx);
+      var aux = auxSteps[newIdx];
+      auxSteps[newIdx] = auxSteps[oldIdx];
+      auxSteps[oldIdx] = aux;
 
-      return false;
+      Session.set('auxSteps', auxSteps);
+  	},
+  	onEnd: function (evt) {
+      var steps = Session.get('auxSteps');
+      Session.set('steps', steps);
+        console.log('steps', steps);
   	}
   });
 });
@@ -68,6 +67,25 @@ Template.cards.helpers({
     } else return 0;
   },
 
+  totalTime: function() {
+    var steps = Session.get("steps");
+    if(typeof steps !== "undefined") {
+      var hours = 0;
+      var minutes = 0;
+      var time;
+      for(var i = 0; i < steps.length; i++) {
+        time = steps[i].time.split("h ", 2);
+        hours += parseInt(time[0]);
+        minutes += parseInt(time[1]);
+      }
+
+      hours += parseInt(minutes/60);
+      minutes = minutes%60;
+
+      return hours + 'h ' + minutes + 'min';
+    } else return "0h 0min";
+  },
+
   beautifyType: function(type) {
     if(type == "restaurant")
       return "Restaurante";
@@ -75,26 +93,6 @@ Template.cards.helpers({
       return "Museo";
     else if(type == "theatre")
       return "Teatro";
-  },
-
-  totalTime: function() {
-    var steps = Session.get("steps");
-    if(typeof steps !== "undefined") {
-      var hours = 0;
-      var minutes = 0;
-      for(var i = 0; i < steps.length; i++) {
-        hours += steps[i].hours;
-        minutes += steps[i].minutes;
-      }
-
-      hours += parseInt(minutes/60);
-      minutes = minutes%60;
-
-      if(minutes == 0)
-        return hours + ':00';
-      else
-        return hours + ':' + minutes;
-    } else return 0;
   }
 });
 
@@ -141,6 +139,10 @@ Template.cards.events({
   }
 });
 
+Template.cardsModal.onCreated(function() {
+  this.checking = new ReactiveVar( false );
+  this.validEmail = new ReactiveVar( false );
+});
 
 Template.cardsModal.helpers({
   steps: function() {
@@ -150,27 +152,56 @@ Template.cardsModal.helpers({
 
   totalPrice: function() {
     return Session.get("totalPrice");
+  },
+
+  beautifyType: function(type) {
+    return beautifyType(type);
+  },
+
+  getPinImgName: function(type) {
+    if(type == "restaurant") {
+      return "rest";
+    } else if(type == "museum") {
+      return "muse";
+    } else if(type == "theatre") {
+      return "teat";
+    }
+  },
+
+  isEmailInvalid: function() {
+    return Template.instance().checking.get() && !Template.instance().validEmail.get();
   }
 });
 
 Template.cardsModal.events({
   'click .ui.positive.button'(event) {
+    event.preventDefault();
+
     var steps = Session.get("steps");
-    var price = Session.get("totalPrice");
 
-    var email = $('.ui.send.email.input').val();
-    console.log(email);
+    if(Meteor.user()) {
+      Meteor.call('insertItinerary', steps, (error, result) => {
+        if(error) alert(error.message);
+      });
+    } else {
+      var email = $('.ui.send.email.input').val();
+      var price = Session.get("totalPrice");
 
+      Template.instance().validEmail.set( validateEmail(email) );
+      Template.instance().checking.set( true );
 
-    Meteor.call('sendItineraryToEmail',
-      email,
-      'jdnietov@unal.edu.co',
-      steps,
-      price,
-      Meteor.user(),
-      (error, result) => {
-        alert(error.message);
-      }
-    );
+      if(Template.instance().validEmail.get()) {
+          Meteor.call('sendItineraryToEmail',
+            email,
+            steps,
+            price,
+            (error, result) => {
+              if(error) alert(error.message);
+            }
+          );
+        }
+    }
+
+    $('#generalModal').modal('hide');
   }
 });

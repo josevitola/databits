@@ -61,11 +61,11 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
           var hours = parseInt(getRandomArbitrary(0, 5));
           var minutes = 0;
           if(hours == 0){
-            minutes = parseInt(getRandomArbitrary(1, 59));
+            minutes = parseInt(getRandomArbitrary(30, 59));
           }else{
             minutes = parseInt(getRandomArbitrary(0, 59));
           }
-
+          var time = hours + 'h ' + minutes + 'min';
 
           // variables definition
           if(url=='ghc6-jiw3.json') {
@@ -74,6 +74,12 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
           } else {
             name = capitalizeFirstLetter(entry.nombre_del_museo);
             phone = entry.telefono_fijo;
+          }
+
+          // pagina web
+          var web = entry.pagina_web;
+          if(web == 'N.D') {
+            web = 'No Disponible';
           }
 
           // marker definition
@@ -91,9 +97,8 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
             location: location,
             phone: phone,
             price: price,
-            hours: hours,
-            minutes: minutes,
-            web: entry.pagina_web,
+            time: time,
+            web: web,
             placeId: placeId,
             marker: marker,
             html: '<center><h3>'+ name +'</h3>' +
@@ -103,14 +108,14 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
             '" class="ui medium rounded image"></img></center>' +
             '<br><b>Dirección: </b> '+ entry.direccion +
             '<br><b>Teléfono: </b> ' + phone +
-            '<br><b>Sitio web: </b> <a href="' + entry.pagina_web + '">' + entry.pagina_web + '</a>' +
+            '<br><b>Sitio web: </b> <a href="' + web + '">' + web + '</a>' +
             '<br><b style="color: green">Precio Promedio: $</b> ' + price +
-            '<br><b style="color: green">Tiempo Promedio: </b> ' + hours + ':' + minutes +
+            '<br><b style="color: green">Tiempo Promedio: </b> ' + time +
             '<br><br><button class="ui labeled icon green add step button right floated"' +
             'data-name="' + name + '" data-phone="' + phone + '" data-address="'
-            + entry.direccion + '" data-web="' + entry.pagina_web + '" data-price="' + price +
+            + entry.direccion + '" data-web="' + web + '" data-price="' + price +
             '" data-lat="' + lat + '" data-lng="' + lng + '" data-type="' + type +
-            '" data-hours="' + hours + '" data-minutes="' + minutes +
+            '" data-time="' + time +
             '"><i class="plus icon"></i>Agregar</button>'
           }
           google.maps.event.addListener(marker, 'click', function() {

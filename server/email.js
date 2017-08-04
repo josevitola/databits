@@ -1,4 +1,5 @@
 import { check } from 'meteor/check';
+import { beautifyDate, formatTime } from '/imports/ui/lib/beautify.js';
 
 const user = "postmaster@sandbox11d7438fbdc6432fbe532aa1b1aa2637.mailgun.org";
 const pass = "bd70c56c1def29482d67807d55a47b87";
@@ -10,10 +11,11 @@ Meteor.startup(() => {
   process.env.MAIL_URL = url;
 });
 
-function applyTextTemplate(user, steps, price) {
-  var message = "Hola, " +
-    user == null ?
-    Meteor.users.find({_id: user}).fetch().profile.name : "usuario" +
+function applyTextTemplate(userId, steps, price) {
+  var username;
+  if(userId == null) username = "usuario";
+  else username = Meteor.users.find({_id: userId}).fetch().profile.name;
+  var message = "Hola, " + username +
     "! Recientemente usaste el servicio de Puerta Bogotá " +
     "y creaste un itinerario para tu día de turista. Te lo enviamos de forma " +
     "simplificada aquí: \n\n";
@@ -32,9 +34,11 @@ function applyTextTemplate(user, steps, price) {
 }
 
 Meteor.methods({
-  sendItineraryToEmail(to, from, steps, price, user) {
+  sendItineraryToEmail(to, steps, price) {
     // Make sure that all arguments are strings.
-    check([to, from], [String]);
+    check(to, String);
+    check(steps, [Object]);
+    check(price, Number);
 
     // Let other method calls from the same client start running, without
     // waiting for the email sending to complete.
@@ -42,8 +46,9 @@ Meteor.methods({
 
     // Input
     var d = new Date();
-    var subject = "Itinerario creado el " + d.toString();
-    var text = applyTextTemplate(user, steps, price);
+    var from = 'jdnietov@unal.edu.co';
+    var subject = "Itinerario creado el " + beautifyDate(d) + " a las " + formatTime(d);
+    var text = applyTextTemplate(this.userId, steps, price);
 
     Email.send({
       to,

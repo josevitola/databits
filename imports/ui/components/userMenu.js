@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
+import { beautifyDate, beautifyType, formatTime } from '/imports/ui/lib/beautify.js';
 import { Itineraries } from '/imports/api/itinerary.js';
 
 import './userMenu.html';
@@ -11,17 +12,9 @@ Template.userMenu.onRendered(function() {
 
 Template.userMenu.helpers({
   itinCount: function() {
-    var it = Itineraries.find({belongsTo: Meteor.userId()}).fetch();
+    var it = Itineraries.find({userId: Meteor.userId()}).fetch();
     return it.length;
   }
-});
-
-Template.myItinerariesModal.helpers({
-  itineraries: function() {
-    var it = Itineraries.find({belongsTo: Meteor.userId()}).fetch();
-    console.log(it);
-    return it;
-  },
 });
 
 Template.userMenu.events({
@@ -32,7 +25,34 @@ Template.userMenu.events({
   },
 
   'click .itineraries.item'() {
-    console.log("item");
     SemanticModal.generalModal('myItinerariesModal');
   }
 })
+
+Template.myItinerariesModal.onRendered(function() {
+  $('.ui.accordion').accordion();
+})
+
+Template.myItinerariesModal.helpers({
+  itineraries: function() {
+    var it = Itineraries.find({userId: Meteor.userId()}).fetch();
+    return it;
+  },
+
+  getItinDate: function(itin) {
+    return beautifyDate(itin.createdAt) + " a las " + formatTime(itin.createdAt);
+  },
+
+  beautifyType: function(type) {
+    return beautifyType(type);
+  }
+});
+
+Template.myItinerariesModal.events({
+  'click .itin.remove'() {
+    var id = $(event.target).data('id');
+    Meteor.call('removeItinerary', id, (error, result) => {
+      if(error) alert(error.message);
+    });
+  }
+});
