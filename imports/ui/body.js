@@ -9,16 +9,10 @@ import './components/map.js';
 import './body.html';
 
 
-if(!Meteor.user()) {
-  SemanticModal.generalModal('introModal');
-}
+Template.body.onRendered(function() {
+  $(".ui.dropdown").dropdown();
 
-function setCrimeDataByDay(day, count) {
-  var municipio = "BOGOTÁ D.C. (CT)";
-  count = 0;
-  $.getJSON("https://www.datos.gov.co/resource/nic7-3tzj.json" + "?MUNICIPIO=" + municipio + "$DIA=" + day, function(data) {
-    $.each(data, function(i, entry) {
-      count ++;
-    });
-  });
-}
+  if(!Meteor.user()) {
+    SemanticModal.generalModal('introModal');
+  }
+});

@@ -10,6 +10,43 @@
       {{> cards}}
     </div>
     <div class="eleven wide column" style="margin: 0px; padding: 0px;height: 100%;">
+      <div class="ui hovering dropdown button">
+        Búsqueda
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="ui icon search input">
+            <i class="search icon"></i>
+            <input type="text" placeholder="Search tags...">
+          </div>
+          <div class="divider"></div>
+          <div class="header">
+            <i class="tags icon"></i> Tag Label
+          </div>
+          <div class="scrolling menu">
+            <div class="item">
+              <img class="planit icon" src="/markers/muse-pin.png" alt="">
+              <div class="ui checkbox">
+                <input type="checkbox" name="museum">
+                <label>Museos</label>
+              </div>
+            </div>
+            <div class="item">
+              <img class="planit icon" src="/markers/teat-pin.png" alt="">
+              <div class="ui checkbox">
+                <input type="checkbox" name="theatre">
+                <label>Teatros</label>
+              </div>
+            </div>
+            <div class="item">
+              <img class="planit icon" src="/markers/rest-pin.png" alt="">
+              <div class="ui checkbox">
+                <input type="checkbox" name="restaurant">
+                <label>Restaurantes</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {{> map}}
     </div>
   </div>
