@@ -106,5 +106,18 @@ body, html {
 }
 
 #generalModal {
-  margin-top: -200px !important;
+  margin-top: -250px !important;
+}
+
+#carousel {
+  width: 85%;
+}
+
+.slick-prev:before, .slick-next:before {
+  color: var(--secondary-blue);
+  font-size: 40px;
+}
+
+.ui.form input[type="email"] {
+  border: 1px solid rgba(34, 36, 38, 0.32);
 }

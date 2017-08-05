@@ -7,3 +7,11 @@ Template.introModal.events({
     $('#generalModal').modal('hide');
   }
 });
+
+Template.introModal.onRendered(function() {
+  $('#carousel').slick({
+    dots: true,
+    arrows: true,
+    infinite: false
+  });
+});

@@ -3,17 +3,46 @@
   <div class="header">
     <h1 class="ui inverted header">
       <img class="ui image" src="/logo/isotipo-suitcase.png" style="margin-right:20px; height:55px; width:auto">
-      ¡Bienvenidos!<br>
+      Planea tu viaje: calcula precios y tiempo<br>
     </h1>
-    <!-- <h3 class="ui inverted header">Tu itinerario de viaje</h3> -->
   </div>
-  <div class="image content">
+  <!-- <div class="image content">
     <img class="image" src="/images/introModal.png" width="100%" height="100%">
-  </div>
-  <div class="content">
-    <button class="ui labeled icon primary right floated close button">
-      <i class="checkmark icon"></i>
-      Comenzar mi itinerario
-    </button>
-  </div>
+  </div> -->
+  <center>
+    <div id="carousel" style="margin-top:20px; padding-left:20px;">
+        <div><center><img src="/images/intro-0.png" width="80%"/></center></div>
+        <div><center><img src="/images/introModal3.png" width="100%"/></center></div>
+        <div>
+          <center>
+            {{#unless currentUser}}
+              <!-- <a class="ui item content" href="#">
+                <div class="ui signup button">
+                  Registrarse
+                </div>
+              </a>
+              <a class="ui item content" href="#">
+                <div class="ui login button">
+                  Iniciar Sesión
+                </div>
+              </a> -->
+              <div class="content" style="padding:0 100px;">
+                {{> signUpModal}}
+              </div>
+            {{/unless}}
+
+            {{#with currentUser}}
+              {{> userMenu user=this}}
+            {{/with}}
+
+            <div class="content" style="bottom:0;">
+              <button class="ui labeled icon primary right floated close button">
+                <i class="checkmark icon"></i>
+                Continuar sin registrarse
+              </button>
+            </div>
+          </center>
+        </div>
+    </div>
+  </center>
 </template>
