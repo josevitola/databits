@@ -1,5 +1,6 @@
 import {Template} from 'meteor/templating';
 
+import './components/introModal.js';
 import './components/mainMenu.js';
 import './components/searchForm.js';
 import './components/userMenu.js';
