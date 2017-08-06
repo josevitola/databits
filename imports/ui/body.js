@@ -10,9 +10,7 @@ import './body.html';
 
 
 Template.body.onRendered(function() {
-  $(".ui.dropdown").dropdown();
-
-  if(!Meteor.user()) {
+  if(!Meteor.user() && !Meteor.loggingIn()) {
     SemanticModal.generalModal('introModal');
   }
 });

@@ -1,38 +1,32 @@
 <template name="searchForm">
-  <div class="ui icon form search">
-    <div class="ui icon input" id="search-input">
-      <input type="text" placeholder="Busca por nombre...">
-      <i class="search icon"></i>
+  <div class="ui icon search input">
+    <i class="search icon"></i>
+    <input type="text" placeholder="Search tags...">
+  </div>
+  <div class="divider"></div>
+  <div class="header">
+    <i class="tags icon"></i> Tag Label
+  </div>
+  <div class="scrolling menu">
+    <div class="museum item">
+      <img class="planit icon" src="/markers/muse-pin.png" alt="">
+      <div class="ui museum checkbox">
+        <input type="checkbox" name="chkMuseum">
+        <label>Museos</label>
+      </div>
     </div>
-
-    <div class="grouped fields">
-      Selecciona fitros de búsqueda:<br>
-      <div class="field">
-        <div class="ui restaurant checkbox">
-          <input class="filterCheckbox" type="checkbox" value="restaurant" name="field" tabindex="0" />
-          <label>
-            Restaurantes
-            <img class="ui left floated image" src="/markers/rest-pin.png" style="width:20px;">
-          </label>
-        </div>
+    <div class="theatre item">
+      <img class="planit icon" src="/markers/teat-pin.png" alt="">
+      <div class="ui theatre checkbox">
+        <input type="checkbox" name="chk-theatre">
+        <label>Teatros</label>
       </div>
-      <div class="field">
-        <div class="ui museum checkbox">
-          <input class="filterCheckbox" type="checkbox" value="museum" name="field" tabindex="0" />
-          <label>
-            Museos
-            <img class="ui left floated image" src="/markers/muse-pin.png" style="width:20px;">
-          </label>
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui theatre checkbox">
-          <input class="filterCheckbox" type="checkbox" value="theatre" name="field" tabindex="0" />
-          <label>
-            Teatros
-            <img class="ui left floated image" src="/markers/teat-pin.png" style="width:20px;">
-          </label>
-        </div>
+    </div>
+    <div class="restaurant item">
+      <img class="planit icon" src="/markers/rest-pin.png" alt="">
+      <div class="ui restaurant checkbox">
+        <input type="checkbox" name="chk-restaurant">
+        <label>Restaurantes</label>
       </div>
     </div>
   </div>

@@ -11,49 +11,52 @@ function setDataOnMap(data, map) {
   for(let i = 0; i < data.length; i++) {
     var marker = data[i].marker;
     marker.setMap(map);
-    if(i == 0) console.log(marker);
   }
 }
 
 Template.searchForm.onRendered(() => {
-  $('.ui.checkbox').checkbox();
+  $(".ui.dropdown").dropdown({
+    allowReselection: true,
+  });
   GoogleMaps.ready('map', (map) => {
-    $('.ui.checkbox').click();
+    $('.ui.checkbox').checkbox('set checked');
   })
 });
 
 Template.searchForm.events({
-  'click .ui.checkbox' (event) {
-    let input = $(event.target).parent().find("input");
-
-    if(input.prop('checked')) {
-      if(input.val() == "restaurant") {
-        if(restaurantMapData.length == 0) {
-          setPlacesInfo(input.val(), restaurantMapData, 'rest-pin.png', getAppMap().instance, getInfWin());
-        } else {
-          setDataOnMap(restaurantMapData, getAppMap().instance);
-        }
-      } else if(input.val() == "museum") {
-        if(museumMapData.length == 0) {
-          setPlacesInfo(input.val(), museumMapData, 'muse-pin.png', getAppMap().instance, getInfWin());
-        } else {
-          setDataOnMap(museumMapData, getAppMap().instance);
-        }
-      } else if(input.val() == "theatre") {
-        if(theatreMapData.length == 0) {
-          setPlacesInfo(input.val(), theatreMapData, 'teat-pin.png', getAppMap().instance, getInfWin());
-        } else {
-          setDataOnMap(theatreMapData, getAppMap().instance);
-        }
+  'change .ui.museum.checkbox'() {
+    if($('.ui.museum.checkbox').checkbox('is checked')[1]) {
+      if(museumMapData.length == 0) {
+        setPlacesInfo("museum", museumMapData, 'muse-pin.png', getAppMap().instance, getInfWin());
+      } else {
+        setDataOnMap(museumMapData, getAppMap().instance);
       }
     } else {
-      if(input.val() == "restaurant") {
-        setDataOnMap(restaurantMapData, null);
-      } else if(input.val() == "museum") {
-        setDataOnMap(museumMapData, null);
-      } else if(input.val() == "theatre") {
-        setDataOnMap(theatreMapData, null);
+      setDataOnMap(museumMapData, null);
+    }
+  },
+
+  'change .ui.theatre.checkbox'() {
+    if($('.ui.theatre.checkbox').checkbox('is checked')[1]) {
+      if(theatreMapData.length == 0) {
+        setPlacesInfo("theatre", theatreMapData, 'teat-pin.png', getAppMap().instance, getInfWin());
+      } else {
+        setDataOnMap(theatreMapData, getAppMap().instance);
       }
+    } else {
+      setDataOnMap(theatreMapData, null);
+    }
+  },
+
+  'change .ui.restaurant.checkbox'() {
+    if($('.ui.restaurant.checkbox').checkbox('is checked')[1]) {
+      if(restaurantMapData.length == 0) {
+        setPlacesInfo("restaurant", restaurantMapData, 'rest-pin.png', getAppMap().instance, getInfWin());
+      } else {
+        setDataOnMap(restaurantMapData, getAppMap().instance);
+      }
+    } else {
+      setDataOnMap(restaurantMapData, null);
     }
   }
 });
