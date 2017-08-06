@@ -97,6 +97,10 @@ Template.cards.helpers({
 });
 
 Template.cards.events({
+  'click .intro'() {
+    SemanticModal.generalModal('introModal');
+  },
+
   'click .remove.icon'() {
     var steps = Session.get("steps");
     var idx = $(event.target).data("step");
