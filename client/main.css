@@ -68,6 +68,11 @@ body, html {
   color: white;
 }
 
+.planit.icon {
+  height: 20px;
+  width: auto;
+}
+
 .logo {
   margin: 10px 20px;
   height: 50px;
@@ -130,4 +135,19 @@ body, html {
 
 .ui.form input[type="text"], .ui.form input[type="email"], .ui.form input[type="password"] {
   border: 1px solid rgba(34, 36, 38, 0.32);
+}
+
+.ui.hovering {
+  background-color: var(--secondary-blue);
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  margin-top: 10px;
+  margin-left: 10px;
+  z-index: 1;
+}
+
+.ui.hovering:hover, .ui.active.hovering.button {
+  background-color: var(--primary-blue);
+  color: white;
 }
