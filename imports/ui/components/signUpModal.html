@@ -1,56 +1,59 @@
 <template name="signUpModal">
-  <!-- <i class="close icon"></i>
-  <div class="header">
-    Registrarse
-  </div> -->
+  <i class="close icon"></i>
+  <div class="centered header">
+    Registro de <img class="ui spaced image" src="/logo/logo-white.png" style="height:40px; width:auto">
+  </div>
   <div class="content">
     <div class="description">
       <p>
-        Al registarse en Planit puedes <b>guardar, compartir y personalizar</b>
+        Al registarte en Planit puedes <b>guardar, compartir y personalizar</b>
         las mejores rutinas para tus viajes. ¡Ingresa tus datos y haz parte de la comunidad!
         <br />
       </p>
-      <form id="signUpForm" class="ui form">
-        <div class="field">
-          <input type="text" name="name" placeholder="Tu nombre...">
-          {{#if isNotName}}
-          <div class="ui pointing red basic label">
-            Por favor ingrese un nombre.
-          </div>
-          {{/if}}
-        </div>
-        <div class="field">
-          <input type="email" name="email" placeholder="Correo electrónico...">
-          {{#if isEmailInvalid}}
-          <div class="ui pointing red basic label">
-            El email no es válido.
-          </div>
-          {{/if}}
-        </div>
-        <div class="field">
-          <input type="password" name="password" placeholder="Tu contraseña de Planit...">
-          {{#if isNotPass}}
-          <div class="ui pointing red basic label">
-            Por favor ingresa una contraseña.
-          </div>
-          {{/if}}
-          {{#if doPassMatch}}
-          <div class="ui pointing red basic label">
-            Las contraseñas no coinciden.
-          </div>
-          {{/if}}
-        </div>
-        <div class="field">
-          <input type="password" name="checkPassword" placeholder="Verifica tu contraseña...">
-        </div>
-        <button class="ui blue labeled icon button right floated"  type="submit">
-          <i class="checkmark icon"></i>
-          Registrarse
-        </button>
-      </form>
-
+      {{> signUpForm}}
     </div>
   </div>
+</template>
+
+<template name="signUpForm">
+  <form id="signUpForm" class="ui form">
+    <div class="field">
+      <input type="text" name="name" placeholder="Tu nombre...">
+      {{#if isNotName}}
+      <div class="ui pointing red basic label">
+        Por favor ingrese un nombre.
+      </div>
+      {{/if}}
+    </div>
+    <div class="field">
+      <input type="email" name="email" placeholder="Correo electrónico...">
+      {{#if isEmailInvalid}}
+      <div class="ui pointing red basic label">
+        El email no es válido.
+      </div>
+      {{/if}}
+    </div>
+    <div class="field">
+      <input type="password" name="password" placeholder="Tu contraseña de Planit...">
+      {{#if isNotPass}}
+      <div class="ui pointing red basic label">
+        Por favor ingresa una contraseña.
+      </div>
+      {{/if}}
+      {{#if doPassMatch}}
+      <div class="ui pointing red basic label">
+        Las contraseñas no coinciden.
+      </div>
+      {{/if}}
+    </div>
+    <div class="field">
+      <input type="password" name="checkPassword" placeholder="Verifica tu contraseña...">
+    </div>
+    <button class="ui blue labeled icon button right floated"  type="submit">
+      <i class="checkmark icon"></i>
+      Registrarse
+    </button>
+  </form>
 </template>
 
 <template name="loginModal">
@@ -60,19 +63,22 @@
   </div>
   <div class="content">
     <div class="description">
-      <form id="loginForm" class="ui form">
-        <div class="field">
-          <input type="text" name="loginEmail" placeholder="Correo electrónico...">
-        </div>
-        <div class="field">
-          <input type="password" name="loginPassword" placeholder="Contraseña...">
-        </div>
-        <button class="ui labeled icon button right floated" type="submit">
-          <i class="checkmark icon"></i>
-          Iniciar sesión
-        </button>
-      </form>
-
+      {{> loginForm}}
     </div>
   </div>
+</template>
+
+<template name="loginForm">
+  <form id="loginForm" class="ui form">
+    <div class="field">
+      <input type="text" name="loginEmail" placeholder="Correo electrónico...">
+    </div>
+    <div class="field">
+      <input type="password" name="loginPassword" placeholder="Contraseña...">
+    </div>
+    <button class="ui labeled icon button right floated" type="submit">
+      <i class="checkmark icon"></i>
+      Iniciar sesión
+    </button>
+  </form>
 </template>

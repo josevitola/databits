@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import './searchForm.html';
+import './searchFilters.html';
 import {setPlacesInfo, getInfWin, getAppMap} from '../../api/datasets.js';
 
 let restaurantMapData = [];
@@ -11,10 +11,11 @@ function setDataOnMap(data, map) {
   for(let i = 0; i < data.length; i++) {
     var marker = data[i].marker;
     marker.setMap(map);
+    if(i == 0) console.log(marker);
   }
 }
 
-Template.searchForm.onRendered(() => {
+Template.searchFilters.onRendered(() => {
   $(".ui.dropdown").dropdown({
     allowReselection: true,
   });
@@ -23,21 +24,22 @@ Template.searchForm.onRendered(() => {
   })
 });
 
-Template.searchForm.events({
+Template.searchFilters.events({
   'change .ui.museum.checkbox'() {
-    if($('.ui.museum.checkbox').checkbox('is checked')[1]) {
+    if($('.ui.museum.checkbox').checkbox('is checked')) {
       if(museumMapData.length == 0) {
         setPlacesInfo("museum", museumMapData, 'muse-pin.png', getAppMap().instance, getInfWin());
       } else {
         setDataOnMap(museumMapData, getAppMap().instance);
       }
     } else {
+      console.log("museum click");
       setDataOnMap(museumMapData, null);
     }
   },
 
   'change .ui.theatre.checkbox'() {
-    if($('.ui.theatre.checkbox').checkbox('is checked')[1]) {
+    if($('.ui.theatre.checkbox').checkbox('is checked')) {
       if(theatreMapData.length == 0) {
         setPlacesInfo("theatre", theatreMapData, 'teat-pin.png', getAppMap().instance, getInfWin());
       } else {
@@ -49,7 +51,7 @@ Template.searchForm.events({
   },
 
   'change .ui.restaurant.checkbox'() {
-    if($('.ui.restaurant.checkbox').checkbox('is checked')[1]) {
+    if($('.ui.restaurant.checkbox').checkbox('is checked')) {
       if(restaurantMapData.length == 0) {
         setPlacesInfo("restaurant", restaurantMapData, 'rest-pin.png', getAppMap().instance, getInfWin());
       } else {

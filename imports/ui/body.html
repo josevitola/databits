@@ -2,19 +2,22 @@
   {{> mainMenu}}
   <div class="ui grid">
     <div class="five wide column" id="sidebar">
-      <div style="display:none;">
-        <div class="ui dividing header">Búsqueda de lugares</div>
-        {{> searchForm}}
+      <div class="ui secondary menu">
+        <h2 class="ui inverted header">Tu itinerario del día</h2>
+        <div class="right menu">
+          <i class="inverted large calendar icon"></i>
+        </div>
       </div>
-      <div class="ui dividing header">Tu itinerario del día</div>
       {{> cards}}
     </div>
-    <div class="eleven wide column" style="margin: 0px; padding: 0px;height: 100%;">
-      <div class="ui hovering dropdown button">
-        Búsqueda
-        <i class="dropdown icon"></i>
-        <div class="menu">
-          {{> searchForm}}
+    <div class="eleven wide column" style="margin:0px; padding:0px; height:100%;" id="map">
+      <div class="ui secondary menu">
+        {{> searchFilters}}
+        <div class="right menu">
+          <div class="ui icon search input">
+            <i class="search icon"></i>
+            <input type="text" placeholder="Buscar Lugares ...">
+          </div>
         </div>
       </div>
       {{> map}}

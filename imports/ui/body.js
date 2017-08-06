@@ -2,7 +2,7 @@ import {Template} from 'meteor/templating';
 
 import './components/introModal.js';
 import './components/mainMenu.js';
-import './components/searchForm.js';
+import './components/searchFilters.js';
 import './components/userMenu.js';
 import './components/cards.js';
 import './components/map.js';

@@ -1,9 +1,13 @@
 <template name="cards">
   {{#unless steps}}
-    <div class="text">
-      ¡No tienes todavía lugares para tu itinerario!<br>
-      Selecciona uno de los lugares disponibles o crea tu propio lugar y haz clic en <b>Agregar</b> para adicionarlo.
-    </div>
+  <center>
+    <img src="/images/sad.png" class="ui image" style="margin:60px;">
+    <h3 class="ui header">¡Todavía no tienes lugares para tu itinerario!</h3>
+    <button class="ui primary intro button">
+      ¿Cómo se hace un plan?
+    </button>
+    <!-- Selecciona uno de los lugares disponibles o crea tu propio lugar y haz clic en <b>Agregar</b> para adicionarlo. -->
+  </center>
   {{/unless}}
 
   <div id="sortable-cards">
@@ -34,15 +38,16 @@
     {{/each}}
   </div>
 
-  <div class="ui green compact message">
-    Precio Total: $ {{totalPrice}}<br>
-    Tiempo total: {{totalTime}}
-  </div>
-  {{#if steps}}
-  <div class="ui green end steps right floated button">
-    Finalizar
-  </div>
-  {{/if}}
+    {{#if steps}}
+    <div class="ui green compact message">
+      Precio Total: $ {{totalPrice}}<br>
+      Tiempo total: {{totalTime}}
+    </div>
+    <div class="ui green end steps right floated button">
+      Finalizar
+    </div>
+    {{/if}}
+
 </template>
 
 <template name="cardsModal">
