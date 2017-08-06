@@ -150,12 +150,7 @@ body, html {
 .ui.hovering {
   background-color: var(--secondary-blue);
   color: white;
-  /*position: absolute;
-  left: 0px;
-  top: 0px;
-  margin-top: 10px;
-  margin-left: 10px;
-  z-index: 1;*/
+  position: absolute;
 }
 
 .ui.hovering:hover, .ui.active.hovering.button {
