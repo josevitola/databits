@@ -21,24 +21,38 @@ body, html {
 .ui.grid {
   margin: 0px;
   padding: 0px;
-  height: calc(100% - 70px);
+  height: calc(100% - 127px);
 }
 
 .map-container {
   width: 100%;
   height: 100%;
+  /*border-left: solid rgba(14, 58, 75, 0.34) 2px;*/
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #sortable-cards {
   padding: 5px;
-  max-height: calc(100% - 145px);
+  max-height: calc(100% - 140px);
   overflow-x: hidden;
   overflow-y: visible;
 }
 
-#sidebar{
-  margin-top: -20px;
-  /*background: black;*/
+#sidebar .ui.secondary.menu {
+  background: #3e6477;
+  margin: -1rem;
+  padding: 1.2rem;
+  padding-bottom: 0;
+  height: 57px;
+}
+
+#map .ui.secondary.menu {
+  background: #3e6477;
+  /*border-left: solid rgba(14, 58, 75, 0.34) 2px;*/
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 10px 20px;
+  height: 57px;
+  margin: 0;
 }
 
 #main-menu {
@@ -107,10 +121,6 @@ body, html {
   color: white;
 }
 
-#search-input {
-  margin-bottom: 10px;
-}
-
 #carousel {
   width: 105%;
   margin-left: -38px;
@@ -139,15 +149,16 @@ body, html {
 
 .ui.hovering {
   background-color: var(--secondary-blue);
-  position: absolute;
+  color: white;
+  /*position: absolute;
   left: 0px;
   top: 0px;
   margin-top: 10px;
   margin-left: 10px;
-  z-index: 1;
+  z-index: 1;*/
 }
 
 .ui.hovering:hover, .ui.active.hovering.button {
-  background-color: var(--primary-blue);
-  color: white;
+  background-color: white;
+  color: black;
 }

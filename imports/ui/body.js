@@ -13,6 +13,6 @@ Template.body.onRendered(function() {
   $(".ui.dropdown").dropdown();
 
   if(!Meteor.user()) {
-    SemanticModal.generalModal('introModal');
+    // SemanticModal.generalModal('introModal');
   }
 });
