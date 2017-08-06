@@ -1,7 +1,9 @@
-// Yeliana's Key: AIzaSyDDkn2WN4FS6NvzRPq7VQx8k7S5_3CnJ6g
+// Yeliana's Key: AIzaSyAjV2uXekxz_sQ6EPshNsAJ1GqnLJjIrCw
+// Vito's Key: AIzaSyBrkIfbZo3xfBNw6IPkv5Gbizc4mUGWGAY
+// Juan pablo's Key: AIzaSyDm_Vpi_q1K8e2afEqMjS6HEpq7CfKSmP0
 // Key for Images: AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA
 
-export const MAP_KEY = "AIzaSyBrkIfbZo3xfBNw6IPkv5Gbizc4mUGWGAY";
+export const MAP_KEY = "AIzaSyDm_Vpi_q1K8e2afEqMjS6HEpq7CfKSmP0";
 
 let infwin; // global varible for infowindow
 let appMap; // global variable for map
