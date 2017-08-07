@@ -7,6 +7,9 @@ export const MAP_KEY = "AIzaSyDm_Vpi_q1K8e2afEqMjS6HEpq7CfKSmP0";
 
 let infwin; // global varible for infowindow
 let appMap; // global variable for map
+let museumMapData = [];
+let restaurantMapData = [];
+let theatreMapData = [];
 
 //  first letter to uppercase
 function capitalizeFirstLetter(string) {
@@ -154,4 +157,26 @@ export const setClimateInfo = function(array) {
       console.log(entry);
     });
   });
+}
+
+export const getRestaurants = function() {
+  return restaurantMapData;
+}
+
+export const getMuseums = function() {
+  return museumMapData;
+}
+
+export const getTheatres = function() {
+  return theatreMapData;
+}
+
+export const updateInfo = function(type, mapInstance) {
+  if(type == "theatre") {
+    setPlacesInfo("theatre", theatreMapData, 'teat-pin.png', mapInstance, getInfWin());
+  } else if(type == "museum") {
+    setPlacesInfo("museum", museumMapData, 'muse-pin.png', mapInstance, getInfWin());
+  } else if(type == "restaurant") {
+    setPlacesInfo("restaurant", restaurantMapData, 'rest-pin.png', mapInstance, getInfWin());
+  }
 }

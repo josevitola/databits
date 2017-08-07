@@ -87,6 +87,7 @@ semantic:ui@2.2.6_5
 semantic:ui-data@2.2.6_4
 semantic:ui-dimmer@2.1.7
 semantic:ui-modal@2.1.7
+semantic:ui-search@2.2.4
 sergeyt:d3@3.4.1
 service-configuration@1.0.11
 session@1.1.7

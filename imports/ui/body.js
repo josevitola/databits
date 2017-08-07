@@ -5,10 +5,11 @@ import '/node_modules/semantic-ui-calendar/dist/calendar.min.js';
 
 import './components/introModal.js';
 import './components/mainMenu.js';
-import './components/searchFilters.js';
+import './components/filters.js';
 import './components/userMenu.js';
 import './components/cards.js';
 import './components/map.js';
+import './components/search.js';
 import './body.html';
 
 Template.body.onRendered(function() {

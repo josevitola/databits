@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
-import {setPlacesInfo, showMarkers, setInfWin, setAppMap} from '../../api/datasets.js';
+import {setPlacesInfo, showMarkers, setInfWin, setAppMap, getAppMap, updateInfo} from '../../api/datasets.js';
 
 import './map.html';
 
@@ -47,6 +47,10 @@ Template.map.onCreated(function() {
 
     setAppMap(map);
     setInfWin(infowindow);
+
+    updateInfo("museum", getAppMap().instance);
+    updateInfo("theatre", getAppMap().instance);
+    updateInfo("restaurant", getAppMap().instance);
   });
 });
 

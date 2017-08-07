@@ -20,12 +20,9 @@
     </div>
     <div class="ten wide column" style="margin:0px; padding:0px; height:100%;" id="map">
       <div class="ui secondary menu">
-        {{> searchFilters}}
+        {{> filters}}
         <div class="right menu">
-          <div class="ui icon search input">
-            <i class="search icon"></i>
-            <input type="text" placeholder="Buscar Lugares ...">
-          </div>
+          {{> search}}
         </div>
       </div>
       {{> map}}
