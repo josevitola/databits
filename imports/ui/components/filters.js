@@ -24,11 +24,7 @@ Template.filters.onRendered(() => {
 Template.filters.events({
   'change .ui.museum.checkbox'() {
     if($('.ui.museum.checkbox').checkbox('is checked')) {
-      // if(museumMapData.length == 0) {
-      //   setPlacesInfo("museum", museumMapData, 'muse-pin.png', getAppMap().instance, getInfWin());
-      // } else {
-        setDataOnMap(getMuseums(), getAppMap().instance);
-      // }
+      setDataOnMap(getMuseums(), getAppMap().instance);
     } else {
       setDataOnMap(getMuseums(), null);
     }
@@ -36,11 +32,7 @@ Template.filters.events({
 
   'change .ui.theatre.checkbox'() {
     if($('.ui.theatre.checkbox').checkbox('is checked')) {
-      // if(theatreMapData.length == 0) {
-      //   setPlacesInfo("theatre", theatreMapData, 'teat-pin.png', getAppMap().instance, getInfWin());
-      // } else {
-        setDataOnMap(getTheatres(), getAppMap().instance);
-      // }
+      setDataOnMap(getTheatres(), getAppMap().instance);
     } else {
       setDataOnMap(getTheatres(), null);
     }
@@ -48,11 +40,7 @@ Template.filters.events({
 
   'change .ui.restaurant.checkbox'() {
     if($('.ui.restaurant.checkbox').checkbox('is checked')) {
-      // if(restaurantMapData.length == 0) {
-      //   setPlacesInfo("restaurant", restaurantMapData, 'rest-pin.png', getAppMap().instance, getInfWin());
-      // } else {
-        setDataOnMap(getRestaurants(), getAppMap().instance);
-      // }
+      setDataOnMap(getRestaurants(), getAppMap().instance);
     } else {
       setDataOnMap(getRestaurants(), null);
     }

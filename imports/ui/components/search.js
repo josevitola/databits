@@ -13,11 +13,12 @@ Template.search.events({
 
       $('.ui.search').search({
         source: content,
+        fields: {
+          title: 'name'
+        },
         searchFields: ['name'],
         searchFullText: false
       });
-
-      console.log(content[0]);
     }
   }
 });
