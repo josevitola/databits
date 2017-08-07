@@ -1,5 +1,5 @@
 import {Template} from 'meteor/templating';
-import {getMuseums, getRestaurants, getTheatres} from '/imports/api/datasets.js';
+import {openMarker, getMuseums, getRestaurants, getTheatres} from '/imports/api/datasets.js';
 import './search.html';
 
 var content = [];
@@ -14,11 +14,17 @@ Template.search.events({
       $('.ui.search').search({
         source: content,
         fields: {
-          title: 'name'
+          title: 'name',
+          description: 'address'
         },
         searchFields: ['name'],
-        searchFullText: false
+        searchFullText: true,
+        onSelect: function(result, response) {
+          openMarker(result.html, result.marker, result.location);
+        }
       });
+
+      console.log(content[0]);
     }
   }
 });

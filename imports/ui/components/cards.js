@@ -4,17 +4,12 @@ import {ReactiveDict} from 'meteor/reactive-dict';
 
 import Sortable from 'sortablejs';
 
-import {getAppMap} from '/imports/api/datasets.js';
+import {centerMap, generateInfWinHtml} from '/imports/api/datasets.js';
 import {Itineraries, getPriceFromSteps, getTimeFromSteps} from '/imports/api/itinerary.js';
 import {validateEmail} from '/imports/api/users.js';
 import {beautifyType} from '/imports/ui/lib/beautify.js';
 
 import './cards.html';
-
-Template.cards.onCreated(function() {
-  this.state = new ReactiveDict();
-  Session.set("totalPrice", 0);
-});
 
 Template.cards.onRendered(function() {
   var el = document.getElementById('sortable-cards');
@@ -48,8 +43,7 @@ Template.cards.onRendered(function() {
 
 Template.cards.helpers({
   steps: function() {
-    var steps = Session.get("steps");
-    return steps;
+    return Session.get("steps");
   },
 
   getIndex: function(idx) {
@@ -86,8 +80,8 @@ Template.cards.events({
       target = $(target).parent();
     }
 
-    let location = Session.get("steps")[$(target).data("step")].location;
-    getAppMap().instance.panTo(new google.maps.LatLng(location.lat, location.lng));
+    let step = Session.get("steps")[$(target).data("step")];
+    centerMap(step.location);
   },
 
   'click .intro' () {
@@ -200,7 +194,8 @@ Template.cardsModal.events({
     var steps = Session.get("steps");
 
     if (Meteor.user()) {
-      if(name.length === 0) name = "Itinerario sin nombre";
+      if (name.length === 0)
+        name = "Itinerario sin nombre";
       Meteor.call('insertItinerary', name, steps, (error, result) => {
         if (error)
           alert(error.message);
@@ -216,7 +211,8 @@ Template.cardsModal.events({
         Meteor.call('sendItineraryToEmail', name, email, steps, (error, result) => {
           if (error)
             alert(error.message);
-        });
+          }
+        );
       }
     }
 
