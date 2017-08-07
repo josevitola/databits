@@ -1,4 +1,5 @@
 import {Template} from 'meteor/templating';
+import {ReactiveVar} from 'meteor/reactive-var';
 
 import '/node_modules/semantic-ui-calendar/dist/calendar.min.js';
 
@@ -9,7 +10,6 @@ import './components/userMenu.js';
 import './components/cards.js';
 import './components/map.js';
 import './body.html';
-
 
 Template.body.onRendered(function() {
   if(!Meteor.user() && !Meteor.loggingIn()) {

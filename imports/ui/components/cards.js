@@ -5,7 +5,7 @@ import {ReactiveDict} from 'meteor/reactive-dict';
 import Sortable from 'sortablejs';
 
 import {getAppMap} from '/imports/api/datasets.js';
-import {Itineraries} from '/imports/api/itinerary.js';
+import {Itineraries, getPriceFromSteps, getTimeFromSteps} from '/imports/api/itinerary.js';
 import {validateEmail} from '/imports/api/users.js';
 import {beautifyType} from '/imports/ui/lib/beautify.js';
 
@@ -57,39 +57,12 @@ Template.cards.helpers({
   },
 
   totalPrice: function() {
-    var steps = Session.get("steps");
-    if (typeof steps !== "undefined") {
-      var price = 0;
-      for (var i = 0; i < steps.length; i++) {
-        price += steps[i].price;
-      }
-      Session.set("totalPrice", price);
-      return price;
-    } else
-      return 0;
-    }
-  ,
+    return getPriceFromSteps(Session.get("steps"));
+  },
 
   totalTime: function() {
-    var steps = Session.get("steps");
-    if (typeof steps !== "undefined") {
-      var hours = 0;
-      var minutes = 0;
-      var time;
-      for (var i = 0; i < steps.length; i++) {
-        time = steps[i].time.split("h ", 2);
-        hours += parseInt(time[0]);
-        minutes += parseInt(time[1]);
-      }
-
-      hours += parseInt(minutes / 60);
-      minutes = minutes % 60;
-
-      return hours + 'h ' + minutes + 'min';
-    } else
-      return "0h 0min";
-    }
-  ,
+    return getTimeFromSteps(Session.get("steps"));
+  },
 
   beautifyType: function(type) {
     if (type == "restaurant")
@@ -117,11 +90,11 @@ Template.cards.events({
     getAppMap().instance.panTo(new google.maps.LatLng(location.lat, location.lng));
   },
 
-  'click .intro'() {
+  'click .intro' () {
     SemanticModal.generalModal('introModal');
   },
 
-  'click .remove.icon'() {
+  'click .remove.icon' () {
     var steps = Session.get("steps");
     var idx = $(event.target).data("step");
 
@@ -159,6 +132,7 @@ Template.cards.events({
   },
 
   'click .ui.end.steps.button' () {
+    Session.set("planName", $('input[name=planName]').val());
     SemanticModal.generalModal('cardsModal');
   }
 });
@@ -169,13 +143,33 @@ Template.cardsModal.onCreated(function() {
 });
 
 Template.cardsModal.helpers({
+  getPlanName: function() {
+    let planName = Session.get("planName");
+    return planName.length == 0
+      ? "Itinerario sin nombre"
+      : planName;
+  },
+
+  getPlanLength: function() {
+    let len = Session.get("steps").length;
+    if (len == 1) {
+      return "1 parada";
+    } else {
+      return len + " paradas";
+    }
+  },
+
   steps: function() {
     var steps = Session.get("steps");
     return steps;
   },
 
-  totalPrice: function() {
-    return Session.get("totalPrice");
+  getPlanPrice: function() {
+    return getPriceFromSteps(Session.get("steps"));
+  },
+
+  getPlanTime: function() {
+    return getTimeFromSteps(Session.get("steps"));
   },
 
   beautifyType: function(type) {
@@ -201,10 +195,15 @@ Template.cardsModal.events({
   'click .ui.positive.button' (event) {
     event.preventDefault();
 
+    var name = $('input[name=planName]').val();
+    var date = $('input[name=planDate]').val();
     var steps = Session.get("steps");
 
+    console.log(name);
+
     if (Meteor.user()) {
-      Meteor.call('insertItinerary', steps, (error, result) => {
+      if(name.length === 0) name = "Itinerario sin nombre";
+      Meteor.call('insertItinerary', name, steps, (error, result) => {
         if (error)
           alert(error.message);
         }
@@ -220,11 +219,10 @@ Template.cardsModal.events({
         Meteor.call('sendItineraryToEmail', email, steps, price, (error, result) => {
           if (error)
             alert(error.message);
-          }
-        );
+        });
       }
     }
-
+    
     $('#generalModal').modal('hide');
   }
 });

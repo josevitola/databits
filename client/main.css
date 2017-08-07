@@ -75,6 +75,10 @@ body, html {
   width: auto;
 }
 
+.ui.header .content {
+  margin: auto;
+}
+
 .ui.modal {
   padding-bottom: 15px;
 }

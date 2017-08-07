@@ -40,13 +40,13 @@
 
   {{#if steps}}
   <div class="ui secondary end menu">
-    <!-- <div class="ui green compact message">
+    <div class="ui green compact message">
       Precio Total: $ {{totalPrice}}<br>
       Tiempo total: {{totalTime}}
     </div>
     <div class="right menu">
       <div class="ui green end steps button">Finalizar</div>
-    </div> -->
+    </div>
   </div>
   {{/if}}
 
@@ -54,7 +54,7 @@
 
 <template name="cardsModal">
   <div class="header">
-    Finalizar tu itinerario
+    Verifica tu itinerario: {{getPlanName}}
   </div>
   <div class="scrolling content">
     <div class="description">
@@ -66,7 +66,6 @@
         acceder a él cuando quieras.
         {{else}}
         ingresa aquí un correo electrónico a donde podamos enviarlo para llevarlo a donde necesites. <br><br>
-
         <form class="ui form">
           <div class="field">
             <input type="text" class="ui send email input" placeholder="Correo electrónico...">
@@ -79,6 +78,11 @@
         </form>
         {{/if}}
       </p>
+
+      <h3 class="ui center aligned header">
+          {{getPlanName}}
+          <div class="sub header">{{getPlanLength}}. ${{getPlanPrice}}. {{getPlanTime}}.</div>
+      </h3>
 
       <div class="ui divided items">
         {{#each steps}}
@@ -102,7 +106,7 @@
         <div class="item">
           <div class="content">
             <div class="right floated header">
-               Total: ${{totalPrice}}
+               Total: ${{getPlanPrice}}
             </div>
           </div>
         </div>
