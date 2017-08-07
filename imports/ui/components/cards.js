@@ -199,8 +199,6 @@ Template.cardsModal.events({
     var date = $('input[name=planDate]').val();
     var steps = Session.get("steps");
 
-    console.log(name);
-
     if (Meteor.user()) {
       if(name.length === 0) name = "Itinerario sin nombre";
       Meteor.call('insertItinerary', name, steps, (error, result) => {
@@ -210,19 +208,18 @@ Template.cardsModal.events({
       );
     } else {
       var email = $('.ui.send.email.input').val();
-      var price = Session.get("totalPrice");
 
       Template.instance().validEmail.set(validateEmail(email));
       Template.instance().checking.set(true);
 
       if (Template.instance().validEmail.get()) {
-        Meteor.call('sendItineraryToEmail', email, steps, price, (error, result) => {
+        Meteor.call('sendItineraryToEmail', name, email, steps, (error, result) => {
           if (error)
             alert(error.message);
         });
       }
     }
-    
+
     $('#generalModal').modal('hide');
   }
 });
