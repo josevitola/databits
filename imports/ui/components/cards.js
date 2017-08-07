@@ -117,7 +117,11 @@ Template.cards.events({
     getAppMap().instance.panTo(new google.maps.LatLng(location.lat, location.lng));
   },
 
-  'click .remove.icon' () {
+  'click .intro'() {
+    SemanticModal.generalModal('introModal');
+  },
+
+  'click .remove.icon'() {
     var steps = Session.get("steps");
     var idx = $(event.target).data("step");
 

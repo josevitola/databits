@@ -4,7 +4,7 @@ import './signUpModal.html';
 
 import {validateEmail} from '/imports/api/users.js';
 
-Template.signUpModal.onCreated(function() {
+Template.signUpForm.onCreated(function() {
   this.checking = new ReactiveVar( false );
   this.isName = new ReactiveVar( false );
   this.isPass = new ReactiveVar( false );
@@ -12,7 +12,7 @@ Template.signUpModal.onCreated(function() {
   this.matchPass = new ReactiveVar( false );
 });
 
-Template.signUpModal.helpers({
+Template.signUpForm.helpers({
   isEmailInvalid: function() {
     return Template.instance().checking.get() && !Template.instance().validEmail.get();
   },
@@ -31,7 +31,7 @@ Template.signUpModal.helpers({
 });
 
 
-Template.signUpModal.events({
+Template.signUpForm.events({
   'submit #signUpForm'(event) {
     event.preventDefault();
     var name = $('input[name=name]').val();
@@ -78,7 +78,7 @@ Template.signUpModal.events({
   }
 });
 
-Template.loginModal.events({
+Template.loginForm.events({
   'submit #loginForm'(event) {
     event.preventDefault();
     var email = $('input[name=loginEmail]').val();

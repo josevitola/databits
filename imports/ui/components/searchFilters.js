@@ -18,6 +18,8 @@ function setDataOnMap(data, map) {
 Template.searchFilters.onRendered(() => {
   $(".ui.dropdown").dropdown({
     allowReselection: true,
+    allowAdditions: true,
+    forceSelection: false
   });
   GoogleMaps.ready('map', (map) => {
     $('.ui.checkbox').checkbox('set checked');

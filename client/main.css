@@ -1,4 +1,4 @@
-/* CSS declarations go here */
+/* colorTool: https://material.io/color/#!/?view.left=0&view.right=1&primary.color=0e3a4b&secondary.color=009c8c */
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 :root {
   --primary-blue: #0e3a4b;
@@ -33,22 +33,29 @@ body, html {
 
 #sortable-cards {
   padding: 5px;
-  max-height: calc(100% - 140px);
+  max-height: calc(100% - 70px);
   overflow-x: hidden;
   overflow-y: visible;
 }
 
 #sidebar .ui.secondary.menu {
   background: #3e6477;
-  margin: -1rem;
-  padding: 1.2rem;
-  padding-bottom: 0;
+  margin: -1rem -1em 1em -1em;
+  padding: 12px 20px 0 20px;
   height: 57px;
+}
+
+#sidebar .ui.secondary.end.menu {
+  background: rgb(144, 175, 191);
+  position: fixed;
+  bottom: 0;
+  height: 70px;
+  width: 37.5%;
+  margin-bottom: 0;
 }
 
 #map .ui.secondary.menu {
   background: #3e6477;
-  /*border-left: solid rgba(14, 58, 75, 0.34) 2px;*/
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 10px 20px;
   height: 57px;
