@@ -6,18 +6,12 @@
         <center><img src="/images/intro.png"/></center>
       </div> -->
       <div>
-        {{#with currentUser}}
-          {{> introWelcomeBack}}
-        {{/with}}
-
-        {{#unless currentUser}}
-          {{> introSteps}}
-        {{/unless}}
+        {{> introSteps}}
       </div>
 
       <div>
         {{#with currentUser}}
-          {{> introSteps}}
+          {{> introWelcomeBack}}
         {{/with}}
 
         {{#unless currentUser}}

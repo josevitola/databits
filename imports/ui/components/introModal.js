@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 
+import './signUpModal.js';
 import './introModal.html';
 
 Template.introModal.events({

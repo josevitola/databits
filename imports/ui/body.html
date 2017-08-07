@@ -1,16 +1,23 @@
 <body>
   {{> mainMenu}}
   <div class="ui grid">
-    <div class="five wide column" id="sidebar">
+    <div class="six wide column" id="sidebar">
       <div class="ui secondary menu">
-        <h2 class="ui inverted header">Tu itinerario del día</h2>
+        <div class="ui inverted transparent input" style="font-size:1.5em; margin-top:-10px;">
+          <input type="text" name="planName" placeholder="Nombre del itinerario">
+        </div>
         <div class="right menu">
-          <i class="inverted large calendar icon"></i>
+          <div class="ui calendar" id="mycalendar">
+            <div class="ui inverted transparent input left icon" style="margin-top:10px; width:157px; margin-left:10px;">
+              <i class="calendar icon"></i>
+              <input type="text" name="planDate" placeholder="Fecha del Itinerario">
+            </div>
+          </div>
         </div>
       </div>
       {{> cards}}
     </div>
-    <div class="eleven wide column" style="margin:0px; padding:0px; height:100%;" id="map">
+    <div class="ten wide column" style="margin:0px; padding:0px; height:100%;" id="map">
       <div class="ui secondary menu">
         {{> searchFilters}}
         <div class="right menu">
