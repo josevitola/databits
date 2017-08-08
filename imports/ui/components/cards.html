@@ -40,12 +40,17 @@
 
   {{#if steps}}
   <div class="ui secondary end menu">
-    <div class="ui green compact message">
-      Precio Total: $ {{totalPrice}}<br>
-      Tiempo total: {{totalTime}}
+    <div class="ui green image label" style="margin:0; font-size:1em;">
+      Precio <br>Total: <div class="detail" style="margin-left:13px;">$ {{totalPrice}}</div>
+    </div>
+    <div class="ui teal image label" style="margin:0; font-size:1em; margin-left:20px;">
+      Tiempo <br>total:
+      <div class="detail" style="margin-left:17px;"><i class="time icon"></i>{{totalTime}}</div>
+    </div>
+    <div class="">
     </div>
     <div class="right menu">
-      <div class="ui green end steps button">Finalizar</div>
+      <div class="ui secondary end steps button" style="padding:14px 20px">Finalizar</div>
     </div>
   </div>
   {{/if}}
