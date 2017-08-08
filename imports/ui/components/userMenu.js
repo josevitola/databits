@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { beautifyDate, beautifyType, formatTime } from '/imports/ui/lib/beautify.js';
-import { Itineraries } from '/imports/api/itinerary.js';
+import { styleShortDate, beautifyType, formatTime } from '/imports/ui/lib/beautify.js';
+import { Itineraries, getPriceFromSteps, getTimeFromSteps } from '/imports/api/itinerary.js';
 
 import './userMenu.html';
 
@@ -39,8 +39,16 @@ Template.myItinerariesModal.helpers({
     return it;
   },
 
-  getItinDate: function(itin) {
-    return beautifyDate(itin.createdAt) + " a las " + formatTime(itin.createdAt);
+  styleCreatedAt: function(date) {
+    return styleShortDate(date);
+  },
+
+  getTotalPrice: function(steps) {
+    return getPriceFromSteps(steps);
+  },
+
+  getTotalTime: function(steps) {
+    return getTimeFromSteps(steps);
   },
 
   beautifyType: function(type) {
@@ -49,8 +57,9 @@ Template.myItinerariesModal.helpers({
 });
 
 Template.myItinerariesModal.events({
-  'click .itin.remove'() {
-    var id = $(event.target).data('id');
+  'click .remove.icon'() {
+    var id = $(event.target).parent().parent().parent().parent().data('id');
+    console.log($(event.target).parent().parent().parent().parent());
     Meteor.call('removeItinerary', id, (error, result) => {
       if(error) alert(error.message);
     });

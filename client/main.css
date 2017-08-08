@@ -18,6 +18,10 @@ body, html {
   height: 100%;
 }
 
+a.icon {
+  color: black;
+}
+
 .ui.grid {
   margin: 0px;
   padding: 0px;

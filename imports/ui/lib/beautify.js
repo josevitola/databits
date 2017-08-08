@@ -86,6 +86,10 @@ export const beautifyDate = function(date) {
   return date.getDate() + " de " + getMonthName(date);
 }
 
+export const styleShortDate = function(date) {
+  return date.getDate() + " " + shortenMonth(date);
+}
+
 export const formatTime = function(date) {
   return moment(date).format("hh:mma");
 }
