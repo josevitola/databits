@@ -1,10 +1,11 @@
-import {Session} from 'meteor/session';
+  import {Session} from 'meteor/session';
 import {Meteor} from 'meteor/meteor';
 import {ReactiveDict} from 'meteor/reactive-dict';
 
 import Sortable from 'sortablejs';
 
-import {centerMap, generateInfWinHtml} from '/imports/api/datasets.js';
+import {getPinImgName} from '/imports/api/places.js';
+import {openMarker, getAppMap, generateInfWinHtml} from '/imports/api/datasets.js';
 import {Itineraries, getPriceFromSteps, getTimeFromSteps} from '/imports/api/itinerary.js';
 import {validateEmail} from '/imports/api/users.js';
 import {beautifyType} from '/imports/ui/lib/beautify.js';
@@ -59,14 +60,9 @@ Template.cards.helpers({
   },
 
   beautifyType: function(type) {
-    if (type == "restaurant")
-      return "Restaurante";
-    else if (type == "museum")
-      return "Museo";
-    else if (type == "theatre")
-      return "Teatro";
-    }
-  });
+    return beautifyType(type);
+  }
+});
 
 Template.cards.events({
   'click .ui.link.fluid.card' () {
@@ -81,7 +77,13 @@ Template.cards.events({
     }
 
     let step = Session.get("steps")[$(target).data("step")];
-    centerMap(step.location);
+    // centerMap(step.location);
+    console.log('/markers/' + getPinImgName(step.type) + '-pin.png');
+    openMarker(generateInfWinHtml(step), new google.maps.Marker({
+      position: step.location,
+      map: getAppMap().instance,
+      visible: false    // TODO TEMPORARY SOLUTION. Actually use the associated marker
+    }), step.location);
   },
 
   'click .intro' () {
@@ -171,13 +173,7 @@ Template.cardsModal.helpers({
   },
 
   getPinImgName: function(type) {
-    if (type == "restaurant") {
-      return "rest";
-    } else if (type == "museum") {
-      return "muse";
-    } else if (type == "theatre") {
-      return "teat";
-    }
+    return getPinImgName(type);
   },
 
   isEmailInvalid: function() {
