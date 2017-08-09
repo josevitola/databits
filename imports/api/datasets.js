@@ -40,22 +40,22 @@ function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-export const generateInfWinHtml = function(stop) {
-  return '<center><h3>'+ stop.name +'</h3>' +
+export const generateInfWinHtml = function(step) {
+  return '<center><h3>'+ step.name +'</h3>' +
   '<img src="' +
-      'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + stop.name +
+      'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + step.name +
       ' Bogota, Colombia&size=600x300' + '&key=AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA' +
   '" class="ui medium rounded image"></img></center>' +
-  '<br><b>Dirección: </b> '+ stop.address +
-  '<br><b>Teléfono: </b> ' + stop.phone +
-  '<br><b>Sitio web: </b> <a href="' + stop.webpage + '">' + stop.webpage + '</a>' +
-  '<br><b style="color: green">Precio Promedio: $</b> ' + stop.price +
-  '<br><b style="color: green">Tiempo Promedio: </b> ' + stop.time +
-  '<br><br><button class="ui labeled icon green add stop button right floated"' +
-  'data-name="' + stop.name + '" data-phone="' + stop.phone + '" data-address="'
-  + stop.address + '" data-web="' + stop.webpage + '" data-price="' + stop.price +
-  '" data-lat="' + stop.location.lat + '" data-lng="' + stop.location.lng + '" data-type="' + stop.type +
-  '" data-time="' + stop.time +
+  '<br><b>Dirección: </b> '+ step.address +
+  '<br><b>Teléfono: </b> ' + step.phone +
+  '<br><b>Sitio web: </b> <a href="' + step.webpage + '">' + step.webpage + '</a>' +
+  '<br><b style="color: green">Precio Promedio: $</b> ' + step.price +
+  '<br><b style="color: green">Tiempo Promedio: </b> ' + step.time +
+  '<br><br><button class="ui labeled icon green add step button right floated"' +
+  'data-name="' + step.name + '" data-phone="' + step.phone + '" data-address="'
+  + step.address + '" data-web="' + step.webpage + '" data-price="' + step.price +
+  '" data-lat="' + step.location.lat + '" data-lng="' + step.location.lng + '" data-type="' + step.type +
+  '" data-time="' + step.time +
   '"><i class="plus icon"></i>Agregar</button>';
 }
 

@@ -52,11 +52,11 @@ Template.cards.helpers({
   },
 
   totalPrice: function() {
-    return getPriceFromSteps(Template.instance().data.stops);
+    return getPriceFromSteps(Template.instance().data.steps);
   },
 
   totalTime: function() {
-    return getTimeFromSteps(Template.instance().data.stops);
+    return getTimeFromSteps(Template.instance().data.steps);
   },
 
   styleType: function(type) {
@@ -66,7 +66,7 @@ Template.cards.helpers({
 
 Template.cards.events({
   'click .ui.link.fluid.card' () {
-    const stops = Template.instance().data.stops;
+    const steps = Template.instance().data.steps;
     let target = event.target;
 
     if ($(target).is(".icon") || $(target).is(".button")) {
@@ -77,7 +77,7 @@ Template.cards.events({
       target = $(target).parent();
     }
 
-    let step = stops[$(target).data("step")];
+    let step = steps[$(target).data("step")];
     // centerMap(step.location);
     console.log('/markers/' + getPinImgName(step.type) + '-pin.png');
     openMarker(generateInfWinHtml(step), new google.maps.Marker({
@@ -130,7 +130,7 @@ Template.cards.events({
 
   'click .ui.end.steps.button' () {
     Session.set("planName", $('input[name=planName]').val());
-    SemanticModal.generalModal('cardsModal', {stops: Session.get("steps")});
+    SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
   }
 });
 

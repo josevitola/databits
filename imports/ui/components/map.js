@@ -107,7 +107,6 @@ Template.map.helpers({
 
 Template.map.events({
   'click .ui.add.step.button' (event) {
-    console.log("add stop");
     var target = event.target;
 
     if(typeof $(target).data("name") === "undefined") {

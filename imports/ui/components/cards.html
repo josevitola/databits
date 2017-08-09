@@ -1,5 +1,5 @@
 <template name="cards">
-  {{#unless stops}}
+  {{#unless steps}}
   <center>
     <img src="/images/sad.png" class="ui image" style="margin:60px;">
     <h3 class="ui header">¡Todavía no tienes lugares para tu itinerario!</h3>
@@ -11,7 +11,7 @@
   {{/unless}}
 
   <div id="sortable-cards">
-    {{#each stops}}
+    {{#each steps}}
     <div class="ui link {{this.type}} fluid card" data-step="{{@index}}">
       <div class="main content">
         {{#unless isDisplaying}}
@@ -42,7 +42,7 @@
   </div>
 
   <div class="ui secondary end menu">
-    {{#if stops}}
+    {{#if steps}}
     <div class="ui green image label" style="margin:0; font-size:1em;">
       Precio <br>Total: <div class="detail" style="margin-left:13px;">$ {{totalPrice}}</div>
     </div>
@@ -97,7 +97,7 @@
       </h3>
 
       <div class="ui divided items">
-        {{#each stops}}
+        {{#each steps}}
         <div class="item">
           <div class="image" style="width:20px; margin-top:10px;">
             <img class="ui left floated image" src="/markers/{{getPinImgName this.type}}-pin.png" style="width:20px;">
