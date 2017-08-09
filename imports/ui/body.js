@@ -59,7 +59,7 @@ Template.body.helpers({
     return styleShortDate(Session.get("displayItin").date);
   },
 
-  getStops: function() {
+  getSteps: function() {
     if(Session.get("isDisplaying"))
       return Session.get("displayItin").steps;
     else return Session.get("steps");
@@ -69,6 +69,7 @@ Template.body.helpers({
 Template.body.events({
   'click .big.icon'() {
     Session.set("isDisplaying", false);
+    Session.set("isEditing", true);
   }
 });
 

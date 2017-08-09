@@ -32,8 +32,6 @@ Meteor.methods({
       steps: steps
     };
 
-    console.log(itinerary);
-
     Itineraries.schema.validate(itinerary);
     Itineraries.insert(itinerary);
   },
@@ -43,6 +41,17 @@ Meteor.methods({
     var itinerary = Itineraries.find({"_id": id}).fetch()[0];
     if(itinerary.userId == this.userId) {
       Itineraries.remove(id);
+    }
+  },
+
+  'itinerary.updateName'( id, newName ) {
+    check(id, Meteor.Collection.ObjectID);
+    check(name, String);
+
+    if(this.userId == itinerary.userId) {
+      Itineraries.update(id, {
+        $set: { name: newName }
+      })
     }
   }
 });

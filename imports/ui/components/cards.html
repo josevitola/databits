@@ -12,12 +12,12 @@
 
   <div id="sortable-cards">
     {{#each steps}}
-    <div class="ui link {{this.type}} fluid card" data-step="{{@index}}">
+    <div class="ui link {{this.type}} fluid card" data-idx="{{@index}}">
       <div class="main content">
         {{#if isEditing}}
-        <i class="right floated remove icon" data-step="{{@index}}"></i>
-        <i class="right floated angle up icon" data-step="{{@index}}"></i>
-        <i class="right floated angle down icon" data-step="{{@index}}"></i>
+        <i class="right floated remove icon" data-idx="{{@index}}"></i>
+        <i class="right floated angle up icon" data-idx="{{@index}}"></i>
+        <i class="right floated angle down icon" data-idx="{{@index}}"></i>
         {{/if}}
 
         <div class="header">

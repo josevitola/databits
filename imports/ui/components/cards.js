@@ -12,6 +12,17 @@ import {styleType, styleDate} from '/imports/ui/lib/stylish.js';
 
 import './cards.html';
 
+// FIXME update data to template, not to global variable
+function updateSteps(newSteps) {
+  if(Session.get("isEditing")) {
+    if(Session.get("isDisplaying")) {
+      Session.set("displayItin", newSteps);
+    } else {
+      Session.set("steps", newSteps);
+    }
+  }
+}
+
 Template.cards.onRendered(function() {
   var el = document.getElementById('sortable-cards');
   var sortable = Sortable.create(el, {
@@ -81,7 +92,7 @@ Template.cards.events({
       target = $(target).parent();
     }
 
-    let step = steps[$(target).data("step")];
+    let step = steps[$(target).data("idx")];
     // centerMap(step.location);
     openMarker(generateInfWinHtml(step), new google.maps.Marker({
       position: step.location, map: getAppMap().instance, visible: false // TODO TEMPORARY SOLUTION. Actually use the associated marker
@@ -93,45 +104,50 @@ Template.cards.events({
   },
 
   'click .remove.icon' () {
-    var steps = Session.get("steps");
-    var idx = $(event.target).data("step");
+    var steps = Template.instance().data.steps;
+    var idx = $(event.target).data("idx");
 
     if (idx > -1) {
       steps.splice(idx, 1);
     }
 
-    Session.set("steps", steps);
+    updateSteps(steps);
   },
 
   'click .angle.down.icon' () {
-    var steps = Session.get("steps");
-    var idx = $(event.target).data("step");
+    var steps = Template.instance().data.steps;
+    var idx = $(event.target).data("idx");
 
     if (steps.length >= 2 && idx + 1 < steps.length) {
       var aux = steps[idx + 1];
       steps[idx + 1] = steps[idx];
       steps[idx] = aux;
 
-      Session.set("steps", steps);
+      updateSteps(steps);
     }
   },
 
   'click .angle.up.icon' () {
-    var steps = Session.get("steps");
-    var idx = $(event.target).data("step");
+    var steps = Template.instance().data.steps;
+    var idx = $(event.target).data("idx");
 
     if (steps.length >= 2 && idx - 1 >= 0) {
       var aux = steps[idx - 1];
       steps[idx - 1] = steps[idx];
       steps[idx] = aux;
 
-      Session.set("steps", steps);
+      updateSteps(steps);
     }
   },
 
   'click .ui.end.steps.button' () {
-    Session.set("planName", $('input[name=planName]').val());
-    SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
+    if(Session.get("isDisplaying")) {
+      var newName = $('input[name=planName]').val();
+      var newDate = $('input[name=planDate]').val();
+    } else {
+      Session.set("planName", $('input[name=planName]').val());
+      SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
+    }
   },
 
   'click .ui.end.edit.button' () {
