@@ -69,7 +69,8 @@ Template.myItinerariesModal.events({
     var it = Itineraries.find({_id: id}).fetch()[0];
     Session.set("displayItin", it);
 
-    Session.set("userState", "display");
+    Session.set("isDisplaying", true);
+    Session.set("isEditing", false);
     $('#generalModal').modal('hide');
   }
 });

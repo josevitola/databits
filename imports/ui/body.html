@@ -4,20 +4,28 @@
     <div class="six wide column" id="sidebar">
       {{#if isDisplaying}}
       <div class="ui alternate secondary menu">
-        <i class="big remove icon"></i>
+        <i class="big left arrow icon"></i>
+        {{#if isEditing}}
+        {{> planNameInput value=getItinName}}
+        {{else}}
         <h2 class="ui header">{{getItinName}}</h2>
+        {{/if}}
         <div class="right menu">
+          {{#if isEditing}}
+          {{> planCalendar date=getItinDate}}
+          {{else}}
           <h5 class="ui disabled header">
             <i class="calendar icon"></i>
             <div class="content">{{getItinDate}}</div>
           </h5>
+          {{/if}}
         </div>
       </div>
       {{else}}
       <div class="ui secondary menu">
-        {{> itinNameInput}}
+        {{> planNameInput}}
         <div class="right menu">
-          {{> itinDateInput}}
+          {{> planCalendar}}
         </div>
       </div>
       {{/if}}
@@ -36,14 +44,14 @@
   </div>
 </body>
 
-<template name="itinNameInput">
+<template name="planNameInput">
   <div class="ui small inverted transparent icon input" style="font-size:1.5em; margin-top:-10px;">
-    <input type="text" name="planName" placeholder="Itinerario sin nombre...">
+    <input type="text" name="planName" value="{{value}}" placeholder="Itinerario sin nombre..." />
     <i class="edit icon"></i>
   </div>
 </template>
 
-<template name="itinDateInput">
+<template name="planCalendar">
   <div class="ui calendar" id="mycalendar">
     <div class="ui inverted transparent input left icon" style="margin-top:10px; width:157px; margin-left:10px;">
       <i class="calendar icon"></i>

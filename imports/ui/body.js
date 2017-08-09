@@ -1,6 +1,5 @@
 import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
-import {isDisplaying} from '/imports/api/users.js';
 import {styleShortDate} from '/imports/ui/lib/stylish.js';
 
 import '/node_modules/semantic-ui-calendar/dist/calendar.min.js';
@@ -14,11 +13,7 @@ import './components/map.js';
 import './components/search.js';
 import './body.html';
 
-Template.body.onRendered(function() {
-  if(!Meteor.user() && !Meteor.loggingIn()) {
-    SemanticModal.generalModal('introModal');
-  }
-
+function initCalendar() {
   $('#mycalendar').calendar({
     type: 'date',
     firstDayOfWeek: 1,
@@ -37,11 +32,23 @@ Template.body.onRendered(function() {
       Session.set("programDate", date);
     }
   });
+}
+
+Template.body.onRendered(function() {
+  if(!Meteor.user() && !Meteor.loggingIn()) {
+    SemanticModal.generalModal('introModal');
+  }
+
+  initCalendar();
 });
 
 Template.body.helpers({
   isDisplaying: function() {
-    return isDisplaying();
+    return Session.get("isDisplaying");
+  },
+
+  isEditing: function() {
+    return Session.get("isEditing");
   },
 
   getItinName: function() {
@@ -53,14 +60,22 @@ Template.body.helpers({
   },
 
   getStops: function() {
-    if(isDisplaying())
+    if(Session.get("isDisplaying"))
       return Session.get("displayItin").steps;
     else return Session.get("steps");
   }
 });
 
 Template.body.events({
-  'click .remove.icon'() {
-    Session.set("userState", "create");
+  'click .big.icon'() {
+    Session.set("isDisplaying", false);
   }
+});
+
+Template.planCalendar.onRendered(function() {
+  const data = Template.instance().data;
+  initCalendar();
+
+  if(data != null && data.date != null)
+    this.$('#mycalendar').calendar('set date', Template.instance().data.date);
 });

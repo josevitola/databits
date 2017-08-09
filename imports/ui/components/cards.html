@@ -14,11 +14,11 @@
     {{#each steps}}
     <div class="ui link {{this.type}} fluid card" data-step="{{@index}}">
       <div class="main content">
-        {{#unless isDisplaying}}
+        {{#if isEditing}}
         <i class="right floated remove icon" data-step="{{@index}}"></i>
         <i class="right floated angle up icon" data-step="{{@index}}"></i>
         <i class="right floated angle down icon" data-step="{{@index}}"></i>
-        {{/unless}}
+        {{/if}}
 
         <div class="header">
           {{getIndex @index}}. {{this.name}}
@@ -54,17 +54,18 @@
     </div>
     {{/if}}
     <div class="right menu">
-    {{#if isCreating}}
+    {{#if isEditing}}
+      {{#if steps}}
       <div class="ui secondary end steps button" style="padding:14px 20px">Finalizar</div>
+      {{/if}}
     {{else if isDisplaying}}
-      <div class="ui secondary end steps button">
+    <div class="ui secondary end edit button" style="padding:14px 20px">
         <i class="edit icon"></i>
         Editar
       </div>
     {{/if}}
     </div>
   </div>
-
 </template>
 
 <template name="cardsModal">

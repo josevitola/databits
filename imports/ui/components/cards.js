@@ -1,4 +1,4 @@
-  import {Session} from 'meteor/session';
+import {Session} from 'meteor/session';
 import {Meteor} from 'meteor/meteor';
 import {ReactiveDict} from 'meteor/reactive-dict';
 
@@ -7,7 +7,7 @@ import Sortable from 'sortablejs';
 import {getPinImgName} from '/imports/api/places.js';
 import {openMarker, getAppMap, generateInfWinHtml} from '/imports/api/datasets.js';
 import {Itineraries, getPriceFromSteps, getTimeFromSteps} from '/imports/api/itinerary.js';
-import {validateEmail, isDisplaying} from '/imports/api/users.js';
+import {validateEmail} from '/imports/api/users.js';
 import {styleType, styleDate} from '/imports/ui/lib/stylish.js';
 
 import './cards.html';
@@ -44,7 +44,11 @@ Template.cards.onRendered(function() {
 
 Template.cards.helpers({
   isDisplaying: function() {
-    return isDisplaying();
+    return Session.get("isDisplaying");
+  },
+
+  isEditing: function() {
+    return Session.get("isEditing");
   },
 
   getIndex: function(idx) {
@@ -79,11 +83,8 @@ Template.cards.events({
 
     let step = steps[$(target).data("step")];
     // centerMap(step.location);
-    console.log('/markers/' + getPinImgName(step.type) + '-pin.png');
     openMarker(generateInfWinHtml(step), new google.maps.Marker({
-      position: step.location,
-      map: getAppMap().instance,
-      visible: false    // TODO TEMPORARY SOLUTION. Actually use the associated marker
+      position: step.location, map: getAppMap().instance, visible: false // TODO TEMPORARY SOLUTION. Actually use the associated marker
     }), step.location);
   },
 
@@ -131,6 +132,11 @@ Template.cards.events({
   'click .ui.end.steps.button' () {
     Session.set("planName", $('input[name=planName]').val());
     SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
+  },
+
+  'click .ui.end.edit.button' () {
+    console.log("edit");
+    Session.set("isEditing", true);
   }
 });
 
@@ -191,7 +197,7 @@ Template.cardsModal.events({
     event.preventDefault();
 
     var name = $('input[name=planName]').val();
-    if(name.length == 0) {
+    if (name.length == 0) {
       name = "Itinerario sin nombre";
     }
 
