@@ -7,18 +7,10 @@ import Sortable from 'sortablejs';
 import {getPinImgName} from '/imports/api/places.js';
 import {openMarker, getAppMap, generateInfWinHtml} from '/imports/api/datasets.js';
 import {Itineraries, getPriceFromSteps, getTimeFromSteps} from '/imports/api/itinerary.js';
-import {validateEmail} from '/imports/api/users.js';
+import {validateEmail, isDisplaying} from '/imports/api/users.js';
 import {styleType, styleDate} from '/imports/ui/lib/stylish.js';
 
 import './cards.html';
-
-
-function parseDateText(text) {
-  console.log(text);
-  var split = text.split(" ");
-  return split;
-}
-
 
 Template.cards.onRendered(function() {
   var el = document.getElementById('sortable-cards');
@@ -51,16 +43,20 @@ Template.cards.onRendered(function() {
 });
 
 Template.cards.helpers({
+  isDisplaying: function() {
+    return isDisplaying();
+  },
+
   getIndex: function(idx) {
     return idx + 1;
   },
 
   totalPrice: function() {
-    return getPriceFromSteps(Session.get("steps"));
+    return getPriceFromSteps(Template.instance().data.stops);
   },
 
   totalTime: function() {
-    return getTimeFromSteps(Session.get("steps"));
+    return getTimeFromSteps(Template.instance().data.stops);
   },
 
   styleType: function(type) {
@@ -70,6 +66,7 @@ Template.cards.helpers({
 
 Template.cards.events({
   'click .ui.link.fluid.card' () {
+    const stops = Template.instance().data.stops;
     let target = event.target;
 
     if ($(target).is(".icon") || $(target).is(".button")) {
@@ -80,7 +77,7 @@ Template.cards.events({
       target = $(target).parent();
     }
 
-    let step = Session.get("steps")[$(target).data("step")];
+    let step = stops[$(target).data("step")];
     // centerMap(step.location);
     console.log('/markers/' + getPinImgName(step.type) + '-pin.png');
     openMarker(generateInfWinHtml(step), new google.maps.Marker({

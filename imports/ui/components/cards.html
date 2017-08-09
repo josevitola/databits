@@ -14,9 +14,12 @@
     {{#each stops}}
     <div class="ui link {{this.type}} fluid card" data-step="{{@index}}">
       <div class="main content">
+        {{#unless isDisplaying}}
         <i class="right floated remove icon" data-step="{{@index}}"></i>
         <i class="right floated angle up icon" data-step="{{@index}}"></i>
         <i class="right floated angle down icon" data-step="{{@index}}"></i>
+        {{/unless}}
+
         <div class="header">
           {{getIndex @index}}. {{this.name}}
         </div>
@@ -38,8 +41,8 @@
     {{/each}}
   </div>
 
-  {{#if stops}}
   <div class="ui secondary end menu">
+    {{#if stops}}
     <div class="ui green image label" style="margin:0; font-size:1em;">
       Precio <br>Total: <div class="detail" style="margin-left:13px;">$ {{totalPrice}}</div>
     </div>
@@ -49,11 +52,18 @@
     </div>
     <div class="">
     </div>
+    {{/if}}
     <div class="right menu">
+    {{#if isCreating}}
       <div class="ui secondary end steps button" style="padding:14px 20px">Finalizar</div>
+    {{else if isDisplaying}}
+      <div class="ui secondary end steps button">
+        <i class="edit icon"></i>
+        Editar
+      </div>
+    {{/if}}
     </div>
   </div>
-  {{/if}}
 
 </template>
 
