@@ -36,7 +36,7 @@ Meteor.methods({
     Itineraries.insert(itinerary);
   },
 
-    'itinerary.remove'( id ) {
+  'itinerary.remove'( id ) {
     // check(id, Meteor.Collection.ObjectID);
     var itinerary = Itineraries.find({"_id": id}).fetch()[0];
     if(itinerary.userId == this.userId) {
@@ -54,6 +54,28 @@ Meteor.methods({
       Itineraries.update(id, {
         $set: { name: newName }
       })
+    }
+  },
+
+  'itinerary.updateDate'( id, newDate ) {
+    check(newDate, Date);
+
+    let itinerary = Itineraries.find({_id: id}).fetch()[0];
+    if(this.userId == itinerary.userId) {
+      Itineraries.update(id, {
+        $set: { date: newDate }
+      })
+    }
+  },
+
+  'itinerary.updateSteps'( id, steps ) {
+    Itineraries.schema.validate({steps});
+
+    let itinerary = Itineraries.find({_id: id}).fetch()[0];
+    if(this.userId == itinerary.userId) {
+      Itineraries.update(id, {
+        $set: { steps: steps }
+      });
     }
   }
 });

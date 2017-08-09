@@ -147,18 +147,22 @@ Template.cards.events({
 
   'click #saveItin' () {
     var newName = $('input[name=planName]').val();
-    var newDate = $('input[name=planDate]').val();
+    var newDate = Session.get("planDate");
     var oldItin = Session.get("displayItin");
 
     if(newName !== oldItin.name) {
-      console.log(oldItin._id);
       Meteor.call('itinerary.updateName', oldItin._id, newName, (error, result) => {
-        if (error)
-          alert(error.message);
-        }
-      );
+        if (error) alert(error.message);
+      });
     }
 
+    if(newDate !== oldItin.date) {
+      Meteor.call('itinerary.updateDate', oldItin._id, newDate, (error, result) => {
+        if (error) alert(error.message);
+      });
+    }
+
+    console.log(newDate);
     Session.set("isEditing", false);
   },
 
