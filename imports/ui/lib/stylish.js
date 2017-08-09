@@ -82,7 +82,7 @@ export const getMonthName = function(date) {
   return "Error";
 }
 
-export const beautifyDate = function(date) {
+export const styleDate = function(date) {
   return date.getDate() + " de " + getMonthName(date);
 }
 
@@ -94,7 +94,7 @@ export const formatTime = function(date) {
   return moment(date).format("hh:mma");
 }
 
-export const beautifyType = function(type) {
+export const styleType = function(type) {
   if(type == "restaurant")
     return "Restaurante";
   else if(type == "museum")

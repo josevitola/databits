@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { styleShortDate, beautifyType, formatTime } from '/imports/ui/lib/beautify.js';
+import { styleShortDate, styleType, formatTime } from '/imports/ui/lib/stylish.js';
 import { Itineraries, getPriceFromSteps, getTimeFromSteps } from '/imports/api/itinerary.js';
 
 import './userMenu.html';
@@ -39,7 +39,7 @@ Template.myItinerariesModal.helpers({
     return it;
   },
 
-  styleCreatedAt: function(date) {
+  styleShortDate: function(date) {
     return styleShortDate(date);
   },
 
@@ -51,8 +51,8 @@ Template.myItinerariesModal.helpers({
     return getTimeFromSteps(steps);
   },
 
-  beautifyType: function(type) {
-    return beautifyType(type);
+  styleType: function(type) {
+    return styleType(type);
   }
 });
 

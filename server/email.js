@@ -1,6 +1,6 @@
 import { check } from 'meteor/check';
 import {getPriceFromSteps} from '/imports/api/itinerary.js';
-import { beautifyDate, formatTime } from '/imports/ui/lib/beautify.js';
+import { styleDate, formatTime } from '/imports/ui/lib/stylish.js';
 
 const user = "postmaster@sandbox11d7438fbdc6432fbe532aa1b1aa2637.mailgun.org";
 const pass = "bd70c56c1def29482d67807d55a47b87";

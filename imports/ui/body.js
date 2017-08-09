@@ -1,6 +1,7 @@
 import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
 import {isDisplaying} from '/imports/api/users.js';
+import {styleShortDate} from '/imports/ui/lib/stylish.js';
 
 import '/node_modules/semantic-ui-calendar/dist/calendar.min.js';
 
@@ -32,12 +33,23 @@ Template.body.onRendered(function() {
       am: 'AM',
       pm: 'PM'
     },
+    onChange: function(date, text, mode) {
+      Session.set("programDate", date);
+    }
   });
 });
 
 Template.body.helpers({
   isDisplaying: function() {
     return isDisplaying();
+  },
+
+  getItinName: function() {
+    return Session.get("displayItin").name;
+  },
+
+  getItinDate: function() {
+    return styleShortDate(Session.get("displayItin").date);
   },
 
   getStops: function() {

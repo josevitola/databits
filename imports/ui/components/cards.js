@@ -8,9 +8,17 @@ import {getPinImgName} from '/imports/api/places.js';
 import {openMarker, getAppMap, generateInfWinHtml} from '/imports/api/datasets.js';
 import {Itineraries, getPriceFromSteps, getTimeFromSteps} from '/imports/api/itinerary.js';
 import {validateEmail} from '/imports/api/users.js';
-import {beautifyType} from '/imports/ui/lib/beautify.js';
+import {styleType, styleDate} from '/imports/ui/lib/stylish.js';
 
 import './cards.html';
+
+
+function parseDateText(text) {
+  console.log(text);
+  var split = text.split(" ");
+  return split;
+}
+
 
 Template.cards.onRendered(function() {
   var el = document.getElementById('sortable-cards');
@@ -55,8 +63,8 @@ Template.cards.helpers({
     return getTimeFromSteps(Session.get("steps"));
   },
 
-  beautifyType: function(type) {
-    return beautifyType(type);
+  styleType: function(type) {
+    return styleType(type);
   }
 });
 
@@ -125,7 +133,7 @@ Template.cards.events({
 
   'click .ui.end.steps.button' () {
     Session.set("planName", $('input[name=planName]').val());
-    SemanticModal.generalModal('cardsModal');
+    SemanticModal.generalModal('cardsModal', {stops: Session.get("steps")});
   }
 });
 
@@ -164,8 +172,8 @@ Template.cardsModal.helpers({
     return getTimeFromSteps(Session.get("steps"));
   },
 
-  beautifyType: function(type) {
-    return beautifyType(type);
+  styleType: function(type) {
+    return styleType(type);
   },
 
   getPinImgName: function(type) {
@@ -174,6 +182,10 @@ Template.cardsModal.helpers({
 
   isEmailInvalid: function() {
     return Template.instance().checking.get() && !Template.instance().validEmail.get();
+  },
+
+  styleDate: function() {
+    return styleDate(Session.get("programDate"));
   }
 });
 
@@ -182,13 +194,17 @@ Template.cardsModal.events({
     event.preventDefault();
 
     var name = $('input[name=planName]').val();
-    var date = $('input[name=planDate]').val();
+    if(name.length == 0) {
+      name = "Itinerario sin nombre";
+    }
+
+    // FIXME get date direcly from calendar, not onChange workaround
+    date = Session.get("programDate");
+
     var steps = Session.get("steps");
 
     if (Meteor.user()) {
-      if (name.length === 0)
-        name = "Itinerario sin nombre";
-      Meteor.call('insertItinerary', name, steps, (error, result) => {
+      Meteor.call('insertItinerary', name, date, steps, (error, result) => {
         if (error)
           alert(error.message);
         }

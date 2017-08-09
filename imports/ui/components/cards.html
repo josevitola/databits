@@ -23,7 +23,7 @@
         <div class="meta">
           <div class="ui {{this.type}} horizontal label">
             <!-- <i class="hotel icon"></i> -->
-            {{beautifyType this.type}}
+            {{styleType this.type}}
           </div>
           <b>{{this.address}}</b>
         </div>
@@ -58,14 +58,12 @@
   </div>
   <div class="scrolling content">
     <div class="description">
-      <p>
+      <center>
         Verifica lo que ingresaste. <b>¿Es éste tu itinerario?</b><br/>
-        Si así es,
-        {{#if currentUser}}
-        presiona "Continuar" para guardar tu itinerario en tu cuenta y que puedas
-        acceder a él cuando quieras.
-        {{else}}
-        ingresa aquí un correo electrónico a donde podamos enviarlo para llevarlo a donde necesites. <br><br>
+      </center>
+
+        {{#unless currentUser}}
+        Ingresa aquí un correo electrónico a donde podamos enviarlo para llevarlo a donde necesites.
         <form class="ui form">
           <div class="field">
             <input type="text" class="ui send email input" placeholder="Correo electrónico...">
@@ -76,12 +74,11 @@
             {{/if}}
           </div>
         </form>
-        {{/if}}
-      </p>
+        {{/unless}}
 
       <h3 class="ui center aligned header">
           {{getPlanName}}
-          <div class="sub header">{{getPlanLength}}. ${{getPlanPrice}}. {{getPlanTime}}.</div>
+          <div class="sub header">{{getPlanLength}}. {{getPlanTime}}. Programado para el {{styleDate}}.</div>
       </h3>
 
       <div class="ui divided items">
@@ -92,13 +89,13 @@
           </div>
           <div class="content">
             <div class="{{this.type}} meta">
-              {{beautifyType this.type}}
+              {{styleType this.type}}
             </div>
             <div class="header">
                {{this.name}}
             </div>
             <div class="description">
-              ${{this.price}} - {{this.hours}}h {{this.minutes}}m de recorrido
+              ${{this.price}} - {{this.time}} de recorrido
             </div>
           </div>
         </div>

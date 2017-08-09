@@ -7,6 +7,7 @@ Itinerary.schema = new SimpleSchema({
   userId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: false},
   name: {type: String, optional: false},
   createdAt: {type: Date},
+  date: {type: Date},
   steps: {type: [Object]},
   "steps.$.name": {type: String},
   "steps.$.address": {type: String},
@@ -22,11 +23,12 @@ Itinerary.schema = new SimpleSchema({
 export const Itineraries = Itinerary;
 
 Meteor.methods({
-  insertItinerary( name, steps ) {
+  insertItinerary( name, date, steps ) {
     var itinerary = {
       userId: this.userId,
       name: name,
       createdAt: new Date(),
+      date: date,
       steps: steps
     };
 

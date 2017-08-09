@@ -10,7 +10,6 @@ export const isCreating = function() {
 }
 
 export const isDisplaying = function() {
-  console.log(Session.get("userState"));
   return Session.get("userState") == "display";
 }
 

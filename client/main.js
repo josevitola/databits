@@ -9,4 +9,5 @@ Meteor.startup(function() {
   Session.set("userState", "create"); // create, display, edit
   Session.set("steps", []);
   Session.set("displayItin", []);
+  Session.set("programDate", new Date());
 });
