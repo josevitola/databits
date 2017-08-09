@@ -10,5 +10,6 @@ Meteor.startup(function() {
   Session.set("isEditing", true);
   Session.set("steps", []);
   Session.set("displayItin", []);
-  Session.set("programDate", new Date());
+  Session.set("planName", "");
+  Session.set("planDate", new Date());
 });

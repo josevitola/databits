@@ -23,7 +23,7 @@ Itinerary.schema = new SimpleSchema({
 export const Itineraries = Itinerary;
 
 Meteor.methods({
-  insertItinerary( name, date, steps ) {
+  'itinerary.insert'( name, date, steps ) {
     var itinerary = {
       userId: this.userId,
       name: name,
@@ -36,7 +36,7 @@ Meteor.methods({
     Itineraries.insert(itinerary);
   },
 
-  removeItinerary( id ) {
+    'itinerary.remove'( id ) {
     // check(id, Meteor.Collection.ObjectID);
     var itinerary = Itineraries.find({"_id": id}).fetch()[0];
     if(itinerary.userId == this.userId) {
@@ -45,9 +45,11 @@ Meteor.methods({
   },
 
   'itinerary.updateName'( id, newName ) {
-    check(id, Meteor.Collection.ObjectID);
-    check(name, String);
+    // TODO check id
+    // check(id, Meteor.Collection.ObjectID._str);
+    check(newName, String);
 
+    let itinerary = Itineraries.find({_id: id}).fetch()[0];
     if(this.userId == itinerary.userId) {
       Itineraries.update(id, {
         $set: { name: newName }

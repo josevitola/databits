@@ -29,7 +29,7 @@ function initCalendar() {
       pm: 'PM'
     },
     onChange: function(date, text, mode) {
-      Session.set("programDate", date);
+      Session.set("planDate", date);
     }
   });
 }

@@ -54,15 +54,22 @@
     </div>
     {{/if}}
     <div class="right menu">
-    {{#if isEditing}}
-      {{#if steps}}
-      <div class="ui secondary end steps button" style="padding:14px 20px">Finalizar</div>
-      {{/if}}
-    {{else if isDisplaying}}
-    <div class="ui secondary end edit button" style="padding:14px 20px">
+    {{#if isDisplaying}}
+      {{#if isEditing}}
+      <div id="saveItin" class="ui secondary end button" style="padding:14px 20px">
+        <i class="check icon"></i>
+        Guardar
+      </div>
+      {{else}}
+      <div id="editItin" class="ui secondary end button" style="padding:14px 20px">
         <i class="edit icon"></i>
         Editar
       </div>
+      {{/if}}
+    {{else}}
+      {{#if steps}}
+      <div id="createItin" class="ui secondary end button" style="padding:14px 20px">Finalizar</div>
+      {{/if}}
     {{/if}}
     </div>
   </div>

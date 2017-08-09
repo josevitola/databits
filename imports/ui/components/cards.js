@@ -140,18 +140,29 @@ Template.cards.events({
     }
   },
 
-  'click .ui.end.steps.button' () {
-    if(Session.get("isDisplaying")) {
-      var newName = $('input[name=planName]').val();
-      var newDate = $('input[name=planDate]').val();
-    } else {
-      Session.set("planName", $('input[name=planName]').val());
-      SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
-    }
+  'click #createItin' () {
+    Session.set("planName", $('input[name=planName]').val());
+    SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
   },
 
-  'click .ui.end.edit.button' () {
-    console.log("edit");
+  'click #saveItin' () {
+    var newName = $('input[name=planName]').val();
+    var newDate = $('input[name=planDate]').val();
+    var oldItin = Session.get("displayItin");
+
+    if(newName !== oldItin.name) {
+      console.log(oldItin._id);
+      Meteor.call('itinerary.updateName', oldItin._id, newName, (error, result) => {
+        if (error)
+          alert(error.message);
+        }
+      );
+    }
+
+    Session.set("isEditing", false);
+  },
+
+  'click #editItin' () {
     Session.set("isEditing", true);
   }
 });
@@ -204,7 +215,10 @@ Template.cardsModal.helpers({
   },
 
   styleDate: function() {
-    return styleDate(Session.get("programDate"));
+    if(typeof Session.get("planDate") === "undefined") {
+      Session.set("planDate", new Date());
+    }
+    return styleDate(Session.get("planDate"));
   }
 });
 
@@ -218,12 +232,12 @@ Template.cardsModal.events({
     }
 
     // FIXME get date direcly from calendar, not onChange workaround
-    date = Session.get("programDate");
+    date = Session.get("planDate");
 
     var steps = Session.get("steps");
 
     if (Meteor.user()) {
-      Meteor.call('insertItinerary', name, date, steps, (error, result) => {
+      Meteor.call('itinerary.insert', name, date, steps, (error, result) => {
         if (error)
           alert(error.message);
         }
