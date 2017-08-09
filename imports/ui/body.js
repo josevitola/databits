@@ -1,5 +1,6 @@
 import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
+import {isDisplaying} from '/imports/api/users.js';
 
 import '/node_modules/semantic-ui-calendar/dist/calendar.min.js';
 
@@ -32,4 +33,22 @@ Template.body.onRendered(function() {
       pm: 'PM'
     },
   });
+});
+
+Template.body.helpers({
+  isDisplaying: function() {
+    return isDisplaying();
+  },
+
+  getStops: function() {
+    if(isDisplaying())
+      return Session.get("displayItin").steps;
+    else return Session.get("steps");
+  }
+});
+
+Template.body.events({
+  'click .remove.icon'() {
+    Session.set("userState", "create");
+  }
 });

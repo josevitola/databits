@@ -43,10 +43,6 @@ Template.cards.onRendered(function() {
 });
 
 Template.cards.helpers({
-  steps: function() {
-    return Session.get("steps");
-  },
-
   getIndex: function(idx) {
     return idx + 1;
   },

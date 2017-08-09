@@ -2,21 +2,27 @@
   {{> mainMenu}}
   <div class="ui grid">
     <div class="six wide column" id="sidebar">
-      <div class="ui secondary menu">
-        <div class="ui small inverted transparent icon input" style="font-size:1.5em; margin-top:-10px;">
-          <input type="text" name="planName" placeholder="Itinerario sin nombre...">
-          <i class="edit icon"></i>
-        </div>
+      {{#if isDisplaying}}
+      <div class="ui alternate secondary menu">
+        <i class="big remove icon"></i>
+        <h2 class="ui header">Nombre del itinerario</h2>
         <div class="right menu">
-          <div class="ui calendar" id="mycalendar">
-            <div class="ui inverted transparent input left icon" style="margin-top:10px; width:157px; margin-left:10px;">
-              <i class="calendar icon"></i>
-              <input type="text" name="planDate" placeholder="Fecha del Itinerario">
-            </div>
-          </div>
+          <h5 class="ui disabled header">
+            <i class="calendar icon"></i>
+            <div class="content">20 Jul</div>
+          </h5>
         </div>
       </div>
-      {{> cards}}
+      {{else}}
+      <div class="ui secondary menu">
+        {{> itinNameInput}}
+        <div class="right menu">
+          {{> itinDateInput}}
+        </div>
+      </div>
+      {{/if}}
+
+      {{> cards stops=getStops}}
     </div>
     <div class="ten wide column" style="margin:0px; padding:0px; height:100%;" id="map">
       <div class="ui secondary menu">
@@ -29,3 +35,19 @@
     </div>
   </div>
 </body>
+
+<template name="itinNameInput">
+  <div class="ui small inverted transparent icon input" style="font-size:1.5em; margin-top:-10px;">
+    <input type="text" name="planName" placeholder="Itinerario sin nombre...">
+    <i class="edit icon"></i>
+  </div>
+</template>
+
+<template name="itinDateInput">
+  <div class="ui calendar" id="mycalendar">
+    <div class="ui inverted transparent input left icon" style="margin-top:10px; width:157px; margin-left:10px;">
+      <i class="calendar icon"></i>
+      <input type="text" name="planDate" placeholder="Fecha del Itinerario">
+    </div>
+  </div>
+</template>

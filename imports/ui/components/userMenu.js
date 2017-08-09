@@ -63,5 +63,15 @@ Template.myItinerariesModal.events({
     Meteor.call('removeItinerary', id, (error, result) => {
       if(error) alert(error.message);
     });
+  },
+
+  'click a.header'(event) {
+    var id = $(event.target).data("id");
+    console.log(id);
+    var it = Itineraries.find({_id: id}).fetch()[0];
+    Session.set("displayItin", it);
+
+    Session.set("userState", "display");
+    $('#generalModal').modal('hide');
   }
 });

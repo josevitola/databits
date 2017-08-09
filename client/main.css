@@ -1,12 +1,15 @@
 /* colorTool: https://material.io/color/#!/?view.left=0&view.right=1&primary.color=0e3a4b&secondary.color=009c8c */
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 :root {
-  --primary-blue: #0e3a4b;
-  --secondary-blue: #009c8c;
-  --museum-orange: #E87300;
-  --light-museum: lighten(var(--museum-orange), 15%);
-  --food-red: #DA052F;
-  --theather-green: #007562;
+  --primary-blue:         #0e3a4b;
+  --secondary-blue:       #009c8c;
+  --secondary-blue-dark:  #005F55;
+  --museum-orange:        #E87300;
+  --food-red:             #DA052F;
+  --theather-green:       #007562;
+  --secondary-menu:       #3e6477;
+  --secondary-menu-light: rgb(144, 175, 191);
+  --shadow:               rgba(0, 0, 0, 0.2);
 }
 
 .ui.primary.button {
@@ -18,7 +21,7 @@ body, html {
   height: 100%;
 }
 
-a.icon {
+a.text.icon {
   color: black;
 }
 
@@ -42,15 +45,18 @@ a.icon {
   overflow-y: visible;
 }
 
-#sidebar .ui.secondary.menu {
-  background: #3e6477;
-  margin: -1rem -1em 1em -1em;
-  padding: 12px 20px 0 20px;
+.ui.secondary.menu {
+  background: var(--secondary-menu);
   height: 57px;
 }
 
+#sidebar .ui.secondary.menu {
+  margin: -1rem -1em 1em -1em;
+  padding: 12px 20px 0 20px;
+}
+
 #sidebar .ui.secondary.end.menu {
-  background: rgb(144, 175, 191);
+  background: var(--secondary-menu-light);
   position: fixed;
   bottom: 0;
   height: 70px;
@@ -58,11 +64,33 @@ a.icon {
   margin-bottom: 0;
 }
 
+#sidebar .ui.alternate.secondary.menu {
+  color: white;
+  background: var(--secondary-blue);
+  margin: -1rem -1em 1em -1em;
+  padding: 12px 20px 0 20px;
+}
+
+#sidebar .ui.alternate.menu .remove.icon {
+  margin-right: 20px;
+  height: 30px;
+  width: auto;
+  color: var(--secondary-blue-dark);
+  cursor: pointer;
+}
+
+#sidebar .ui.alternate.menu h2 {
+  margin: 0px;
+  color: white;
+}
+
+#sidebar .ui.alternate.menu h5 {
+  margin-top: 5px;
+}
+
 #map .ui.secondary.menu {
-  background: #3e6477;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
   padding: 10px 20px;
-  height: 57px;
   margin: 0;
 }
 

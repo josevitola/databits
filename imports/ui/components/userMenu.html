@@ -27,16 +27,16 @@
         <div class="item" data-id="{{this._id}}">
           <div class="right floated content">
             <div class="header">
-              <a href="#" class="icon"><i class="bookmark icon"></i></a>
-              <a href="#" class="icon"><i class="unhide icon"></i></a>
-              <a href="#" class="icon"><i class="edit icon"></i></a>
+              <a href="#" class="text icon"><i class="bookmark icon"></i></a>
+              <a href="#" class="text icon"><i class="unhide icon"></i></a>
+              <a href="#" class="text icon"><i class="edit icon"></i></a>
               <!-- TODO confirmar eleccion del usuario al eliminar itinerario -->
-              <a class="icon" href="#"><i  data-content="Borrar este itinerario" data-variation="mini" class="remove icon"></i></a>
+              <a href="#" class="text icon"><i  data-content="Borrar este itinerario" data-variation="mini" class="remove icon"></i></a>
             </div>
             <div class="description" style="text-align: right;">{{styleCreatedAt this.createdAt}}</div>
           </div>
           <div class="content">
-            <a class="header">{{this.name}}</a>
+            <a class="header" data-id="{{this._id}}">{{this.name}}</a>
             <div class="description">${{getTotalPrice this.steps}}, {{getTotalTime this.steps}}, programado para 20/07</div>
           </div>
         </div>
