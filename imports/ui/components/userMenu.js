@@ -59,7 +59,6 @@ Template.myItinerariesModal.helpers({
 Template.myItinerariesModal.events({
   'click .remove.icon'() {
     var id = $(event.target).parent().parent().parent().parent().data('id');
-    console.log($(event.target).parent().parent().parent().parent());
     Meteor.call('removeItinerary', id, (error, result) => {
       if(error) alert(error.message);
     });
@@ -67,7 +66,6 @@ Template.myItinerariesModal.events({
 
   'click a.header'(event) {
     var id = $(event.target).data("id");
-    console.log(id);
     var it = Itineraries.find({_id: id}).fetch()[0];
     Session.set("displayItin", it);
 
