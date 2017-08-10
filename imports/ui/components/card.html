@@ -13,7 +13,13 @@
         {{/if}}
 
         <div class="header">
+          {{#if isEditingCard}}
+          <div class="ui small input">
+            <input type="text" value="{{step.name}}" placeholder="Gastos" min="0" step="100" id="newName">
+          </div>
+          {{else}}
           {{getIndex idx}}. {{step.name}}
+          {{/if}}
         </div>
         <div class="meta">
           <div class="ui {{step.type}} horizontal label">

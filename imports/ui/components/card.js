@@ -100,6 +100,7 @@ Template.card.events({
     var hours = $("#hours").val();
     var minutes = $("#minutes").val();
     var newPrice = parseInt($("#newPrice").val());
+    var newName = $("#newName").val();
 
     if(!hours) hours = 0;
     if(!minutes) minutes = 0;
@@ -108,6 +109,7 @@ Template.card.events({
     var idx = Template.instance().data.idx;
     var steps = getSessionSteps();
 
+    if(newName) steps[idx].name = newName;
     steps[idx].time = newTime;
     steps[idx].price = newPrice;
     updateSessionSteps(steps);
