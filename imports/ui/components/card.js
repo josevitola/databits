@@ -1,8 +1,6 @@
 import {Session} from 'meteor/session';
 import {Meteor} from 'meteor/meteor';
-import {ReactiveDict} from 'meteor/reactive-dict';
-
-import Sortable from 'sortablejs';
+import {ReactiveVar} from 'meteor/reactive-var';
 
 import {getSessionSteps, updateSessionSteps, removeSessionStep} from '/client/lib/session.js';
 import {getPinImgName} from '/imports/api/places.js';
@@ -11,45 +9,15 @@ import {Itineraries, getPriceFromSteps, getTimeFromSteps} from '/imports/api/iti
 import {validateEmail} from '/imports/api/users.js';
 import {styleType, styleDate} from '/imports/ui/lib/stylish.js';
 
-import './cards.html';
+import './card.html';
 
 // FIXME update data to template, not to global variable
 
-Template.cards.onRendered(function() {
-  var el = document.getElementById('sortable-cards');
-  var sortable = Sortable.create(el, {
-    // handle: '.move',
-    animation: 200,
-    onStart: function(evt) {
-      var auxSteps = Session.get('steps');
-      Session.set('auxSteps', auxSteps);
-      console.log('auxSteps:', auxSteps);
-    },
-    onMove: function(evt, originalEvent) {
-      var oldIdx = evt.dragged.getAttribute('data-step');
-      var newIdx = evt.related.getAttribute('data-step');
-      var auxSteps = Session.get('auxSteps');
-      console.log('move:', oldIdx, newIdx);
+Template.card.onCreated(function() {
+  this.index = new ReactiveVar(this.data.idx);
+})
 
-      var aux = auxSteps[newIdx];
-      auxSteps[newIdx] = auxSteps[oldIdx];
-      auxSteps[oldIdx] = aux;
-
-      Session.set('auxSteps', auxSteps);
-    },
-    onEnd: function(evt) {
-      var steps = Session.get('auxSteps');
-      Session.set('steps', steps);
-      console.log('steps', steps);
-    }
-  });
-});
-
-Template.cards.helpers({
-  steps: function() {
-    return getSessionSteps();
-  },
-
+Template.card.helpers({
   isDisplaying: function() {
     return Session.get("isDisplaying");
   },
@@ -59,15 +27,7 @@ Template.cards.helpers({
   },
 
   getIndex: function(idx) {
-    return idx + 1;
-  },
-
-  totalPrice: function() {
-    return getPriceFromSteps(getSessionSteps());
-  },
-
-  totalTime: function() {
-    return getTimeFromSteps(getSessionSteps());
+    return Template.instance().index.get() + 1;
   },
 
   styleType: function(type) {
@@ -75,7 +35,7 @@ Template.cards.helpers({
   }
 });
 
-Template.cards.events({
+Template.card.events({
   'click .ui.link.fluid.card' () {
     const steps = getSessionSteps();
     let target = event.target;
@@ -89,14 +49,9 @@ Template.cards.events({
     }
 
     let step = steps[$(target).data("idx")];
-    // centerMap(step.location);
     openMarker(generateInfWinHtml(step), new google.maps.Marker({
       position: step.location, map: getAppMap().instance, visible: false // TODO TEMPORARY SOLUTION. Actually use the associated marker
     }), step.location);
-  },
-
-  'click .intro' () {
-    SemanticModal.generalModal('introModal');
   },
 
   'click .remove.icon' () {
@@ -130,40 +85,6 @@ Template.cards.events({
       updateSessionSteps(steps);
     }
   },
-
-  'click #createItin' () {
-    Session.set("planName", $('input[name=planName]').val());
-    SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
-  },
-
-  'click #saveItin' () {  // TODO confirm choices
-    var newName = $('input[name=planName]').val();
-    var newDate = Session.get("planDate");
-    var oldItin = Session.get("displayItin");
-
-    if(newName !== oldItin.name) {
-      Meteor.call('itinerary.updateName', oldItin._id, newName, (error, result) => {
-        if (error) alert(error.message);
-      });
-    }
-
-    if(newDate !== oldItin.date) {
-      Meteor.call('itinerary.updateDate', oldItin._id, newDate, (error, result) => {
-        if (error) alert(error.message);
-      });
-    }
-
-    Meteor.call('itinerary.updateSteps', oldItin._id, getSessionSteps(), (error, result) => {
-      if(error) alert(error.message);
-    })
-
-    console.log(newDate);
-    Session.set("isEditing", false);
-  },
-
-  'click #editItin' () {
-    Session.set("isEditing", true);
-  }
 });
 
 Template.cardsModal.onCreated(function() {

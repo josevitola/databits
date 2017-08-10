@@ -30,7 +30,47 @@
       </div>
       {{/if}}
 
-      {{> cards steps=getSteps}}
+      {{#unless steps}}
+      <center>
+        <img src="/images/sad.png" class="ui image" style="margin:60px;">
+        <h3 class="ui header">¡Todavía no tienes lugares para tu itinerario!</h3>
+        <button class="ui primary intro button">
+          ¿Cómo se hace un plan?
+        </button>
+        <!-- Selecciona uno de los lugares disponibles o crea tu propio lugar y haz clic en <b>Agregar</b> para adicionarlo. -->
+      </center>
+      {{/unless}}
+
+      <div id="sortable-cards">
+        {{#each steps}}
+          {{> card idx=@index step=this}}
+        {{/each}}
+      </div>
+
+      <div class="ui secondary end menu">
+        {{#if steps}}
+          {{> infoMenu steps=steps}}
+        {{/if}}
+        <div class="right menu">
+        {{#if isDisplaying}}
+          {{#if isEditing}}
+          <div id="saveItin" class="ui secondary end button" style="padding:14px 20px">
+            <i class="check icon"></i>
+            Guardar
+          </div>
+          {{else}}
+          <div id="editItin" class="ui secondary end button" style="padding:14px 20px">
+            <i class="edit icon"></i>
+            Editar
+          </div>
+          {{/if}}
+        {{else}}
+          {{#if steps}}
+          <div id="createItin" class="ui secondary end button" style="padding:14px 20px">Finalizar</div>
+          {{/if}}
+        {{/if}}
+        </div>
+      </div>
     </div>
     <div class="ten wide column" style="margin:0px; padding:0px; height:100%;" id="map">
       <div class="ui secondary menu">

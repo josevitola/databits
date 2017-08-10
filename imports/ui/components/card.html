@@ -1,78 +1,30 @@
-<template name="cards">
-  {{#unless steps}}
-  <center>
-    <img src="/images/sad.png" class="ui image" style="margin:60px;">
-    <h3 class="ui header">¡Todavía no tienes lugares para tu itinerario!</h3>
-    <button class="ui primary intro button">
-      ¿Cómo se hace un plan?
-    </button>
-    <!-- Selecciona uno de los lugares disponibles o crea tu propio lugar y haz clic en <b>Agregar</b> para adicionarlo. -->
-  </center>
-  {{/unless}}
-
-  <div id="sortable-cards">
-    {{#each steps}}
-    <div class="ui link {{this.type}} fluid card" data-idx="{{@index}}">
+<template name="card">
+    <div class="ui link {{step.type}} fluid card" data-idx="{{idx}}">
       <div class="main content">
         {{#if isEditing}}
-        <i class="right floated remove icon" data-idx="{{@index}}"></i>
-        <i class="right floated angle up icon" data-idx="{{@index}}"></i>
-        <i class="right floated angle down icon" data-idx="{{@index}}"></i>
+        <i class="right floated remove icon" data-idx="{{idx}}"></i>
+        <i class="right floated angle up icon" data-idx="{{idx}}"></i>
+        <i class="right floated angle down icon" data-idx="{{idx}}"></i>
         {{/if}}
 
         <div class="header">
-          {{getIndex @index}}. {{this.name}}
+          {{getIndex idx}}. {{step.name}}
         </div>
         <div class="meta">
-          <div class="ui {{this.type}} horizontal label">
+          <div class="ui {{step.type}} horizontal label">
             <!-- <i class="hotel icon"></i> -->
-            {{styleType this.type}}
+            {{styleType step.type}}
           </div>
-          <b>{{this.address}}</b>
+          <b>{{step.address}}</b>
         </div>
       </div>
       <div class="extra content" style="color:rgba(0, 0, 0, 0.85); font-size:1.3em">
-        <b>{{this.time}}</b>
+        <b>{{step.time}}</b>
         <span class="right floated">
-          <b>$ {{this.price}}</b>
+          <b>$ {{step.price}}</b>
         </span>
       </div>
     </div>
-    {{/each}}
-  </div>
-
-  <div class="ui secondary end menu">
-    {{#if steps}}
-    <div class="ui green image label" style="margin:0; font-size:1em;">
-      Precio <br>Total: <div class="detail" style="margin-left:13px;">$ {{totalPrice}}</div>
-    </div>
-    <div class="ui teal image label" style="margin:0; font-size:1em; margin-left:20px;">
-      Tiempo <br>total:
-      <div class="detail" style="margin-left:17px;"><i class="time icon"></i>{{totalTime}}</div>
-    </div>
-    <div class="">
-    </div>
-    {{/if}}
-    <div class="right menu">
-    {{#if isDisplaying}}
-      {{#if isEditing}}
-      <div id="saveItin" class="ui secondary end button" style="padding:14px 20px">
-        <i class="check icon"></i>
-        Guardar
-      </div>
-      {{else}}
-      <div id="editItin" class="ui secondary end button" style="padding:14px 20px">
-        <i class="edit icon"></i>
-        Editar
-      </div>
-      {{/if}}
-    {{else}}
-      {{#if steps}}
-      <div id="createItin" class="ui secondary end button" style="padding:14px 20px">Finalizar</div>
-      {{/if}}
-    {{/if}}
-    </div>
-  </div>
 </template>
 
 <template name="cardsModal">
