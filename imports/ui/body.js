@@ -1,6 +1,7 @@
 import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
 import {styleShortDate} from '/imports/ui/lib/stylish.js';
+import {getSessionSteps} from '/client/lib/session.js';
 
 import '/node_modules/semantic-ui-calendar/dist/calendar.min.js';
 
@@ -60,9 +61,7 @@ Template.body.helpers({
   },
 
   getSteps: function() {
-    if(Session.get("isDisplaying"))
-      return Session.get("displayItin").steps;
-    else return Session.get("steps");
+    return getSessionSteps();
   }
 });
 

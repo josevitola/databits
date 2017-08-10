@@ -4,6 +4,7 @@ import {ReactiveDict} from 'meteor/reactive-dict';
 
 import Sortable from 'sortablejs';
 
+import {getSessionSteps, updateSessionSteps, removeSessionStep} from '/client/lib/session.js';
 import {getPinImgName} from '/imports/api/places.js';
 import {openMarker, getAppMap, generateInfWinHtml} from '/imports/api/datasets.js';
 import {Itineraries, getPriceFromSteps, getTimeFromSteps} from '/imports/api/itinerary.js';
@@ -13,15 +14,6 @@ import {styleType, styleDate} from '/imports/ui/lib/stylish.js';
 import './cards.html';
 
 // FIXME update data to template, not to global variable
-function updateSteps(newSteps) {
-  if(Session.get("isEditing")) {
-    if(Session.get("isDisplaying")) {
-      Session.set("displayItin", newSteps);
-    } else {
-      Session.set("steps", newSteps);
-    }
-  }
-}
 
 Template.cards.onRendered(function() {
   var el = document.getElementById('sortable-cards');
@@ -54,6 +46,10 @@ Template.cards.onRendered(function() {
 });
 
 Template.cards.helpers({
+  steps: function() {
+    return getSessionSteps();
+  },
+
   isDisplaying: function() {
     return Session.get("isDisplaying");
   },
@@ -67,11 +63,11 @@ Template.cards.helpers({
   },
 
   totalPrice: function() {
-    return getPriceFromSteps(Template.instance().data.steps);
+    return getPriceFromSteps(getSessionSteps());
   },
 
   totalTime: function() {
-    return getTimeFromSteps(Template.instance().data.steps);
+    return getTimeFromSteps(getSessionSteps());
   },
 
   styleType: function(type) {
@@ -81,7 +77,7 @@ Template.cards.helpers({
 
 Template.cards.events({
   'click .ui.link.fluid.card' () {
-    const steps = Template.instance().data.steps;
+    const steps = getSessionSteps();
     let target = event.target;
 
     if ($(target).is(".icon") || $(target).is(".button")) {
@@ -104,18 +100,13 @@ Template.cards.events({
   },
 
   'click .remove.icon' () {
-    var steps = Template.instance().data.steps;
     var idx = $(event.target).data("idx");
 
-    if (idx > -1) {
-      steps.splice(idx, 1);
-    }
-
-    updateSteps(steps);
+    removeSessionStep(idx);
   },
 
   'click .angle.down.icon' () {
-    var steps = Template.instance().data.steps;
+    var steps = getSessionSteps();
     var idx = $(event.target).data("idx");
 
     if (steps.length >= 2 && idx + 1 < steps.length) {
@@ -123,12 +114,12 @@ Template.cards.events({
       steps[idx + 1] = steps[idx];
       steps[idx] = aux;
 
-      updateSteps(steps);
+      updateSessionSteps(steps);
     }
   },
 
   'click .angle.up.icon' () {
-    var steps = Template.instance().data.steps;
+    var steps = getSessionSteps();
     var idx = $(event.target).data("idx");
 
     if (steps.length >= 2 && idx - 1 >= 0) {
@@ -136,7 +127,7 @@ Template.cards.events({
       steps[idx - 1] = steps[idx];
       steps[idx] = aux;
 
-      updateSteps(steps);
+      updateSessionSteps(steps);
     }
   },
 

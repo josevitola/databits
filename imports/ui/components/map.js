@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
+import {addToSessionSteps} from '/client/lib/session.js';
 import {setPlacesInfo, showMarkers, setInfWin, setAppMap, getAppMap, updateInfo} from '../../api/datasets.js';
 
 import './map.html';
@@ -97,8 +98,6 @@ Template.map.helpers({
     return error && error.message;
   },
   mapOptions: function() {
-    // var latLng = Geolocation.latLng();
-    // Initialize the map once we have the latLng.
     if (GoogleMaps.loaded()) {
       return {center: candelariaLatLng, zoom: MAP_ZOOM};
     }
@@ -124,32 +123,20 @@ Template.map.events({
     var time = $(target).data("time");
 
     phone = phone.toString();
-    var location = {
-      lat: lat,
-      lng: lng
-    };
 
-
-    var step = {
+    addToSessionSteps({
       name: name,
       phone: phone,
       address: address,
-      location: location,
+      location: {
+        lat: lat,
+        lng: lng
+      },
       webpage: web,
       price: price,
       type: type,
       time: time,
-    };
-
-
-    var steps = Session.get("steps");
-    if(typeof steps === "undefined") {
-      steps = [];
-    }
-
-    steps.push(step);
-
-    Session.set("steps", steps);
+    });
   },
 
   'click .ui.add.point.button' (event) {
@@ -161,7 +148,6 @@ Template.map.events({
     var address = $(target).data("address");
     var lat = $(target).data("lat");
     var lng = $(target).data("lng");
-    var location = {lat: lat, lng: lng};
     var type = $(target).data("type");
     var time = $(target).data("time");
 
@@ -195,23 +181,18 @@ Template.map.events({
     // add item to array
     pointsData.push(item);
 
-    var step = {
+    addToSessionSteps({
       name: name,
       phone: "",
       address: address,
-      location: location,
+      location: {
+        lat: lat,
+        lng: lng
+      },
       webpage: "",
       price: 0,
       type: type,
       time: time
-    };
-
-    var steps = Session.get("steps");
-    if(typeof steps === "undefined") {
-      steps = [];
-    }
-
-    steps.push(step);
-    Session.set("steps", steps);
+    });
   }
 });

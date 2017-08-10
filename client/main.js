@@ -9,6 +9,7 @@ Meteor.startup(function() {
   Session.set("isDisplaying", false);
   Session.set("isEditing", true);
   Session.set("steps", []);
+  Session.set("auxSteps", []);
   Session.set("displayItin", []);
   Session.set("planName", "");
   Session.set("planDate", new Date());
