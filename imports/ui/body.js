@@ -1,5 +1,6 @@
 import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
+import {getAppMap} from '/imports/api/mapper.js';
 import {styleShortDate} from '/imports/ui/lib/stylish.js';
 import {getSessionSteps, updateSessionSteps} from '/client/lib/session.js';
 import Sortable from 'sortablejs';
@@ -16,26 +17,28 @@ import './components/map.js';
 import './components/search.js';
 import './body.html';
 
-function initCalendar() {
-  $('#mycalendar').calendar({
-    type: 'date',
-    firstDayOfWeek: 1,
-    today: true,
-    monthFirst: false,
-    text: {
-      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-      today: 'Hoy',
-      now: 'Ahora',
-      am: 'AM',
-      pm: 'PM'
-    },
-    onChange: function(date, text, mode) {
-      Session.set("planDate", date);
-    }
+var directionsService, directionsDisplay;
+
+function calculateAndDisplayRoute(lat, lng, destLat, destLng) {
+    directionsService.route({
+      origin: lat + ',' + lng,
+      destination: destLat + ',' + destLng,
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+    }, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+      } else {
+          console.log('Directions request failed due to ' + status);
+        }
   });
 }
+
+Template.body.onCreated(function() {
+  this.lat = ReactiveVar(4.7512149);
+  this.lng = ReactiveVar(-74.0711512);
+  this.destLat = ReactiveVar(4.8196776);
+  this.destLng = ReactiveVar(-74.0258801);
+});
 
 Template.body.onRendered(function() {
   if(!Meteor.user() && !Meteor.loggingIn()) {
@@ -72,7 +75,37 @@ Template.body.onRendered(function() {
   //   }
   // });
 
-  initCalendar();
+  this.autorun(function() {
+    var steps = getSessionSteps();
+    if(steps.length >= 2) {
+      this.lat.set(steps[0].location.lat);
+      this.lng.set(steps[0].location.lng);
+      this.destLat.set(steps[steps.length - 1].location.lat);
+      this.destLng.set(steps[steps.length - 1].location.lng);
+
+      if(GoogleMaps.loaded()) {
+        calculateAndDisplayRoute(
+          this.lat.get(),
+          this.lng.get(),
+          this.destLat.get(),
+          this.destLng.get()
+        );
+
+        directionsDisplay.setMap(getAppMap().instance);
+      }
+    } else {
+      if(GoogleMaps.loaded()) {
+        directionsDisplay.setMap(null);
+      }
+    }
+  }.bind(this));
+
+  GoogleMaps.ready('map', function(map) {
+    directionsService = new google.maps.DirectionsService;
+    directionsDisplay = new google.maps.DirectionsRenderer({
+      suppressMarkers: true
+    });
+  });
 });
 
 Template.body.helpers({
@@ -109,7 +142,7 @@ Template.body.events({
 
   'click #createItin' () {
     $('.check.icon').click();
-    
+
     Session.set("planName", $('input[name=planName]').val());
     SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
   },
@@ -141,12 +174,30 @@ Template.body.events({
 
   'click #editItin' () {
     Session.set("isEditing", true);
-  }
+  },
 });
 
 Template.planCalendar.onRendered(function() {
   const data = Template.instance().data;
-  initCalendar();
+
+  $('#mycalendar').calendar({
+    type: 'date',
+    firstDayOfWeek: 1,
+    today: true,
+    monthFirst: false,
+    text: {
+      days: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+      months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+      today: 'Hoy',
+      now: 'Ahora',
+      am: 'AM',
+      pm: 'PM'
+    },
+    onChange: function(date, text, mode) {
+      Session.set("planDate", date);
+    }
+  });
 
   if(data != null && data.date != null)
     this.$('#mycalendar').calendar('set date', Template.instance().data.date);

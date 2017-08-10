@@ -4,7 +4,7 @@ import {ReactiveVar} from 'meteor/reactive-var';
 
 import {getSessionSteps, updateSessionSteps, removeSessionStep} from '/client/lib/session.js';
 import {getPinImgName} from '/imports/api/places.js';
-import {openMarker, getAppMap, generateInfWinHtml} from '/imports/api/datasets.js';
+import {openMarker, getAppMap, generateInfWinHtml} from '/imports/api/mapper.js';
 import {Itineraries, getPriceFromSteps, getTimeFromSteps} from '/imports/api/itinerary.js';
 import {validateEmail} from '/imports/api/users.js';
 import {styleType, styleDate} from '/imports/ui/lib/stylish.js';

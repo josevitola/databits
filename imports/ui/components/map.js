@@ -1,7 +1,8 @@
 import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
 import {addToSessionSteps} from '/client/lib/session.js';
-import {setPlacesInfo, showMarkers, setInfWin, setAppMap, getAppMap, updateInfo} from '../../api/datasets.js';
+import {showMarkers, setInfWin, setAppMap,
+        getInfWin, getAppMap, updateInfo} from '../../api/mapper.js';
 
 import './map.html';
 
@@ -137,6 +138,8 @@ Template.map.events({
       type: type,
       time: time,
     });
+
+    getInfWin().close();
   },
 
   'click .ui.add.point.button' (event) {

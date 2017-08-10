@@ -1,5 +1,5 @@
 import {Template} from 'meteor/templating';
-import {openMarker, getMuseums, getRestaurants, getTheatres} from '/imports/api/datasets.js';
+import {openMarker, getMuseums, getRestaurants, getTheatres} from '/imports/api/mapper.js';
 import './search.html';
 
 var content = [];

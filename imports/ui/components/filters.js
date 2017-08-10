@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 
 import './filters.html';
-import {getRestaurants, getTheatres, getMuseums, getInfWin, getAppMap} from '../../api/datasets.js';
+import {getRestaurants, getTheatres, getMuseums, getInfWin, getAppMap} from '../../api/mapper.js';
 
 function setDataOnMap(data, map) {
   for(let i = 0; i < data.length; i++) {
