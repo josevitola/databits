@@ -136,7 +136,7 @@ Template.cards.events({
     SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
   },
 
-  'click #saveItin' () {
+  'click #saveItin' () {  // TODO confirm choices
     var newName = $('input[name=planName]').val();
     var newDate = Session.get("planDate");
     var oldItin = Session.get("displayItin");
@@ -152,6 +152,10 @@ Template.cards.events({
         if (error) alert(error.message);
       });
     }
+
+    Meteor.call('itinerary.updateSteps', oldItin._id, getSessionSteps(), (error, result) => {
+      if(error) alert(error.message);
+    })
 
     console.log(newDate);
     Session.set("isEditing", false);

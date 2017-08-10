@@ -20,6 +20,18 @@ Itinerary.schema = new SimpleSchema({
   "steps.$.time": {type: String, optional: true},
 });
 
+stepSchema = new SimpleSchema({
+  "name": {type: String},
+  "address": {type: String},
+  "type": {type: String},
+  "location.lat": {type: Number, decimal: true},
+  "location.lng": {type: Number, decimal: true},
+  "phone": {type: String, optional: true},
+  "webpage": {type: String, optional: true},
+  "price": {type: Number, optional: true},
+  "time": {type: String, optional: true},
+});
+
 export const Itineraries = Itinerary;
 
 Meteor.methods({
@@ -69,7 +81,9 @@ Meteor.methods({
   },
 
   'itinerary.updateSteps'( id, steps ) {
-    Itineraries.schema.validate({steps});
+    for(var i = 0; i < steps.length; i++) {
+      stepSchema.validate(steps[i]);
+    }
 
     let itinerary = Itineraries.find({_id: id}).fetch()[0];
     if(this.userId == itinerary.userId) {
