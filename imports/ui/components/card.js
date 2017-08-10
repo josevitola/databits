@@ -14,7 +14,7 @@ import './card.html';
 // FIXME update data to template, not to global variable
 
 Template.card.onCreated(function() {
-  this.index = new ReactiveVar(this.data.idx);
+  this.editingCard = new ReactiveVar(false);
 })
 
 Template.card.helpers({
@@ -26,8 +26,16 @@ Template.card.helpers({
     return Session.get("isEditing");
   },
 
+  isEditingCard: function() {
+    return Template.instance().editingCard.get();
+  },
+
+  isPoint: function(type) {
+    return type == "new";
+  },
+
   getIndex: function(idx) {
-    return Template.instance().index.get() + 1;
+    return idx + 1;
   },
 
   styleType: function(type) {
@@ -37,10 +45,9 @@ Template.card.helpers({
 
 Template.card.events({
   'click .ui.link.fluid.card' () {
-    const steps = getSessionSteps();
     let target = event.target;
 
-    if ($(target).is(".icon") || $(target).is(".button")) {
+    if ($(target).is(".icon") || $(target).is(".button") || $(target).is("input")) {
       return;
     }
 
@@ -48,21 +55,19 @@ Template.card.events({
       target = $(target).parent();
     }
 
-    let step = steps[$(target).data("idx")];
+    let step = getSessionSteps()[Template.instance().data.idx];
     openMarker(generateInfWinHtml(step), new google.maps.Marker({
       position: step.location, map: getAppMap().instance, visible: false // TODO TEMPORARY SOLUTION. Actually use the associated marker
     }), step.location);
   },
 
   'click .remove.icon' () {
-    var idx = $(event.target).data("idx");
-
-    removeSessionStep(idx);
+    removeSessionStep(Template.instance().data.idx);
   },
 
   'click .angle.down.icon' () {
     var steps = getSessionSteps();
-    var idx = $(event.target).data("idx");
+    var idx = Template.instance().data.idx;
 
     if (steps.length >= 2 && idx + 1 < steps.length) {
       var aux = steps[idx + 1];
@@ -75,7 +80,7 @@ Template.card.events({
 
   'click .angle.up.icon' () {
     var steps = getSessionSteps();
-    var idx = $(event.target).data("idx");
+    var idx = Template.instance().data.idx;
 
     if (steps.length >= 2 && idx - 1 >= 0) {
       var aux = steps[idx - 1];
@@ -85,6 +90,30 @@ Template.card.events({
       updateSessionSteps(steps);
     }
   },
+
+  'click .edit.icon' () {
+    Template.instance().editingCard.set(true);
+  },
+
+  'click .check.icon' () {
+    // TODO prevent user from input negative numbers
+    var hours = $("#hours").val();
+    var minutes = $("#minutes").val();
+    var newPrice = parseInt($("#newPrice").val());
+
+    if(!hours) hours = 0;
+    if(!minutes) minutes = 0;
+
+    var newTime = hours + "h " + minutes + "min";
+    var idx = Template.instance().data.idx;
+    var steps = getSessionSteps();
+
+    steps[idx].time = newTime;
+    steps[idx].price = newPrice;
+    updateSessionSteps(steps);
+
+    Template.instance().editingCard.set(false);
+  }
 });
 
 Template.cardsModal.onCreated(function() {

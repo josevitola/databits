@@ -152,6 +152,14 @@ a.text.icon {
   background-color: var(--museum-orange) !important;
 }
 
+.ui.money.input input {
+  width: 100px;
+}
+
+.ui.time.input input {
+  width: 65px;
+}
+
 .ui.theatre.horizontal.label {
   background-color: var(--theather-green) !important;
 }

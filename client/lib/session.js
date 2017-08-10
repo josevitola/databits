@@ -23,7 +23,7 @@ export const addToSessionSteps = function(step) {
   updateSessionSteps(oldSteps);
 }
 
-export const removeSessionStep = function(stepIdx) {
+export const removeSessionStep = function(idx) {
   var oldSteps = getSessionSteps();
   if (idx > -1) {
     oldSteps.splice(idx, 1);

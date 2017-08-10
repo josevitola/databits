@@ -5,6 +5,11 @@
         <i class="right floated remove icon" data-idx="{{idx}}"></i>
         <i class="right floated angle up icon" data-idx="{{idx}}"></i>
         <i class="right floated angle down icon" data-idx="{{idx}}"></i>
+        {{#if isEditingCard}}
+        <i class="right floated check icon" data-idx="{{idx}}"></i>
+        {{else if isPoint step.type}}
+        <i class="right floated edit icon" data-idx="{{idx}}"></i>
+        {{/if}}
         {{/if}}
 
         <div class="header">
@@ -19,9 +24,27 @@
         </div>
       </div>
       <div class="extra content" style="color:rgba(0, 0, 0, 0.85); font-size:1.3em">
+        {{#if isEditingCard}}
+        <div class="ui right labeled mini time input">
+          <input type="number" min="0" step="1" id="hours">
+          <div class="ui label">h</div>
+        </div>
+        <div class="ui right labeled mini time input">
+          <input type="number" min="0" step="1" max="59" id="minutes">
+          <div class="ui label">m</div>
+        </div>
+        {{else}}
         <b>{{step.time}}</b>
+        {{/if}}
         <span class="right floated">
+          {{#if isEditingCard}}
+          <div class="ui labeled mini money input">
+            <label for="newPrice" class="ui label">$</label>
+            <input type="number" value="{{step.price}}" placeholder="Gastos" min="0" step="100" id="newPrice">
+          </div>
+          {{else}}
           <b>$ {{step.price}}</b>
+          {{/if}}
         </span>
       </div>
     </div>

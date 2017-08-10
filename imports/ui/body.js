@@ -108,6 +108,8 @@ Template.body.events({
   },
 
   'click #createItin' () {
+    $('.check.icon').click();
+    
     Session.set("planName", $('input[name=planName]').val());
     SemanticModal.generalModal('cardsModal', {steps: Session.get("steps")});
   },
