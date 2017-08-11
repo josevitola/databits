@@ -1,7 +1,6 @@
 import {Template} from 'meteor/templating';
 import {ReactiveVar} from 'meteor/reactive-var';
 import {getAppMap} from '/imports/api/mapper.js';
-import {getRequestObject} from '/imports/api/directions.js';
 import {styleShortDate} from '/imports/ui/lib/stylish.js';
 import {getSessionSteps, updateSessionSteps} from '/client/lib/session.js';
 import Sortable from 'sortablejs';
@@ -18,40 +17,10 @@ import './components/map.js';
 import './components/search.js';
 import './body.html';
 
-var directionsService, directionsDisplay;
-var renderArray = [];
-
-function calculateAndDisplayRoute(requests) {
-  for(var i = 0; i < requests.length; i++) {
-    directionsService.route(requests[i], function(response, status) {
-      console.log(renderArray[i]);
-      if(typeof renderArray[i] === "undefined")
-        renderArray[i] = new google.maps.DirectionsRenderer({
-          suppressMarkers: true
-        });
-        console.log(renderArray[i]);
-
-      if (status == google.maps.DirectionsStatus.OK) {
-        renderArray[i].setDirections(response);
-        renderArray[i].setMap(getAppMap().instance);
-      } else {
-        console.log('Directions request failed due to ' + status);
-      }
-    });
-  }
-}
-
 Template.body.onRendered(function() {
   if(!Meteor.user() && !Meteor.loggingIn()) {
     SemanticModal.generalModal('introModal');
   }
-
-  GoogleMaps.ready('map', function(map) {
-    directionsService = new google.maps.DirectionsService;
-    directionsDisplay = new google.maps.DirectionsRenderer({
-      suppressMarkers: true
-    });
-  });
 
   var el = document.getElementById('sortable-cards');
 
@@ -82,36 +51,6 @@ Template.body.onRendered(function() {
   //     console.log('steps', steps);
   //   }
   // });
-
-  this.autorun(function() {
-    var steps = getSessionSteps();
-    if(steps.length >= 2) {
-      var requests = [];
-
-      for(var i = 0; i < steps.length; i++) {
-        if(i == (steps.length - 1)) break;
-        var prevStepLoc = steps[i].location;
-        var nextStepLoc = steps[i+1].location;
-
-        console.log(prevStepLoc);
-        requests.push(getRequestObject(
-          prevStepLoc.lat, prevStepLoc.lng,
-          nextStepLoc.lat, nextStepLoc.lng
-        ));
-      }
-
-      if(GoogleMaps.loaded()) {
-        calculateAndDisplayRoute(requests);
-      }
-    } else {
-      if(GoogleMaps.loaded()) {
-        while(renderArray.length != 0) {
-          renderArray[renderArray.length - 1].setMap(null);
-          renderArray.pop();
-        }
-      }
-    }
-  }.bind(this));
 });
 
 Template.body.helpers({

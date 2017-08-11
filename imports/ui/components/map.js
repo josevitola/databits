@@ -1,6 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
-import {addToSessionSteps} from '/client/lib/session.js';
+import {getSessionSteps, addToSessionSteps} from '/client/lib/session.js';
+import {getRequestObject} from '/imports/api/directions.js';
 import {showMarkers, setInfWin, setAppMap,
         getInfWin, getAppMap, updateInfo} from '../../api/mapper.js';
 
@@ -14,9 +15,29 @@ var candelariaLatLng = {
 
 // Data Arrays
 var pointsData = [];
-
 var newMarker;
 var infowindow;
+var renderArray = [];
+var directionsService;
+
+function calculateAndDisplayRoute(requests) {
+  for(var i = 0; i < requests.length; i++) {
+    directionsService.route(requests[i], function(response, status) {
+      if(typeof renderArray[i] === "undefined") {
+        renderArray[i] = new google.maps.DirectionsRenderer({
+          suppressMarkers: true
+        });
+      }
+      
+      if (status == google.maps.DirectionsStatus.OK) {
+        renderArray[i].setDirections(response);
+        renderArray[i].setMap(getAppMap().instance);
+      } else {
+        console.log('Directions request failed due to ' + status);
+      }
+    });
+  }
+}
 
 Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
@@ -29,6 +50,7 @@ Template.map.onCreated(function() {
       animation: google.maps.Animation.DROP,
       icon: "markers/new-pin.png"
     });
+
     infowindow = new google.maps.InfoWindow({content: ''});
 
     google.maps.event.addListener(newMarker, 'click', function(){
@@ -53,8 +75,43 @@ Template.map.onCreated(function() {
     updateInfo("museum", getAppMap().instance);
     updateInfo("theatre", getAppMap().instance);
     updateInfo("restaurant", getAppMap().instance);
+
+    // set up directions
+    directionsService = new google.maps.DirectionsService;
   });
 });
+
+Template.map.onRendered(function() {
+  this.autorun(function() {
+    var steps = getSessionSteps();
+    if(steps.length >= 2) {
+      var requests = [];
+
+      for(var i = 0; i < steps.length; i++) {
+        if(i == (steps.length - 1)) break;
+        var prevStepLoc = steps[i].location;
+        var nextStepLoc = steps[i+1].location;
+
+        console.log(prevStepLoc);
+        requests.push(getRequestObject(
+          prevStepLoc.lat, prevStepLoc.lng,
+          nextStepLoc.lat, nextStepLoc.lng
+        ));
+      }
+
+      if(GoogleMaps.loaded()) {
+        calculateAndDisplayRoute(requests);
+      }
+    } else {
+      if(GoogleMaps.loaded()) {
+        while(renderArray.length != 0) {
+          renderArray[renderArray.length - 1].setMap(null);
+          renderArray.pop();
+        }
+      }
+    }
+  }.bind(this));
+})
 
 function newPointMarkerInfo(map, marker, infowindow){
   var id = pointsData.length +1;
