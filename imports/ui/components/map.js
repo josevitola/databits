@@ -15,8 +15,7 @@ var candelariaLatLng = {
 
 // Data Arrays
 var pointsData = [];
-var newMarker;
-var infowindow;
+var newMarker, infowindow, mapBounds;
 var directionsService, renderArray = [];
 
 Template.map.onCreated(function() {
@@ -56,7 +55,6 @@ Template.map.onCreated(function() {
     updateInfo("theatre", getAppMap().instance);
     updateInfo("restaurant", getAppMap().instance);
 
-    // set up directions
     directionsService = new google.maps.DirectionsService;
   });
 });
@@ -68,6 +66,7 @@ Template.map.onRendered(function() {
     if(steps.length >= 2) {
       clearDirections(renderArray);
       var requests = [];
+      mapBounds = new google.maps.LatLngBounds();
 
       for(var i = 0; i < steps.length - 1; i++) {
         var prevStepLoc = steps[i].location;
@@ -77,16 +76,22 @@ Template.map.onRendered(function() {
           prevStepLoc.lat, prevStepLoc.lng,
           nextStepLoc.lat, nextStepLoc.lng
         ));
+
+        var geo = new google.maps.LatLng(prevStepLoc.lat, prevStepLoc.lng);
+        mapBounds.extend(geo);
+        if(i == steps.length - 2) mapBounds.extend(new google.maps.LatLng(nextStepLoc.lat, nextStepLoc.lng));
       }
 
       if(GoogleMaps.loaded()) {
         for(let i = 0; i < steps.length - 1; i++) {
           renderArray[i] = new google.maps.DirectionsRenderer({
-            suppressMarkers: true
+            suppressMarkers: true,
+            preserveViewport: true,
           });
         }
 
         calculateAndDisplayRoute(requests, directionsService, renderArray);
+        getAppMap().instance.fitBounds(mapBounds);
       }
     } else {
       if(GoogleMaps.loaded()) {
