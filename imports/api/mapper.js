@@ -10,8 +10,6 @@ let appMap; // global variable for map
 let museumMapData = [];
 let restaurantMapData = [];
 let theatreMapData = [];
-let directionsService;
-let requestArray = [], renderArray = [];
 
 //  first letter to uppercase
 function capitalizeFirstLetter(string) {

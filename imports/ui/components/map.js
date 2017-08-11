@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Template} from 'meteor/templating';
 import {getSessionSteps, addToSessionSteps} from '/client/lib/session.js';
-import {getRequestObject} from '/imports/api/directions.js';
+import {getRequestObject, calculateAndDisplayRoute, clearDirections} from '/imports/api/directions.js';
 import {showMarkers, setInfWin, setAppMap,
         getInfWin, getAppMap, updateInfo} from '../../api/mapper.js';
 
@@ -17,27 +17,7 @@ var candelariaLatLng = {
 var pointsData = [];
 var newMarker;
 var infowindow;
-var renderArray = [];
-var directionsService;
-
-function calculateAndDisplayRoute(requests) {
-  for(var i = 0; i < requests.length; i++) {
-    directionsService.route(requests[i], function(response, status) {
-      if(typeof renderArray[i] === "undefined") {
-        renderArray[i] = new google.maps.DirectionsRenderer({
-          suppressMarkers: true
-        });
-      }
-      
-      if (status == google.maps.DirectionsStatus.OK) {
-        renderArray[i].setDirections(response);
-        renderArray[i].setMap(getAppMap().instance);
-      } else {
-        console.log('Directions request failed due to ' + status);
-      }
-    });
-  }
-}
+var directionsService, renderArray = [];
 
 Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
@@ -84,15 +64,15 @@ Template.map.onCreated(function() {
 Template.map.onRendered(function() {
   this.autorun(function() {
     var steps = getSessionSteps();
+    // clearDirections();
     if(steps.length >= 2) {
+      clearDirections(renderArray);
       var requests = [];
 
-      for(var i = 0; i < steps.length; i++) {
-        if(i == (steps.length - 1)) break;
+      for(var i = 0; i < steps.length - 1; i++) {
         var prevStepLoc = steps[i].location;
         var nextStepLoc = steps[i+1].location;
 
-        console.log(prevStepLoc);
         requests.push(getRequestObject(
           prevStepLoc.lat, prevStepLoc.lng,
           nextStepLoc.lat, nextStepLoc.lng
@@ -100,14 +80,17 @@ Template.map.onRendered(function() {
       }
 
       if(GoogleMaps.loaded()) {
-        calculateAndDisplayRoute(requests);
+        for(let i = 0; i < steps.length - 1; i++) {
+          renderArray[i] = new google.maps.DirectionsRenderer({
+            suppressMarkers: true
+          });
+        }
+
+        calculateAndDisplayRoute(requests, directionsService, renderArray);
       }
     } else {
       if(GoogleMaps.loaded()) {
-        while(renderArray.length != 0) {
-          renderArray[renderArray.length - 1].setMap(null);
-          renderArray.pop();
-        }
+        clearDirections(renderArray);
       }
     }
   }.bind(this));
