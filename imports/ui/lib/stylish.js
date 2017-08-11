@@ -1,3 +1,7 @@
+export const capitalizeFirstLetter = function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 export const shortenMonth = function(date) {
   switch(date.getMonth() + 1) {
     case 1:

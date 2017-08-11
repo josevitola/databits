@@ -1,3 +1,5 @@
+import {capitalizeFirstLetter} from '/imports/ui/lib/stylish.js';
+
 // Yeliana's Key: AIzaSyAjV2uXekxz_sQ6EPshNsAJ1GqnLJjIrCw
 // Vito's Key: AIzaSyBrkIfbZo3xfBNw6IPkv5Gbizc4mUGWGAY
 // Juan pablo's Key: AIzaSyDm_Vpi_q1K8e2afEqMjS6HEpq7CfKSmP0
@@ -10,11 +12,6 @@ let appMap; // global variable for map
 let museumMapData = [];
 let restaurantMapData = [];
 let theatreMapData = [];
-
-//  first letter to uppercase
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
 
 // direction to LatLng
 function setLatLng(direction, latlng) {
@@ -38,6 +35,35 @@ function setInfoWindow(map, html, marker, infowindow) {
 
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+// getters and setters
+export const getAppMap = function() {
+  return appMap;
+}
+
+export const setAppMap = function(map) {
+  appMap = map;
+}
+
+export const getInfWin = function() {
+  return infwin;
+}
+
+export const setInfWin = function(inf) {
+  infwin = inf;
+}
+
+export const getRestaurants = function() {
+  return restaurantMapData;
+}
+
+export const getMuseums = function() {
+  return museumMapData;
+}
+
+export const getTheatres = function() {
+  return theatreMapData;
 }
 
 export const generateInfWinHtml = function(step) {
@@ -115,33 +141,33 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
             visible: true
           });
           // data item definition
+
           var item = {
             name: name,
             address: entry.direccion,
-            location: location,
+            location: {
+              lat: lat,
+              lng: lng
+            },
             phone: phone,
             price: price,
             time: time,
             web: web,
             placeId: placeId,
             marker: marker,
-            html: '<center><h3>'+ name +'</h3>' +
-            '<img src="' +
-                'https://maps.googleapis.com/maps/api/streetview?' + 'location=' + name +
-                ' Bogota, Colombia&size=600x300' + '&key=AIzaSyDip7CRroRr9Aui972KlJZ2MKr7P-U20PA' +
-            '" class="ui medium rounded image"></img></center>' +
-            '<br><b>Dirección: </b> '+ entry.direccion +
-            '<br><b>Teléfono: </b> ' + phone +
-            '<br><b>Sitio web: </b> <a href="' + web + '">' + web + '</a>' +
-            '<br><b style="color: green">Precio Promedio: $</b> ' + price +
-            '<br><b style="color: green">Tiempo Promedio: </b> ' + time +
-            '<br><br><button class="ui labeled icon green add step button right floated"' +
-            'data-name="' + name + '" data-phone="' + phone + '" data-address="'
-            + entry.direccion + '" data-web="' + web + '" data-price="' + price +
-            '" data-lat="' + lat + '" data-lng="' + lng + '" data-type="' + type +
-            '" data-time="' + time +
-            '"><i class="plus icon"></i>Agregar</button>'
           }
+
+          item.html = generateInfWinHtml({
+            name: item.name,
+            address: item.address,
+            location: item.location,
+            phone: item.phone,
+            price: item.price,
+            webpage: item.web,
+            time: item.time,
+            type: type,
+          });
+
           google.maps.event.addListener(marker, 'click', function() {
             setInfoWindow(map, item.html, marker, infowindow);
           });
@@ -153,28 +179,8 @@ export const setPlacesInfo = function(type, array, icon, map, infowindow) {
   });
 }
 
-export const getAppMap = function() {
-  return appMap;
-}
-
-export const setAppMap = function(map) {
-  appMap = map;
-}
-
-export const getInfWin = function() {
-  return infwin;
-}
-
-export const setInfWin = function(inf) {
-  infwin = inf;
-}
-
-export const centerMap = function(location) {
-  appMap.instance.panTo(location);
-}
-
 export const openMarker = function(html, marker, location) {
-  appMap.instance.panTo(location);
+  appMap.instance.panTo(location);  // center map
   infwin.setContent(html);
   infwin.open(appMap.instance, marker);
 }
@@ -186,18 +192,6 @@ export const setClimateInfo = function(array) {
       console.log(entry);
     });
   });
-}
-
-export const getRestaurants = function() {
-  return restaurantMapData;
-}
-
-export const getMuseums = function() {
-  return museumMapData;
-}
-
-export const getTheatres = function() {
-  return theatreMapData;
 }
 
 export const updateInfo = function(type, mapInstance) {

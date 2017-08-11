@@ -6,7 +6,6 @@ export const clearDirections = function(display) {
 }
 
 export const calculateAndDisplayRoute = function(requests, service, display) {
-  console.log(display);
   for(let i = 0; i < requests.length; i++) {
     service.route(requests[i], function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {

@@ -237,5 +237,7 @@ Template.map.events({
       type: type,
       time: time
     });
+
+    getInfWin().close();
   }
 });
